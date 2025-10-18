@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Statistical Distributions Guide - Z, t, χ², F Tests</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+        }
+
+        h1 {
+            color: #667eea;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        .toc {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            border-left: 5px solid #667eea;
+        }
+
+        .toc h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .toc ul {
+            list-style: none;
+        }
+
+        .toc li {
+            padding: 8px 0;
+        }
+
+        .toc a {
+            color: #764ba2;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .toc a:hover {
+            color: #667eea;
+            padding-left: 10px;
+        }
+
+        .section {
+            margin: 40px 0;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid;
+        }
+
+        .section.z-dist { border-left-color: #28a745; }
+        .section.t-dist { border-left-color: #007bff; }
+        .section.chi-dist { border-left-color: #dc3545; }
+        .section.f-dist { border-left-color: #ffc107; }
+        .section.comparison { border-left-color: #6c757d; }
+
+        h2 {
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid;
+        }
+
+        .z-dist h2 { border-bottom-color: #28a745; }
+        .t-dist h2 { border-bottom-color: #007bff; }
+        .chi-dist h2 { border-bottom-color: #dc3545; }
+        .f-dist h2 { border-bottom-color: #ffc107; }
+        .comparison h2 { border-bottom-color: #6c757d; }
+
+        h3 {
+            color: #555;
+            font-size: 1.5em;
+            margin: 25px 0 15px 0;
+            padding-left: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .formula-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid #667eea;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .property-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .property-item strong {
+            color: #764ba2;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .note {
+            background: #d4edda;
+            padding: 15px;
+            border-left: 4px solid #28a745;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .warning {
+            background: #f8d7da;
+            padding: 15px;
+            border-left: 4px solid #dc3545;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #667eea;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+        }
+
+        .back-to-top:hover {
+            background: #764ba2;
+            transform: translateY(-5px);
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .container {
+                box-shadow: none;
+            }
+            .back-to-top {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Complete Statistical Distributions Guide</h1>
+        <p class="subtitle">Comprehensive Notes on Z, t, χ², and F Distributions with Tests, Formulas & Transformations</p>
+
+        <div class="toc">
+            <h2>📑 Table of Contents</h2>
+            <ul>
+                <li><a href="#z-distribution">1. Z Distribution (Standard Normal)</a></li>
+                <li><a href="#t-distribution">2. t Distribution (Student's t)</a></li>
+                <li><a href="#chi-distribution">3. χ² Distribution (Chi-Square)</a></li>
+                <li><a href="#f-distribution">4. F Distribution</a></li>
+                <li><a href="#transformations">5. Distribution Transformations & Relationships</a></li>
+                <li><a href="#hypothesis-tests">6. Hypothesis Testing Guide</a></li>
+                <li><a href="#comparison">7. Quick Comparison Table</a></li>
+            </ul>
+        </div>
+
+        <!-- Z DISTRIBUTION -->
+        <div id="z-distribution" class="section z-dist">
+            <h2>1. Z Distribution (Standard Normal Distribution)</h2>
+
+            <h3>Definition</h3>
+            <p>The standard normal distribution is a special case of the normal distribution with mean μ = 0 and standard deviation σ = 1.</p>
+
+            <div class="formula-box">
+                <h4>Probability Density Function (PDF):</h4>
+                <p>\[f(z) = \frac{1}{\sqrt{2\pi}} e^{-\frac{z^2}{2}}, \quad -\infty < z < \infty\]</p>
+            </div>
+
+            <div class="formula-box">
+                <h4>Z-Score Transformation:</h4>
+                <p>\[Z = \frac{X - \mu}{\sigma}\]</p>
+                <p>Where X ~ N(μ, σ²)</p>
+            </div>
+
+            <h3>Properties</h3>
+            <div class="property-grid">
+                <div class="property-item">
+                    <strong>Mean:</strong> 0
+                </div>
+                <div class="property-item">
+                    <strong>Variance:</strong> 1
+                </div>
+                <div class="property-item">
+                    <strong>Standard Deviation:</strong> 1
+                </div>
+                <div class="property-item">
+                    <strong>Skewness:</strong> 0 (symmetric)
+                </div>
+                <div class="property-item">
+                    <strong>Kurtosis:</strong> 3 (mesokurtic)
+                </div>
+                <div class="property-item">
+                    <strong>Range:</strong> (-∞, +∞)
+                </div>
+            </div>
+
+            <h3>Z-Test</h3>
+
+            <div class="formula-box">
+                <h4>One-Sample Z-Test (σ known):</h4>
+                <p>\[Z = \frac{\bar{X} - \mu_0}{\sigma / \sqrt{n}}\]</p>
+            </div>
+
+            <div class="formula-box">
+                <h4>Two-Sample Z-Test (σ₁, σ₂ known):</h4>
+                <p>\[Z = \frac{(\bar{X}_1 - \bar{X}_2) - (\mu_1 - \mu_2)}{\sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}}\]</p>
+            </div>
+
+            <div class="formula-box">
+                <h4>Z-Test for Proportions:</h4>
+                <p>\[Z = \frac{\hat{p} - p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}}\]</p>
+            </div>
+
+            <h3>When to Use Z-Test</h3>
+            <div class="note">
+                <strong>✓ Use Z-Test when:</strong>
+                <ul>
+                    <li>Population standard deviation (σ) is <strong>known</strong></li>
+                    <li>Sample size n ≥ 30 (large sample)</li>
+                    <li>Testing means or proportions</li>
+                    <li>Data is normally distributed or n is large (CLT applies)</li>
+                </ul>
+            </div>
+
+            <h3>Critical Values (Two-Tailed)</h3>
+            <table>
+                <tr>
+                    <th>Significance Level (α)</th>
+                    <th>Critical Z-value</th>
+                    <th>Confidence Level</th>
+                </tr>
+                <tr>
+                    <td>0.10</td>
+                    <td>±1.645</td>
+                    <td>90%</td>
+                </tr>
+                <tr>
+                    <td>0.05</td>
+                    <td>±1.96</td>
+                    <td>95%</td>
+                </tr>
+                <tr>
+                    <td>0.01</td>
+                    <td>±2.576</td>
+                    <td>99%</td>
+                </tr>
+            </table>
+
+            <div class="highlight">
+                <strong>🎯 Empirical Rule (68-95-99.7):</strong>
+                <ul>
+                    <li>68% of data falls within ±1σ</li>
+                    <li>95% of data falls within ±2σ (approximately ±1.96σ)</li>
+                    <li>99.7% of data falls within ±3σ</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- T DISTRIBUTION -->
+        <div id="t-distribution" class="section t-dist">
+            <h2>2. t Distribution (Student's t-Distribution)</h2>
+
+            <h3>Definition</h3>
+            <p>The t-distribution is used when the population standard deviation is unknown and must be estimated from the sample. It was developed by William Sealy Gosset under the pseudonym "Student".</p>
+
+            <div class="formula-box">
+                <h4>Probability Density Function (PDF):</h4>
+                <p>\[f(t) = \frac{\Gamma(\frac{\nu+1}{2})}{\sqrt{\nu\pi}\Gamma(\frac{\nu}{2})} \left(1 + \frac{t^2}{\nu}\right)^{-\frac{\nu+1}{2}}\]</p>
+                <p>where ν = degrees of freedom, Γ = Gamma function</p>
+            </div>
+
+            <h3>Properties</h3>
+            <div class="property-grid">
+                <div class="property-item">
+                    <strong>Mean:</strong> 0 (for ν > 1)
+                </div>
+                <div class="property-item">
+                    <strong>Variance:</strong> ν/(ν-2) for ν > 2
+                </div>
+                <div class="property-item">
+                    <strong>Skewness:</strong> 0 (symmetric)
+                </div>
+                <div class="property-item">
+                    <strong>Kurtosis:</strong> 6/(ν-4) + 3 for ν > 4
+                </div>
+                <div class="property-item">
+                    <strong>Range:</strong> (-∞, +∞)
+                </div>
+                <div class="property-item">
+                    <strong>Parameter:</strong> ν (degrees of freedom)
+                </div>
+            </div>
+
+            <div class="highlight">
+                <strong>Key Characteristics:</strong>
+                <ul>
+                    <li>Bell-shaped and symmetric like normal distribution</li>
+                    <li><strong>Heavier tails</strong> than normal distribution</li>
+                    <li>As ν → ∞, t-distribution → Z-distribution</li>
+                    <li>Lower peak (more spread out) than Z for small df</li>
+                </ul>
+            </div>
+
+            <h3>t-Test Formulas</h3>
+
+            <div class="formula-box">
+                <h4>One-Sample t-Test (σ unknown):</h4>
+                <p>\[t = \frac{\bar{X} - \mu_0}{s / \sqrt{n}}\]</p>
+                <p>df = n - 1</p>
+            </div>
+
+            <div class="formula-box">
+                <h4>Two-Sample t-Test (Equal Variances):</h4>
+                <p>\[t = \frac{\bar{X}_1 - \bar{X}_2}{s_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}\]</p>
+                <p>where pooled variance: \(s_p^2 = \frac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1+n_2-2}\)</p>
+                <p>df = n₁ + n₂ - 2</p>
+            </div>
+
+            <div class="formula-box">
+                <h4>Two-Sample t-Test (Unequal Variances - Welch's t-test):</h4>
+                <p>\[t = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}\]</p>
+                <p>df ≈ \(\frac{\left(\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}\right)^2}{\frac{(s_1^2/n_1)^2}{n_1-1} + \frac{(s_2^2/n_2)^2}{n_2-1}}\) (Welch-Satterthwaite)</p>
+            </div>
+
+            <div class="formula-box">
+                <h4>Paired t-Test:</h4>
+                <p>\[t = \frac{\bar{d}}{s_d / \sqrt{n}}\]</p>
+                <p>where \(\bar{d}\) = mean of differences, s_d = std dev of differences</p>
+                <p>df = n - 1</p>
+            </div>
+
+            <h3>When to Use t-Test</h3>
+            <div class="note">
+                <strong>✓ Use t-Test when:</strong>
+                <ul>
+                    <li>Population standard deviation (σ) is <strong>unknown</strong></li>
+                    <li>Sample size is small (n < 30)</li>
+                    <li>Data is approximately normally distributed</li>
+                    <li>Comparing means of groups</li>
+                </ul>
+            </div>
+
+            <h3>Confidence Intervals</h3>
+            <div class="formula-box">
+                <h4>For Population Mean:</h4>
+                <p>\[\bar{X} \pm t_{\alpha/2, n-1} \times \frac{s}{\sqrt{n}}\]</p>
+            </div>
+        </div>
+
+        <!-- CHI-SQUARE DISTRIBUTION -->
+        <div id="chi-distribution" class="section chi-dist">
+            <h2>3. χ² Distribution (Chi-Square Distribution)</h2>
+
+            <h3>Definition</h3>
+            <p>The chi-square distribution is the sum of the squares of k independent standard normal random variables.</p>
+
+            <div class="formula-box">
+                <h4>If Z₁, Z₂, ..., Z_k ~ N(0,1):</h4>
+                <p>\[\chi^2 = Z_1^2 + Z_2^2 + ... + Z_k^2\]</p>
+                <p>Then χ² ~ χ²(k), where k = degrees of freedom</p>
+            </div>
+
+            <div class="formula-box">
+                <h4>Probability Density Function (PDF):</h4>
+                <p>\[f(x; k) = \frac{1}{2^{k/2} \Gamma(k/2)} x^{(k/2)-1} e^{-x/2}, \quad x \geq 0\]</p>
+            </div>
+
+            <h3>Properties</h3>
+            <div class="property-grid">
+                <div class="property-item">
+                    <strong>Mean:</strong> k
+                </div>
+                <div class="property-item">
+                    <strong>Variance:</strong> 2k
+                </div>
+                <div class="property-item">
+                    <strong>Standard Deviation:</strong> √(2k)
+                </div>
+                <div class="property-item">
+                    <strong>Skewness:</strong> √(8/k)
+                </div>
+                <div class="property-item">
+                    <strong>Kurtosis:</strong> 12/k
+                </div>
+                <div class="property-item">
+                    <strong>Mode:</strong> max(k-2, 0)
+                </div>
+                <div class="property-item">
+                    <strong>Range:</strong> [0, ∞)
+                </div>
+                <div class="property-item">
+                    <strong>Parameter:</strong> k (degrees of freedom)
+                </div>
+            </div>
+
+            <div class="highlight">
+                <strong>Key Characteristics:</strong>
+                <ul>
+                    <li>Always non-negative (x ≥ 0)</li>
+                    <li>Right-skewed for small k</li>
+                    <li>Approaches normal distribution as k → ∞</li>
+                    <li>Additive: χ²(k₁) + χ²(k₂) = χ²(k₁ + k₂)</li>
+                </ul>
+            </div>
+
+            <h3>Chi-Square Tests</h3>
+
+            <div class="formula-box">
+                <h4>1. Chi-Square Test for Variance:</h4>
+                <p>\[\chi^2 = \frac{(n-1)s^2}{\sigma_0^2}\]</p>
+                <p>df = n - 1</p>
+                <p><strong>Use:</strong> Testing if sample variance equals hypothesized variance</p>
+            </div>
+
+            <div class="formula-box">
+                <h4>2. Chi-Square Goodness-of-Fit Test:</h4>
+                <p>\[\chi^2 = \sum_{i=1}^{k} \frac{(O_i - E_i)^2}{E_i}\]</p>
+                <p>where O_i = observed frequency, E_i = expected frequency</p>
+                <p>df = k - 1 - (number of estimated parameters)</p>
+                <p><strong>Use:</strong> Testing if observed frequencies match expected distribution</p>
+            </div>
+
+            <div class="formula-box">
+                <h4>3. Chi-Square Test of Independence:</h4>
+                <p>\[\chi^2 = \sum_{i=1}^{r} \sum_{j=1}^{c} \frac{(O_{ij} - E_{ij})^2}{E_{ij}}\]</p>
+                <p>where \(E_{ij} = \frac{(\text{Row}_i \text{ total}) \times (\text{Column}_j \text{ total})}{\text{Grand total}}\)</p>
+                <p>df = (r - 1)(c - 1)</p>
+                <p><strong>Use:</strong> Testing if two categorical variables are independent</p>
+            </div>
+
+            <div class="formula-box">
+                <h4>4. Chi-Square Test for Homogeneity:</h4>
+                <p>Same formula as independence test</p>
+                <p>df = (r - 1)(c - 1)</p>
+                <p><strong>Use:</strong> Testing if multiple populations have same distribution</p>
+            </div>
+
+            <h3>Confidence Intervals</h3>
+            <div class="formula-box">
+                <h4>For Population Variance (σ² known mean):</h4>
+                <p>\[\left(\frac{\sum(X_i - \mu)^2}{\chi^2_{1-\alpha/2, n}}, \frac{\sum(X_i - \mu)^2}{\chi^2_{\alpha/2, n}}\right)\]</p>
+            </div>
+
+            <div class="formula-box">
+                <h4>For Population Variance (σ² unknown mean):</h4>
+                <p>\[\left(\frac{(n-1)s^2}{\chi^2_{1-\alpha/2, n-1}}, \frac{(n-1)s^2}{\chi^2_{\alpha/2, n-1}}\right)\]</p>
+            </div>
+
+            <h3>When to Use Chi-Square Tests</h3>
+            <div class="note">
+                <strong>✓ Use χ² Test when:</strong>
+                <ul>
+                    <li>Testing <strong>categorical data</strong> (frequency counts)</li>
+                    <li>Testing goodness of fit</li>
+                    <li>Testing independence of variables</li>
+                    <li>Testing variance of a population</li>
+                    <li>Expected frequency in each cell ≥ 5</li>
+                </ul>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Assumptions:</strong>
+                <ul>
+                    <li>Data must be frequencies or counts</li>
+                    <li>Categories must be mutually exclusive</li>
+                    <li>Expected frequency ≥ 5 in at least 80% of cells</li>
+                    <li>Independent observations</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- F DISTRIBUTION -->
+        <div id="f-distribution" class="section f-dist">
+            <h2>4. F Distribution (Fisher-Snedecor Distribution)</h2>
+
+            <h3>Definition</h3>
+            <p>The F-distribution is the ratio of two independent chi-square variables divided by their degrees of freedom.</p>
+
+            <div class="formula-box">
+                <h4>If χ₁² ~ χ²(d₁) and χ₂² ~ χ²(d₂):</h4>
+                <p>\[F = \frac{\chi_1^2/d_1}{\chi_2^2/d_2}\]</p>
+                <p>Then F ~ F(d₁, d₂)</p>
+            </div>
+
+            <div class="formula-box">
+                <h4>Probability Density Function (PDF):</h4>
+                <p>\[f(x; d_1, d_2) = \frac{\sqrt{\frac{(d_1x)^{d_1}d_2^{d_2}}{(d_1x+d_2)^{d_1+d_2}}}}{x \cdot B(d_1/2, d_2/2)}\]</p>
+                <p>where B is the Beta function</p>
+            </div>
+
+            <h3>Properties</h3>
+            <div class="property-grid">
+                <div class="property-item">
+                    <strong>Mean:</strong> d₂/(d₂-2) for d₂ > 2
+                </div>
+                <div class="property-item">
+                    <strong>Variance:</strong> \(\frac{2d_2^2(d_1+d_2-2)}{d_1(d_2-2)^2(d_2-4)}\) for d₂ > 4
+                </div>
+                <div class="property-item">
+                    <strong>Mode:</strong> \(\frac{d_1-2}{d_1} \cdot \frac{d_2}{d_2+2}\) for d₁ > 2
+                </div>
+                <div class="property-item">
+                    <strong>Range:</strong> [0, ∞)
+                </div>
+                <div class="property-item">
+                    <strong>Parameters:</strong> d₁, d₂ (degrees of freedom)
+                </div>
+                <div class="property-item">
+                    <strong>Skewness:</strong> Positive (right-skewed)
+                </div>
+            </div>
+
+            <div class="highlight">
+                <strong>Key Characteristics:</strong>
+                <ul>
+                    <li>Always non-negative (F ≥ 0)</li>
+                    <li>Right-skewed distribution</li>
+                    <li>Reciprocal property: If F ~ F(d₁, d₂), then 1/F ~ F(d₂, d₁)</li>
+                    <li>As d₁, d₂ → ∞, approaches normal distribution</li>
+                </ul>
+            </div>
+
+            <h3>F-Test Formulas</h3>
+
+            <div class="formula-box">
+                <h4>1. F-Test for Two Variances:</h4>
+                <p>\[F = \frac{s_1^2}{s_2^2}\]</p>
+                <p>where s₁² ≥ s₂² (larger variance in numerator)</p>
+                <p>df₁ = n₁ - 1, df₂ = n₂ - 1</p>
+                <p><strong>Use:</strong> Testing if two population variances are equal</p>
+            </div>
+
+            <div class="formula-box">
+                <h4>2. F-Test in ANOVA (Analysis of Variance):</h4>
+                <p>\[F = \frac{MSB}{MSW} = \frac{\text{Between-group variance}}{\text{Within-group variance}}\]</p>
+                <p>\[F = \frac{SSB/(k-1)}{SSW/(n-k)}\]</p>
+                <p>df₁ = k - 1 (between groups), df₂ = n - k (within groups)</p>
+                <p>where k = number of groups, n = total sample size</p>
+                <p><strong>Use:</strong> Testing if means of 3+ groups are equal</p>
+            </div>
+
+            <div class="formula-box">
+                <h4>3. F-Test in Regression:</h4>
+                <p>\[F = \frac{R^2/k}{(1-R^2)/(n-k-1)}\]</p>
+                <p>or \[F = \frac{MSR}{MSE} = \frac{ESS/k}{RSS/(n-k-1)}\]</p>
+                <p>df₁ = k (number of predictors), df₂ = n - k - 1</p>
+                <p><strong>Use:</strong> Testing overall significance of regression model</p>
+            </div>
+
+            <h3>ANOVA Decomposition</h3>
+            <div class="formula-box">
+                <p><strong>Total Sum of Squares (SST):</strong></p>
+                <p>\[SST = \sum_{i=1}^k \sum_{j=1}^{n_i} (X_{ij} - \bar{X})^2\]</p>
+
+                <p><strong>Between-Group Sum of Squares (SSB):</strong></p>
+                <p>\[SSB = \sum_{i=1}^k n_i(\bar{X}_i - \bar{X})^2\]</p>
+
+                <p><strong>Within-Group Sum of Squares (SSW):</strong></p>
+                <p>\[SSW = \sum_{i=1}^k \sum_{j=1}^{n_i} (X_{ij} - \bar{X}_i)^2\]</p>
+
+                <p><strong>Relationship:</strong> SST = SSB + SSW</p>
+            </div>
+
+            <h3>ANOVA Table</h3>
+            <table>
+                <tr>
+                    <th>Source</th>
+                    <th>Sum of Squares</th>
+                    <th>df</th>
+                    <th>Mean Square</th>
+                    <th>F-statistic</th>
+                </tr>
+                <tr>
+                    <td>Between Groups</td>
+                    <td>SSB</td>
+                    <td>k - 1</td>
+                    <td>MSB = SSB/(k-1)</td>
+                    <td>F = MSB/MSW</td>
+                </tr>
+                <tr>
+                    <td>Within Groups</td>
+                    <td>SSW</td>
+                    <td>n - k</td>
+                    <td>MSW = SSW/(n-k)</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Total</td>
+                    <td>SST</td>
+                    <td>n - 1</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </table>
+
+            <h3>Confidence Interval for Variance Ratio</h3>
+            <div class="formula-box">
+                <p>\[\left(\frac{s_1^2}{s_2^2} \cdot \frac{1}{F_{\alpha/2, n_1-1, n_2-1}}, \frac{s_1^2}{s_2^2} \cdot F_{\alpha/2, n_2-1, n_1-1}\right)\]</p>
+            </div>
+
+            <h3>When to Use F-Test</h3>
+            <div class="note">
+                <strong>✓ Use F-Test when:</strong>
+                <ul>
+                    <li>Comparing <strong>two variances</strong></li>
+                    <li>Comparing means of <strong>3 or more groups</strong> (ANOVA)</li>
+                    <li>Testing <strong>overall significance</strong> of regression model</li>
+                    <li>Data is normally distributed</li>
+                    <li>Samples are independent</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- TRANSFORMATIONS -->
+        <div id="transformations" class="section comparison">
+            <h2>5. Distribution Transformations & Relationships</h2>
+
+            <h3>Relationships Between Distributions</h3>
+
+            <div class="formula-box">
+                <h4>1. Z to t:</h4>
+                <p>If \(Z \sim N(0,1)\) and \(V \sim \chi^2(n)\) are independent:</p>
+                <p>\[T = \frac{Z}{\sqrt{V/n}} \sim t(n)\]</p>
+            </div>
+
+            <div class="formula-box">
+                <h4>2. Z to χ²:</h4>
+                <p>If \(Z_1, Z_2, ..., Z_n \sim N(0,1)\) independent:</p>
+                <p>\[\chi^2 = \sum_{i=1}^n Z_i^2 \sim \chi^2(n)\]</p>
+            </div>
+
+            <div class="formula-box">
+                <h4>3. χ² to F:</h4>
+                <p>If \(U \sim \chi^2(d_1)\) and \(V \sim \chi^2(d_2)\) independent:</p>
+                <p>\[F = \frac{U/d_1}{V/d_2} \sim F(d_1, d_2)\]</p>
+            </div>
+
+            <div class="formula-box">
+                <h4>4. t to F:</h4>
+                <p>If \(T \sim t(n)\):</p>
+                <p>\[T^2 \sim F(1, n)\]</p>
+            </div>
+
+            <div class="formula-box">
+                <h4>5. Limiting Cases:</h4>
+                <p>As n → ∞:</p>
+                <ul>
+                    <li>\(t(n) \to N(0,1)\)</li>
+                    <li>\(\chi^2(n)/n \to 1\)</li>
+                    <li>\((\chi^2(n) - n)/\sqrt{2n} \to N(0,1)\)</li>
+                </ul>
+            </div>
+
+            <h3>Sample Statistics Distributions</h3>
+
+            <div class="formula-box">
+                <h4>Sample Mean (\(\bar{X}\)):</h4>
+                <p>If \(X_i \sim N(\mu, \sigma^2)\):</p>
+                <p>\[\bar{X} \sim N\left(\mu, \frac{\sigma^2}{n}\right)\]</p>
+                <p>\[\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \sim N(0,1)\]</p>
+            </div>
+
+            <div class="formula-box">
+                <h4>Sample Variance (s²):</h4>
+                <p>If \(X_i \sim N(\mu, \sigma^2)\):</p>
+                <p>\[\frac{(n-1)s^2}{\sigma^2} \sim \chi^2(n-1)\]</p>
+            </div>
+
+            <div class="formula-box">
+                <h4>Independence of Mean and Variance:</h4>
+                <p>For normal populations:</p>
+                <p>\(\bar{X}\) and \(s^2\) are <strong>independent</strong></p>
+            </div>
+
+            <h3>Transformation Formulas</h3>
+            <table>
+                <tr>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Transformation</th>
+                </tr>
+                <tr>
+                    <td>N(μ, σ²)</td>
+                    <td>N(0, 1)</td>
+                    <td>Z = (X - μ)/σ</td>
+                </tr>
+                <tr>
+                    <td>Normal</td>
+                    <td>χ²</td>
+                    <td>Sum of squared standardized normals</td>
+                </tr>
+                <tr>
+                    <td>Normal + χ²</td>
+                    <td>t</td>
+                    <td>Z/√(V/n)</td>
+                </tr>
+                <tr>
+                    <td>Two χ²</td>
+                    <td>F</td>
+                    <td>(χ₁²/d₁)/(χ₂²/d₂)</td>
+                </tr>
+                <tr>
+                    <td>t²</td>
+                    <td>F(1,n)</td>
+                    <td>Square of t-statistic</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- HYPOTHESIS TESTS -->
+        <div id="hypothesis-tests" class="section comparison">
+            <h2>6. Hypothesis Testing Guide</h2>
+
+            <h3>General Hypothesis Testing Framework</h3>
+
+            <div class="formula-box">
+                <h4>Steps in Hypothesis Testing:</h4>
+                <ol>
+                    <li><strong>State Hypotheses:</strong> H₀ (null) vs H₁/Hₐ (alternative)</li>
+                    <li><strong>Choose Significance Level:</strong> α (typically 0.05, 0.01)</li>
+                    <li><strong>Select Test Statistic:</strong> Z, t, χ², or F</li>
+                    <li><strong>Calculate Test Statistic:</strong> From sample data</li>
+                    <li><strong>Determine p-value or Critical Value</strong></li>
+                    <li><strong>Make Decision:</strong> Reject or fail to reject H₀</li>
+                    <li><strong>State Conclusion:</strong> In context of problem</li>
+                </ol>
+            </div>
+
+            <h3>Types of Tests</h3>
+
+            <div class="property-grid">
+                <div class="property-item">
+                    <strong>One-Tailed (Right):</strong>
+                    <p>H₁: parameter > value</p>
+                    <p>Reject if test statistic > critical value</p>
+                </div>
+                <div class="property-item">
+                    <strong>One-Tailed (Left):</strong>
+                    <p>H₁: parameter < value</p>
+                    <p>Reject if test statistic < -critical value</p>
+                </div>
+                <div class="property-item">
+                    <strong>Two-Tailed:</strong>
+                    <p>H₁: parameter ≠ value</p>
+                    <p>Reject if |test statistic| > critical value</p>
+                </div>
+            </div>
+
+            <h3>Decision Rules</h3>
+
+            <div class="formula-box">
+                <h4>Using p-value:</h4>
+                <p>Reject H₀ if p-value < α</p>
+                <p>Fail to reject H₀ if p-value ≥ α</p>
+            </div>
+
+            <div class="formula-box">
+                <h4>Using Critical Values (Two-tailed, α = 0.05):</h4>
+                <p><strong>Z-test:</strong> Reject if |Z| > 1.96</p>
+                <p><strong>t-test:</strong> Reject if |t| > t₀.₀₂₅,df</p>
+                <p><strong>χ²-test:</strong> Reject if χ² > χ²₀.₀₅,df</p>
+                <p><strong>F-test:</strong> Reject if F > F₀.₀₅,df₁,df₂</p>
+            </div>
+
+            <h3>Type I and Type II Errors</h3>
+            <table>
+                <tr>
+                    <th></th>
+                    <th>H₀ True</th>
+                    <th>H₀ False</th>
+                </tr>
+                <tr>
+                    <td><strong>Reject H₀</strong></td>
+                    <td>Type I Error (α)<br>False Positive</td>
+                    <td>Correct Decision<br>Power = 1 - β</td>
+                </tr>
+                <tr>
+                    <td><strong>Fail to Reject H₀</strong></td>
+                    <td>Correct Decision<br>Confidence = 1 - α</td>
+                    <td>Type II Error (β)<br>False Negative</td>
+                </tr>
+            </table>
+
+            <div class="highlight">
+                <strong>Relationship:</strong>
+                <ul>
+                    <li>As α ↓, β ↑ (trade-off)</li>
+                    <li>As sample size ↑, β ↓ (power ↑)</li>
+                    <li>As effect size ↑, β ↓ (power ↑)</li>
+                </ul>
+            </div>
+
+            <h3>Power of a Test</h3>
+            <div class="formula-box">
+                <p><strong>Power = 1 - β = P(Reject H₀ | H₀ is false)</strong></p>
+                <p>Affected by:</p>
+                <ul>
+                    <li>Sample size (n)</li>
+                    <li>Significance level (α)</li>
+                    <li>Effect size</li>
+                    <li>Variability (σ)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- COMPARISON TABLE -->
+        <div id="comparison" class="section comparison">
+            <h2>7. Quick Comparison Table</h2>
+
+            <h3>All Four Distributions at a Glance</h3>
+            <table>
+                <tr>
+                    <th>Feature</th>
+                    <th>Z (Normal)</th>
+                    <th>t (Student's t)</th>
+                    <th>χ² (Chi-Square)</th>
+                    <th>F (Fisher)</th>
+                </tr>
+                <tr>
+                    <td><strong>Range</strong></td>
+                    <td>(-∞, +∞)</td>
+                    <td>(-∞, +∞)</td>
+                    <td>[0, ∞)</td>
+                    <td>[0, ∞)</td>
+                </tr>
+                <tr>
+                    <td><strong>Parameters</strong></td>
+                    <td>None (std normal)</td>
+                    <td>ν (df)</td>
+                    <td>k (df)</td>
+                    <td>d₁, d₂ (df)</td>
+                </tr>
+                <tr>
+                    <td><strong>Mean</strong></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>k</td>
+                    <td>d₂/(d₂-2)</td>
+                </tr>
+                <tr>
+                    <td><strong>Variance</strong></td>
+                    <td>1</td>
+                    <td>ν/(ν-2)</td>
+                    <td>2k</td>
+                    <td>Complex</td>
+                </tr>
+                <tr>
+                    <td><strong>Symmetry</strong></td>
+                    <td>Symmetric</td>
+                    <td>Symmetric</td>
+                    <td>Right-skewed</td>
+                    <td>Right-skewed</td>
+                </tr>
+                <tr>
+                    <td><strong>Shape</strong></td>
+                    <td>Bell curve</td>
+                    <td>Bell (heavier tails)</td>
+                    <td>Skewed right</td>
+                    <td>Skewed right</td>
+                </tr>
+                <tr>
+                    <td><strong>Use Cases</strong></td>
+                    <td>Known σ<br>Large n</td>
+                    <td>Unknown σ<br>Small n</td>
+                    <td>Categorical data<br>Variance tests</td>
+                    <td>Compare variances<br>ANOVA</td>
+                </tr>
+                <tr>
+                    <td><strong>Test For</strong></td>
+                    <td>Means<br>Proportions</td>
+                    <td>Means<br>Differences</td>
+                    <td>Independence<br>Goodness-of-fit<br>Variance</td>
+                    <td>Equality of variances<br>Multiple means</td>
+                </tr>
+            </table>
+
+            <h3>Test Selection Flowchart</h3>
+            <div class="formula-box">
+                <h4>Choosing the Right Test:</h4>
+                <ol>
+                    <li><strong>Testing Mean(s)?</strong>
+                        <ul>
+                            <li>σ known → Z-test</li>
+                            <li>σ unknown, n < 30 → t-test</li>
+                            <li>σ unknown, n ≥ 30 → Z-test or t-test</li>
+                            <li>3+ groups → ANOVA (F-test)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Testing Variance?</strong>
+                        <ul>
+                            <li>Single variance → χ²-test</li>
+                            <li>Two variances → F-test</li>
+                        </ul>
+                    </li>
+                    <li><strong>Testing Categorical Data?</strong>
+                        <ul>
+                            <li>Independence → χ²-test</li>
+                            <li>Goodness-of-fit → χ²-test</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <h3>Common Test Formulas Summary</h3>
+            <table>
+                <tr>
+                    <th>Test Type</th>
+                    <th>Formula</th>
+                    <th>df</th>
+                </tr>
+                <tr>
+                    <td>One-sample Z</td>
+                    <td>\(Z = \frac{\bar{X} - \mu_0}{\sigma / \sqrt{n}}\)</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>One-sample t</td>
+                    <td>\(t = \frac{\bar{X} - \mu_0}{s / \sqrt{n}}\)</td>
+                    <td>n - 1</td>
+                </tr>
+                <tr>
+                    <td>Two-sample t</td>
+                    <td>\(t = \frac{\bar{X}_1 - \bar{X}_2}{s_p\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}\)</td>
+                    <td>n₁ + n₂ - 2</td>
+                </tr>
+                <tr>
+                    <td>Paired t</td>
+                    <td>\(t = \frac{\bar{d}}{s_d / \sqrt{n}}\)</td>
+                    <td>n - 1</td>
+                </tr>
+                <tr>
+                    <td>χ² variance</td>
+                    <td>\(\chi^2 = \frac{(n-1)s^2}{\sigma_0^2}\)</td>
+                    <td>n - 1</td>
+                </tr>
+                <tr>
+                    <td>χ² goodness-of-fit</td>
+                    <td>\(\chi^2 = \sum \frac{(O_i - E_i)^2}{E_i}\)</td>
+                    <td>k - 1 - p</td>
+                </tr>
+                <tr>
+                    <td>χ² independence</td>
+                    <td>\(\chi^2 = \sum \frac{(O_{ij} - E_{ij})^2}{E_{ij}}\)</td>
+                    <td>(r-1)(c-1)</td>
+                </tr>
+                <tr>
+                    <td>F variance ratio</td>
+                    <td>\(F = \frac{s_1^2}{s_2^2}\)</td>
+                    <td>n₁-1, n₂-1</td>
+                </tr>
+                <tr>
+                    <td>F ANOVA</td>
+                    <td>\(F = \frac{MSB}{MSW}\)</td>
+                    <td>k-1, n-k</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="note" style="margin-top: 40px;">
+            <h3>📚 Additional Resources</h3>
+            <ul>
+                <li>Practice with statistical tables for critical values</li>
+                <li>Use statistical software (R, Python, SPSS) for complex calculations</li>
+                <li>Always check assumptions before applying tests</li>
+                <li>Visualize data before testing (histograms, Q-Q plots)</li>
+                <li>Report effect sizes along with p-values</li>
+            </ul>
+        </div>
+
+        <div class="highlight" style="margin-top: 20px;">
+            <h3>🎓 Study Tips</h3>
+            <ul>
+                <li><strong>Understand concepts first</strong> before memorizing formulas</li>
+                <li><strong>Practice</strong> identifying which test to use in different scenarios</li>
+                <li><strong>Know the assumptions</strong> for each test</li>
+                <li><strong>Interpret results</strong> in context, not just mechanically</li>
+                <li><strong>Review</strong> df calculations - they're crucial!</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px;">
+            <h3>✨ Good Luck with Your Statistics Studies! ✨</h3>
+            <p>Master these distributions and you'll excel in statistical inference!</p>
+        </div>
+    </div>
+
+    <a href="#" class="back-to-top" title="Back to Top">↑</a>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Show/hide back to top button
+        const backToTop = document.querySelector('.back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTop.style.display = 'flex';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
