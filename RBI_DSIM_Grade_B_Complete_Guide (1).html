@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RBI DSIM Grade B - Complete Revision Guide</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+        }
+
+        .sidebar.collapsed {
+            transform: translateX(-280px);
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.3em;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-header p {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .sidebar nav {
+            padding: 20px 0;
+        }
+
+        .sidebar nav ul {
+            list-style: none;
+        }
+
+        .sidebar nav li {
+            margin: 0;
+        }
+
+        .sidebar nav a {
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            display: block;
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+        }
+
+        .sidebar nav a:hover {
+            background-color: rgba(255,255,255,0.1);
+            border-left-color: white;
+            padding-left: 25px;
+        }
+
+        /* Toggle Button */
+        .sidebar-toggle {
+            position: fixed;
+            left: 290px;
+            top: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .sidebar-toggle.collapsed {
+            left: 20px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            transition: margin-left 0.3s ease;
+            padding: 0;
+        }
+
+        .main-content.expanded {
+            margin-left: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        section {
+            margin: 40px 0;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            border-left: 5px solid #667eea;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        h4 {
+            color: #555;
+            font-size: 1.2em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .formula-box {
+            background-color: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .example-box {
+            background-color: #fff9e6;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .theorem-box {
+            background-color: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .important {
+            background-color: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            font-weight: 500;
+        }
+
+        .tip-box {
+            background-color: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #667eea;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-top: 10px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        .quick-ref {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .quick-ref h3 {
+            color: white;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: #f8f9fa;
+            margin-top: 40px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 250px;
+            }
+
+            .sidebar.collapsed {
+                transform: translateX(-250px);
+            }
+
+            .main-content {
+                margin-left: 250px;
+            }
+
+            .sidebar-toggle {
+                left: 260px;
+            }
+
+            .sidebar-toggle.collapsed {
+                left: 20px;
+            }
+        }
+
+        @media print {
+            .sidebar {
+                display: none;
+            }
+
+            .sidebar-toggle {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>📚 Navigation</h2>
+            <p>RBI DSIM Grade B Guide</p>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#probability">1. Probability Theory</a></li>
+                <li><a href="#distributions">2. Distributions</a></li>
+                <li><a href="#estimation">3. Estimation Theory</a></li>
+                <li><a href="#hypothesis">4. Hypothesis Testing</a></li>
+                <li><a href="#regression">5. Regression Analysis</a></li>
+                <li><a href="#anova">6. ANOVA</a></li>
+                <li><a href="#multivariate">7. Multivariate Analysis</a></li>
+                <li><a href="#timeseries">8. Time Series</a></li>
+                <li><a href="#sampling">9. Sampling Theory</a></li>
+                <li><a href="#nonparametric">10. Non-parametric Tests</a></li>
+                <li><a href="#design">11. Design of Experiments</a></li>
+                <li><a href="#formulas">12. Quick Formula Sheet</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Sidebar Toggle Button -->
+    <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()">☰</button>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <div class="container">
+            <header>
+                <h1>RBI DSIM Grade B</h1>
+                <p class="subtitle">Complete Statistics Revision Guide</p>
+                <p>🎯 Exam-Ready Reference | All Essential Formulas & Concepts</p>
+            </header>
+
+            <!-- SECTION 1: PROBABILITY THEORY -->
+            <section id="probability">
+                <h2>1. Probability Theory</h2>
+
+                <h3>1.1 Basic Concepts</h3>
+
+                <div class="formula-box">
+                    <h4>Axioms of Probability</h4>
+                    <ul>
+                        <li><strong>Non-negativity:</strong> \( P(A) \geq 0 \)</li>
+                        <li><strong>Normalization:</strong> \( P(S) = 1 \)</li>
+                        <li><strong>Additivity:</strong> For disjoint events, \( P(A \cup B) = P(A) + P(B) \)</li>
+                    </ul>
+                </div>
+
+                <div class="formula-box">
+                    <h4>Key Probability Rules</h4>
+                    <ul>
+                        <li><strong>Complement:</strong> \( P(A^c) = 1 - P(A) \)</li>
+                        <li><strong>Addition Rule:</strong> \( P(A \cup B) = P(A) + P(B) - P(A \cap B) \)</li>
+                        <li><strong>Multiplication Rule:</strong> \( P(A \cap B) = P(A)P(B|A) \)</li>
+                        <li><strong>Independence:</strong> \( P(A \cap B) = P(A)P(B) \)</li>
+                    </ul>
+                </div>
+
+                <h3>1.2 Conditional Probability</h3>
+
+                <div class="formula-box">
+                    <h4>Conditional Probability Formula</h4>
+                    $$P(A|B) = \frac{P(A \cap B)}{P(B)}$$
+                    <p><strong>Interpretation:</strong> Probability of A given that B has occurred</p>
+                </div>
+
+                <h3>1.3 Bayes' Theorem</h3>
+
+                <div class="theorem-box">
+                    <h4>Bayes' Theorem</h4>
+                    $$P(A|B) = \frac{P(B|A)P(A)}{P(B)} = \frac{P(B|A)P(A)}{P(B|A)P(A) + P(B|A^c)P(A^c)}$$
+                    <p><strong>Use:</strong> Updating probabilities based on new evidence</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example: Medical Testing</h4>
+                    <p>Disease prevalence: 1%, Test accuracy: 95%</p>
+                    <p>If test positive, probability of disease:</p>
+                    $$P(D|+) = \frac{0.95 \times 0.01}{0.95 \times 0.01 + 0.05 \times 0.99} = 0.161$$
+                    <p>Only 16.1% chance of having disease despite positive test!</p>
+                </div>
+
+                <h3>1.4 Total Probability Theorem</h3>
+
+                <div class="formula-box">
+                    <h4>Law of Total Probability</h4>
+                    $$P(A) = \sum_{i=1}^{n} P(A|B_i)P(B_i)$$
+                    <p>Where \( B_1, B_2, \ldots, B_n \) form a partition of sample space</p>
+                </div>
+            </section>
+
+            <!-- SECTION 2: DISTRIBUTIONS -->
+            <section id="distributions">
+                <h2>2. Probability Distributions</h2>
+
+                <h3>2.1 Discrete Distributions</h3>
+
+                <div class="formula-box">
+                    <h4>Bernoulli Distribution</h4>
+                    <p><strong>PMF:</strong> \( P(X=x) = p^x(1-p)^{1-x}, \quad x=0,1 \)</p>
+                    <p><strong>Mean:</strong> \( E[X] = p \)</p>
+                    <p><strong>Variance:</strong> \( Var(X) = p(1-p) \)</p>
+                    <p><strong>Use:</strong> Single trial with two outcomes</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>Binomial Distribution \( B(n,p) \)</h4>
+                    <p><strong>PMF:</strong> \( P(X=k) = \binom{n}{k}p^k(1-p)^{n-k} \)</p>
+                    <p><strong>Mean:</strong> \( E[X] = np \)</p>
+                    <p><strong>Variance:</strong> \( Var(X) = np(1-p) \)</p>
+                    <p><strong>MGF:</strong> \( M_X(t) = (pe^t + 1-p)^n \)</p>
+                    <p><strong>Use:</strong> Number of successes in n independent Bernoulli trials</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>Poisson Distribution \( Poi(\lambda) \)</h4>
+                    <p><strong>PMF:</strong> \( P(X=k) = \frac{\lambda^k e^{-\lambda}}{k!} \)</p>
+                    <p><strong>Mean:</strong> \( E[X] = \lambda \)</p>
+                    <p><strong>Variance:</strong> \( Var(X) = \lambda \)</p>
+                    <p><strong>MGF:</strong> \( M_X(t) = e^{\lambda(e^t-1)} \)</p>
+                    <p><strong>Use:</strong> Rare events, counts in fixed interval</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>Geometric Distribution</h4>
+                    <p><strong>PMF:</strong> \( P(X=k) = (1-p)^{k-1}p \)</p>
+                    <p><strong>Mean:</strong> \( E[X] = \frac{1}{p} \)</p>
+                    <p><strong>Variance:</strong> \( Var(X) = \frac{1-p}{p^2} \)</p>
+                    <p><strong>Use:</strong> Number of trials until first success</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>Negative Binomial Distribution</h4>
+                    <p><strong>PMF:</strong> \( P(X=k) = \binom{k-1}{r-1}p^r(1-p)^{k-r} \)</p>
+                    <p><strong>Mean:</strong> \( E[X] = \frac{r}{p} \)</p>
+                    <p><strong>Variance:</strong> \( Var(X) = \frac{r(1-p)}{p^2} \)</p>
+                    <p><strong>Use:</strong> Number of trials until r-th success</p>
+                </div>
+
+                <h3>2.2 Continuous Distributions</h3>
+
+                <div class="formula-box">
+                    <h4>Uniform Distribution \( U(a,b) \)</h4>
+                    <p><strong>PDF:</strong> \( f(x) = \frac{1}{b-a}, \quad a \leq x \leq b \)</p>
+                    <p><strong>Mean:</strong> \( E[X] = \frac{a+b}{2} \)</p>
+                    <p><strong>Variance:</strong> \( Var(X) = \frac{(b-a)^2}{12} \)</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>Exponential Distribution \( Exp(\lambda) \)</h4>
+                    <p><strong>PDF:</strong> \( f(x) = \lambda e^{-\lambda x}, \quad x \geq 0 \)</p>
+                    <p><strong>CDF:</strong> \( F(x) = 1 - e^{-\lambda x} \)</p>
+                    <p><strong>Mean:</strong> \( E[X] = \frac{1}{\lambda} \)</p>
+                    <p><strong>Variance:</strong> \( Var(X) = \frac{1}{\lambda^2} \)</p>
+                    <p><strong>Memoryless Property:</strong> \( P(X > s+t | X > s) = P(X > t) \)</p>
+                    <p><strong>Use:</strong> Waiting times, time between events</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>Normal Distribution \( N(\mu, \sigma^2) \)</h4>
+                    <p><strong>PDF:</strong> \( f(x) = \frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}} \)</p>
+                    <p><strong>Mean:</strong> \( E[X] = \mu \)</p>
+                    <p><strong>Variance:</strong> \( Var(X) = \sigma^2 \)</p>
+                    <p><strong>Standard Normal:</strong> \( Z = \frac{X-\mu}{\sigma} \sim N(0,1) \)</p>
+                    <p><strong>MGF:</strong> \( M_X(t) = e^{\mu t + \frac{1}{2}\sigma^2 t^2} \)</p>
+                </div>
+
+                <div class="important">
+                    <h4>⚠️ Important Properties of Normal Distribution</h4>
+                    <ul>
+                        <li>Symmetric about mean</li>
+                        <li>Linear combinations of normals are normal</li>
+                        <li>68-95-99.7 rule: ±1σ (68%), ±2σ (95%), ±3σ (99.7%)</li>
+                        <li>If \( X_i \sim N(\mu_i, \sigma_i^2) \), then \( \sum a_i X_i \sim N(\sum a_i\mu_i, \sum a_i^2\sigma_i^2) \)</li>
+                    </ul>
+                </div>
+
+                <div class="formula-box">
+                    <h4>Gamma Distribution \( Gamma(\alpha, \beta) \)</h4>
+                    <p><strong>PDF:</strong> \( f(x) = \frac{\beta^\alpha}{\Gamma(\alpha)}x^{\alpha-1}e^{-\beta x}, \quad x > 0 \)</p>
+                    <p><strong>Mean:</strong> \( E[X] = \frac{\alpha}{\beta} \)</p>
+                    <p><strong>Variance:</strong> \( Var(X) = \frac{\alpha}{\beta^2} \)</p>
+                    <p><strong>Relation:</strong> Exponential is \( Gamma(1, \lambda) \)</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>Beta Distribution \( Beta(\alpha, \beta) \)</h4>
+                    <p><strong>PDF:</strong> \( f(x) = \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}x^{\alpha-1}(1-x)^{\beta-1}, \quad 0 < x < 1 \)</p>
+                    <p><strong>Mean:</strong> \( E[X] = \frac{\alpha}{\alpha+\beta} \)</p>
+                    <p><strong>Variance:</strong> \( Var(X) = \frac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)} \)</p>
+                    <p><strong>Use:</strong> Modeling probabilities, Bayesian prior</p>
+                </div>
+
+                <h3>2.3 Sampling Distributions</h3>
+
+                <div class="formula-box">
+                    <h4>Chi-Square Distribution \( \chi^2(k) \)</h4>
+                    <p><strong>Definition:</strong> If \( Z_1, \ldots, Z_k \sim N(0,1) \) independent, then \( \sum Z_i^2 \sim \chi^2(k) \)</p>
+                    <p><strong>Mean:</strong> \( E[\chi^2] = k \)</p>
+                    <p><strong>Variance:</strong> \( Var(\chi^2) = 2k \)</p>
+                    <p><strong>Use:</strong> Variance estimation, goodness-of-fit tests</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>t-Distribution \( t(k) \)</h4>
+                    <p><strong>Definition:</strong> If \( Z \sim N(0,1) \) and \( V \sim \chi^2(k) \) independent, then \( T = \frac{Z}{\sqrt{V/k}} \sim t(k) \)</p>
+                    <p><strong>Mean:</strong> \( E[T] = 0 \) (for \( k > 1 \))</p>
+                    <p><strong>Variance:</strong> \( Var(T) = \frac{k}{k-2} \) (for \( k > 2 \))</p>
+                    <p><strong>Property:</strong> As \( k \to \infty \), \( t(k) \to N(0,1) \)</p>
+                    <p><strong>Use:</strong> Small sample inference when σ unknown</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>F-Distribution \( F(d_1, d_2) \)</h4>
+                    <p><strong>Definition:</strong> If \( U \sim \chi^2(d_1) \) and \( V \sim \chi^2(d_2) \) independent, then \( F = \frac{U/d_1}{V/d_2} \sim F(d_1, d_2) \)</p>
+                    <p><strong>Mean:</strong> \( E[F] = \frac{d_2}{d_2-2} \) (for \( d_2 > 2 \))</p>
+                    <p><strong>Use:</strong> Comparing variances, ANOVA</p>
+                </div>
+            </section>
+
+            <!-- SECTION 3: ESTIMATION THEORY -->
+            <section id="estimation">
+                <h2>3. Estimation Theory</h2>
+
+                <h3>3.1 Point Estimation</h3>
+
+                <div class="formula-box">
+                    <h4>Key Definitions</h4>
+                    <ul>
+                        <li><strong>Estimator:</strong> A statistic used to estimate parameter θ</li>
+                        <li><strong>Estimate:</strong> Particular value of estimator for given sample</li>
+                        <li><strong>Bias:</strong> \( Bias(\hat{\theta}) = E[\hat{\theta}] - \theta \)</li>
+                        <li><strong>MSE:</strong> \( MSE(\hat{\theta}) = E[(\hat{\theta}-\theta)^2] = Var(\hat{\theta}) + [Bias(\hat{\theta})]^2 \)</li>
+                    </ul>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Properties of Good Estimators</h4>
+                    <ul>
+                        <li><strong>Unbiasedness:</strong> \( E[\hat{\theta}] = \theta \)</li>
+                        <li><strong>Consistency:</strong> \( \hat{\theta}_n \xrightarrow{P} \theta \) as \( n \to \infty \)</li>
+                        <li><strong>Efficiency:</strong> Among unbiased estimators, minimum variance</li>
+                        <li><strong>Sufficiency:</strong> Contains all information about θ</li>
+                    </ul>
+                </div>
+
+                <h3>3.2 Method of Moments (MOM)</h3>
+
+                <div class="formula-box">
+                    <h4>Method of Moments Estimator</h4>
+                    <p>Equate sample moments to population moments:</p>
+                    $$\bar{X} = E[X], \quad \frac{1}{n}\sum X_i^2 = E[X^2], \ldots$$
+                    <p>Solve for parameters</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example: Normal Distribution</h4>
+                    <p>For \( X \sim N(\mu, \sigma^2) \):</p>
+                    <ul>
+                        <li>\( \hat{\mu}_{MOM} = \bar{X} \)</li>
+                        <li>\( \hat{\sigma}^2_{MOM} = \frac{1}{n}\sum(X_i - \bar{X})^2 \)</li>
+                    </ul>
+                </div>
+
+                <h3>3.3 Maximum Likelihood Estimation (MLE)</h3>
+
+                <div class="formula-box">
+                    <h4>Maximum Likelihood Estimator</h4>
+                    <p><strong>Likelihood Function:</strong> \( L(\theta|x) = \prod_{i=1}^n f(x_i|\theta) \)</p>
+                    <p><strong>Log-Likelihood:</strong> \( \ell(\theta) = \log L(\theta) = \sum_{i=1}^n \log f(x_i|\theta) \)</p>
+                    <p><strong>MLE:</strong> \( \hat{\theta}_{MLE} = \arg\max_\theta \ell(\theta) \)</p>
+                    <p><strong>Find by:</strong> \( \frac{\partial \ell}{\partial \theta} = 0 \)</p>
+                </div>
+
+                <div class="theorem-box">
+                    <h4>Properties of MLE</h4>
+                    <ul>
+                        <li>Consistent</li>
+                        <li>Asymptotically normal</li>
+                        <li>Asymptotically efficient (achieves Cramér-Rao bound)</li>
+                        <li>Invariance: If \( \hat{\theta} \) is MLE of θ, then \( g(\hat{\theta}) \) is MLE of \( g(\theta) \)</li>
+                    </ul>
+                </div>
+
+                <h3>3.4 Cramér-Rao Lower Bound (CRLB)</h3>
+
+                <div class="theorem-box">
+                    <h4>Cramér-Rao Inequality</h4>
+                    <p>For any unbiased estimator \( \hat{\theta} \):</p>
+                    $$Var(\hat{\theta}) \geq \frac{1}{I(\theta)}$$
+                    <p><strong>Fisher Information:</strong></p>
+                    $$I(\theta) = E\left[\left(\frac{\partial}{\partial\theta}\log f(X|\theta)\right)^2\right] = -E\left[\frac{\partial^2}{\partial\theta^2}\log f(X|\theta)\right]$$
+                    <p>For sample of size n: \( I_n(\theta) = nI(\theta) \)</p>
+                </div>
+
+                <div class="important">
+                    <h4>⚠️ Efficient Estimator</h4>
+                    <p>An estimator is <strong>efficient</strong> if it achieves the CRLB (minimum variance)</p>
+                </div>
+
+                <h3>3.5 Interval Estimation</h3>
+
+                <div class="formula-box">
+                    <h4>Confidence Interval</h4>
+                    <p>A \( (1-\alpha)100\% \) confidence interval for θ:</p>
+                    $$P(L(X) \leq \theta \leq U(X)) = 1-\alpha$$
+                    <p><strong>Interpretation:</strong> If we repeat sampling many times, \( (1-\alpha)100\% \) of intervals will contain true θ</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>Common Confidence Intervals</h4>
+                    <p><strong>Mean (σ known):</strong> \( \bar{X} \pm z_{\alpha/2}\frac{\sigma}{\sqrt{n}} \)</p>
+                    <p><strong>Mean (σ unknown):</strong> \( \bar{X} \pm t_{\alpha/2,n-1}\frac{s}{\sqrt{n}} \)</p>
+                    <p><strong>Variance:</strong> \( \left[\frac{(n-1)s^2}{\chi^2_{\alpha/2,n-1}}, \frac{(n-1)s^2}{\chi^2_{1-\alpha/2,n-1}}\right] \)</p>
+                    <p><strong>Proportion:</strong> \( \hat{p} \pm z_{\alpha/2}\sqrt{\frac{\hat{p}(1-\hat{p})}{n}} \)</p>
+                </div>
+            </section>
+
+            <!-- SECTION 4: HYPOTHESIS TESTING -->
+            <section id="hypothesis">
+                <h2>4. Hypothesis Testing</h2>
+
+                <h3>4.1 Basic Concepts</h3>
+
+                <div class="formula-box">
+                    <h4>Hypothesis Testing Framework</h4>
+                    <ul>
+                        <li><strong>Null Hypothesis (\( H_0 \)):</strong> Default claim, assume true</li>
+                        <li><strong>Alternative Hypothesis (\( H_1 \)):</strong> Competing claim</li>
+                        <li><strong>Test Statistic:</strong> Function of sample data</li>
+                        <li><strong>Critical Region:</strong> Values leading to rejection of \( H_0 \)</li>
+                        <li><strong>Significance Level (α):</strong> P(Type I error) = P(reject \( H_0 \) | \( H_0 \) true)</li>
+                    </ul>
+                </div>
+
+                <div class="important">
+                    <h4>⚠️ Types of Errors</h4>
+                    <table>
+                        <tr>
+                            <th>Decision</th>
+                            <th>\( H_0 \) True</th>
+                            <th>\( H_0 \) False</th>
+                        </tr>
+                        <tr>
+                            <td>Reject \( H_0 \)</td>
+                            <td><strong>Type I Error (α)</strong></td>
+                            <td>Correct (Power = 1-β)</td>
+                        </tr>
+                        <tr>
+                            <td>Fail to reject \( H_0 \)</td>
+                            <td>Correct (1-α)</td>
+                            <td><strong>Type II Error (β)</strong></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h3>4.2 Z-Test</h3>
+
+                <div class="formula-box">
+                    <h4>Z-Test for Mean (σ known)</h4>
+                    <p><strong>Test Statistic:</strong> \( Z = \frac{\bar{X} - \mu_0}{\sigma/\sqrt{n}} \sim N(0,1) \) under \( H_0 \)</p>
+                    <p><strong>Two-tailed:</strong> \( H_0: \mu = \mu_0 \) vs \( H_1: \mu \neq \mu_0 \)</p>
+                    <p>Reject if \( |Z| > z_{\alpha/2} \)</p>
+                    <p><strong>Left-tailed:</strong> \( H_0: \mu = \mu_0 \) vs \( H_1: \mu < \mu_0 \)</p>
+                    <p>Reject if \( Z < -z_\alpha \)</p>
+                    <p><strong>Right-tailed:</strong> \( H_0: \mu = \mu_0 \) vs \( H_1: \mu > \mu_0 \)</p>
+                    <p>Reject if \( Z > z_\alpha \)</p>
+                </div>
+
+                <h3>4.3 t-Test</h3>
+
+                <div class="formula-box">
+                    <h4>One-Sample t-Test (σ unknown)</h4>
+                    <p><strong>Test Statistic:</strong> \( t = \frac{\bar{X} - \mu_0}{s/\sqrt{n}} \sim t(n-1) \) under \( H_0 \)</p>
+                    <p>Reject if \( |t| > t_{\alpha/2, n-1} \) (two-tailed)</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>Two-Sample t-Test</h4>
+                    <p><strong>Equal Variances:</strong></p>
+                    $$t = \frac{\bar{X}_1 - \bar{X}_2}{s_p\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}} \sim t(n_1+n_2-2)$$
+                    <p>Pooled variance: \( s_p^2 = \frac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1+n_2-2} \)</p>
+                    <p><strong>Unequal Variances (Welch):</strong></p>
+                    $$t = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}}$$
+                    <p>df approximated by Welch-Satterthwaite formula</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>Paired t-Test</h4>
+                    <p>For paired data \( D_i = X_i - Y_i \):</p>
+                    $$t = \frac{\bar{D}}{s_D/\sqrt{n}} \sim t(n-1)$$
+                </div>
+
+                <h3>4.4 Chi-Square Tests</h3>
+
+                <div class="formula-box">
+                    <h4>Chi-Square Test for Variance</h4>
+                    <p><strong>Test Statistic:</strong> \( \chi^2 = \frac{(n-1)s^2}{\sigma_0^2} \sim \chi^2(n-1) \) under \( H_0 \)</p>
+                    <p>For \( H_0: \sigma^2 = \sigma_0^2 \) vs \( H_1: \sigma^2 \neq \sigma_0^2 \)</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>Chi-Square Goodness-of-Fit Test</h4>
+                    <p><strong>Test Statistic:</strong> \( \chi^2 = \sum_{i=1}^k \frac{(O_i - E_i)^2}{E_i} \sim \chi^2(k-1-p) \)</p>
+                    <p>\( O_i \) = observed, \( E_i \) = expected, p = parameters estimated</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>Chi-Square Test of Independence</h4>
+                    <p>For contingency table (r × c):</p>
+                    $$\chi^2 = \sum_{i=1}^r\sum_{j=1}^c \frac{(O_{ij} - E_{ij})^2}{E_{ij}} \sim \chi^2((r-1)(c-1))$$
+                    <p>\( E_{ij} = \frac{R_i \times C_j}{n} \)</p>
+                </div>
+
+                <h3>4.5 F-Test</h3>
+
+                <div class="formula-box">
+                    <h4>F-Test for Equality of Variances</h4>
+                    <p><strong>Test Statistic:</strong> \( F = \frac{s_1^2}{s_2^2} \sim F(n_1-1, n_2-1) \) under \( H_0 \)</p>
+                    <p>For \( H_0: \sigma_1^2 = \sigma_2^2 \)</p>
+                </div>
+
+                <h3>4.6 Neyman-Pearson Lemma</h3>
+
+                <div class="theorem-box">
+                    <h4>Neyman-Pearson Lemma</h4>
+                    <p>For simple hypotheses \( H_0: \theta = \theta_0 \) vs \( H_1: \theta = \theta_1 \):</p>
+                    <p>The <strong>most powerful test</strong> rejects \( H_0 \) when:</p>
+                    $$\frac{L(\theta_1|x)}{L(\theta_0|x)} > k$$
+                    <p>Where k is chosen such that P(reject \( H_0 \) | \( H_0 \)) = α</p>
+                </div>
+
+                <h3>4.7 p-value</h3>
+
+                <div class="formula-box">
+                    <h4>p-value Interpretation</h4>
+                    <p><strong>Definition:</strong> Probability of observing test statistic as extreme as (or more than) observed, assuming \( H_0 \) true</p>
+                    <ul>
+                        <li>p < 0.01: Very strong evidence against \( H_0 \)</li>
+                        <li>p < 0.05: Strong evidence against \( H_0 \)</li>
+                        <li>p > 0.05: Weak evidence against \( H_0 \)</li>
+                    </ul>
+                    <p><strong>Decision:</strong> Reject \( H_0 \) if p-value < α</p>
+                </div>
+            </section>
+
+            <!-- SECTION 5: REGRESSION ANALYSIS -->
+            <section id="regression">
+                <h2>5. Regression Analysis</h2>
+
+                <h3>5.1 Simple Linear Regression</h3>
+
+                <div class="formula-box">
+                    <h4>Simple Linear Regression Model</h4>
+                    <p><strong>Model:</strong> \( Y_i = \beta_0 + \beta_1 X_i + \epsilon_i \)</p>
+                    <p>where \( \epsilon_i \sim N(0, \sigma^2) \) i.i.d.</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>OLS Estimators</h4>
+                    <p><strong>Slope:</strong> \( \hat{\beta}_1 = \frac{Cov(X,Y)}{Var(X)} = \frac{\sum(x_i-\bar{x})(y_i-\bar{y})}{\sum(x_i-\bar{x})^2} \)</p>
+                    <p><strong>Intercept:</strong> \( \hat{\beta}_0 = \bar{y} - \hat{\beta}_1\bar{x} \)</p>
+                    <p><strong>Fitted values:</strong> \( \hat{y}_i = \hat{\beta}_0 + \hat{\beta}_1 x_i \)</p>
+                    <p><strong>Residuals:</strong> \( e_i = y_i - \hat{y}_i \)</p>
+                </div>
+
+                <h3>5.2 Properties of OLS Estimators</h3>
+
+                <div class="theorem-box">
+                    <h4>Gauss-Markov Theorem</h4>
+                    <p>Under classical assumptions, OLS estimators are <strong>BLUE</strong> (Best Linear Unbiased Estimators)</p>
+                    <ul>
+                        <li>Unbiased: \( E[\hat{\beta}_j] = \beta_j \)</li>
+                        <li>Minimum variance among all linear unbiased estimators</li>
+                    </ul>
+                </div>
+
+                <div class="formula-box">
+                    <h4>Variance of OLS Estimators</h4>
+                    <p><strong>Slope:</strong> \( Var(\hat{\beta}_1) = \frac{\sigma^2}{\sum(x_i-\bar{x})^2} \)</p>
+                    <p><strong>Intercept:</strong> \( Var(\hat{\beta}_0) = \sigma^2\left(\frac{1}{n} + \frac{\bar{x}^2}{\sum(x_i-\bar{x})^2}\right) \)</p>
+                    <p><strong>Estimate σ²:</strong> \( \hat{\sigma}^2 = MSE = \frac{\sum e_i^2}{n-2} = \frac{RSS}{n-2} \)</p>
+                </div>
+
+                <h3>5.3 Sums of Squares Decomposition</h3>
+
+                <div class="formula-box">
+                    <h4>ANOVA Decomposition</h4>
+                    <p><strong>TSS = ESS + RSS</strong></p>
+                    <ul>
+                        <li><strong>TSS (Total):</strong> \( \sum(y_i - \bar{y})^2 \)</li>
+                        <li><strong>ESS (Explained):</strong> \( \sum(\hat{y}_i - \bar{y})^2 \)</li>
+                        <li><strong>RSS (Residual):</strong> \( \sum(y_i - \hat{y}_i)^2 = \sum e_i^2 \)</li>
+                    </ul>
+                </div>
+
+                <div class="formula-box">
+                    <h4>R-squared (Coefficient of Determination)</h4>
+                    $$R^2 = \frac{ESS}{TSS} = 1 - \frac{RSS}{TSS}$$
+                    <p><strong>Interpretation:</strong> Proportion of variance in Y explained by X</p>
+                    <p>Range: [0, 1], higher is better fit</p>
+                    <p><strong>Relation to correlation:</strong> \( R^2 = r^2 \) (in simple regression)</p>
+                </div>
+
+                <h3>5.4 Inference in Regression</h3>
+
+                <div class="formula-box">
+                    <h4>t-Test for Coefficients</h4>
+                    <p>Test \( H_0: \beta_j = 0 \):</p>
+                    $$t = \frac{\hat{\beta}_j}{SE(\hat{\beta}_j)} \sim t(n-2)$$
+                    <p>\( SE(\hat{\beta}_1) = \sqrt{\frac{\hat{\sigma}^2}{\sum(x_i-\bar{x})^2}} \)</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>F-Test for Overall Significance</h4>
+                    $$F = \frac{ESS/1}{RSS/(n-2)} = \frac{R^2/1}{(1-R^2)/(n-2)} \sim F(1, n-2)$$
+                    <p>Tests \( H_0: \beta_1 = 0 \) (model has no explanatory power)</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>Confidence and Prediction Intervals</h4>
+                    <p><strong>CI for mean response at \( x_0 \):</strong></p>
+                    $$\hat{y}_0 \pm t_{\alpha/2,n-2} \cdot SE(\hat{y}_0)$$
+                    <p><strong>PI for individual response at \( x_0 \):</strong></p>
+                    $$\hat{y}_0 \pm t_{\alpha/2,n-2} \cdot \sqrt{\hat{\sigma}^2 + SE^2(\hat{y}_0)}$$
+                </div>
+
+                <h3>5.5 Multiple Linear Regression</h3>
+
+                <div class="formula-box">
+                    <h4>Multiple Regression Model</h4>
+                    <p><strong>Model:</strong> \( Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_k X_k + \epsilon \)</p>
+                    <p><strong>Matrix Form:</strong> \( \mathbf{Y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon} \)</p>
+                    <p><strong>OLS Estimator:</strong> \( \hat{\boldsymbol{\beta}} = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y} \)</p>
+                    <p><strong>Variance:</strong> \( Var(\hat{\boldsymbol{\beta}}) = \sigma^2(\mathbf{X}'\mathbf{X})^{-1} \)</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>Adjusted R-squared</h4>
+                    $$R^2_{adj} = 1 - \frac{RSS/(n-k-1)}{TSS/(n-1)} = 1 - (1-R^2)\frac{n-1}{n-k-1}$$
+                    <p>Penalizes adding variables, used for model comparison</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>F-Test for Multiple Coefficients</h4>
+                    <p>Test \( H_0: \beta_1 = \beta_2 = \cdots = \beta_k = 0 \):</p>
+                    $$F = \frac{ESS/k}{RSS/(n-k-1)} = \frac{R^2/k}{(1-R^2)/(n-k-1)} \sim F(k, n-k-1)$$
+                </div>
+
+                <h3>5.6 Regression Assumptions & Diagnostics</h3>
+
+                <div class="important">
+                    <h4>⚠️ Classical Linear Regression Assumptions</h4>
+                    <ol>
+                        <li>Linearity: \( E[Y|X] = \beta_0 + \beta_1 X \)</li>
+                        <li>Independence: Observations independent</li>
+                        <li>Homoscedasticity: \( Var(\epsilon|X) = \sigma^2 \) (constant variance)</li>
+                        <li>Normality: \( \epsilon \sim N(0, \sigma^2) \)</li>
+                        <li>No perfect multicollinearity (multiple regression)</li>
+                    </ol>
+                </div>
+
+                <div class="tip-box">
+                    <h4>💡 Diagnostic Checks</h4>
+                    <ul>
+                        <li><strong>Residual plots:</strong> Check for patterns (heteroscedasticity, non-linearity)</li>
+                        <li><strong>Q-Q plot:</strong> Check normality of residuals</li>
+                        <li><strong>VIF (Variance Inflation Factor):</strong> Detect multicollinearity (VIF > 10 problematic)</li>
+                        <li><strong>Cook's Distance:</strong> Identify influential observations</li>
+                        <li><strong>Durbin-Watson test:</strong> Test for autocorrelation</li>
+                    </ul>
+                </div>
+
+                <h3>5.7 Two Lines of Regression</h3>
+
+                <div class="formula-box">
+                    <h4>Regression Lines</h4>
+                    <p><strong>Regression of Y on X:</strong> \( y = \bar{y} + \beta_{yx}(x - \bar{x}) \)</p>
+                    <p>where \( \beta_{yx} = r\frac{s_y}{s_x} \)</p>
+                    <p><strong>Regression of X on Y:</strong> \( x = \bar{x} + \beta_{xy}(y - \bar{y}) \)</p>
+                    <p>where \( \beta_{xy} = r\frac{s_x}{s_y} \)</p>
+                    <p><strong>Key Relation:</strong> \( \beta_{yx} \times \beta_{xy} = r^2 \)</p>
+                    <p>Both lines pass through (\( \bar{x}, \bar{y} \))</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>Angle Between Regression Lines</h4>
+                    $$\tan\theta = \left|\frac{m_1 - m_2}{1 + m_1 m_2}\right|$$
+                    <p>where \( m_1, m_2 \) are slopes of the two regression lines</p>
+                    <p><strong>Relation to r:</strong> As |r| → 1, θ → 0 (lines coincide)</p>
+                </div>
+            </section>
+
+            <!-- SECTION 6: ANOVA -->
+            <section id="anova">
+                <h2>6. Analysis of Variance (ANOVA)</h2>
+
+                <h3>6.1 One-Way ANOVA</h3>
+
+                <div class="formula-box">
+                    <h4>One-Way ANOVA Model</h4>
+                    <p><strong>Model:</strong> \( Y_{ij} = \mu + \alpha_i + \epsilon_{ij} \)</p>
+                    <ul>
+                        <li>\( i = 1, \ldots, k \) groups</li>
+                        <li>\( j = 1, \ldots, n_i \) observations per group</li>
+                        <li>\( \epsilon_{ij} \sim N(0, \sigma^2) \) i.i.d.</li>
+                    </ul>
+                    <p><strong>Hypothesis:</strong> \( H_0: \mu_1 = \mu_2 = \cdots = \mu_k \)</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>ANOVA Sums of Squares</h4>
+                    <p><strong>Total SS:</strong> \( SST = \sum_{i=1}^k\sum_{j=1}^{n_i}(Y_{ij} - \bar{Y}_{..})^2 \)</p>
+                    <p><strong>Between Groups SS:</strong> \( SSB = \sum_{i=1}^k n_i(\bar{Y}_{i.} - \bar{Y}_{..})^2 \)</p>
+                    <p><strong>Within Groups SS:</strong> \( SSW = \sum_{i=1}^k\sum_{j=1}^{n_i}(Y_{ij} - \bar{Y}_{i.})^2 \)</p>
+                    <p><strong>Decomposition:</strong> \( SST = SSB + SSW \)</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>ANOVA F-Test</h4>
+                    <p><strong>Mean Squares:</strong></p>
+                    <ul>
+                        <li>\( MSB = \frac{SSB}{k-1} \)</li>
+                        <li>\( MSW = \frac{SSW}{n-k} \)</li>
+                    </ul>
+                    <p><strong>Test Statistic:</strong></p>
+                    $$F = \frac{MSB}{MSW} \sim F(k-1, n-k) \text{ under } H_0$$
+                    <p>Reject \( H_0 \) if \( F > F_{\alpha,k-1,n-k} \)</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>ANOVA Table</h4>
+                    <table>
+                        <tr>
+                            <th>Source</th>
+                            <th>SS</th>
+                            <th>df</th>
+                            <th>MS</th>
+                            <th>F</th>
+                        </tr>
+                        <tr>
+                            <td>Between Groups</td>
+                            <td>SSB</td>
+                            <td>k-1</td>
+                            <td>SSB/(k-1)</td>
+                            <td>MSB/MSW</td>
+                        </tr>
+                        <tr>
+                            <td>Within Groups</td>
+                            <td>SSW</td>
+                            <td>n-k</td>
+                            <td>SSW/(n-k)</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Total</td>
+                            <td>SST</td>
+                            <td>n-1</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example: ANOVA Step-by-Step</h4>
+                    <p><strong>Steps:</strong></p>
+                    <ol>
+                        <li>Calculate group means and grand mean</li>
+                        <li>Compute SSB (how far group means are from grand mean)</li>
+                        <li>Compute SSW (how far observations are from their group means)</li>
+                        <li>Calculate MSB and MSW by dividing by degrees of freedom</li>
+                        <li>Compute F = MSB/MSW</li>
+                        <li>Compare to critical F-value or use p-value</li>
+                    </ol>
+                </div>
+
+                <h3>6.2 Two-Way ANOVA</h3>
+
+                <div class="formula-box">
+                    <h4>Two-Way ANOVA Model</h4>
+                    <p><strong>With Interaction:</strong> \( Y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} + \epsilon_{ijk} \)</p>
+                    <p><strong>Without Interaction:</strong> \( Y_{ijk} = \mu + \alpha_i + \beta_j + \epsilon_{ijk} \)</p>
+                    <p>Tests for:</p>
+                    <ul>
+                        <li>Main effect of Factor A</li>
+                        <li>Main effect of Factor B</li>
+                        <li>Interaction effect A×B</li>
+                    </ul>
+                </div>
+
+                <h3>6.3 Post-Hoc Tests</h3>
+
+                <div class="tip-box">
+                    <h4>💡 Multiple Comparison Procedures</h4>
+                    <ul>
+                        <li><strong>Tukey's HSD:</strong> All pairwise comparisons</li>
+                        <li><strong>Bonferroni:</strong> Conservative, controls family-wise error</li>
+                        <li><strong>Scheffe's method:</strong> Most conservative, for all contrasts</li>
+                        <li><strong>Dunnett's test:</strong> Comparing treatments to control</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SECTION 7: MULTIVARIATE ANALYSIS -->
+            <section id="multivariate">
+                <h2>7. Multivariate Analysis</h2>
+
+                <h3>7.1 Multivariate Normal Distribution</h3>
+
+                <div class="formula-box">
+                    <h4>Multivariate Normal \( N_p(\boldsymbol{\mu}, \boldsymbol{\Sigma}) \)</h4>
+                    <p><strong>PDF:</strong></p>
+                    $$f(\mathbf{x}) = \frac{1}{(2\pi)^{p/2}|\boldsymbol{\Sigma}|^{1/2}}\exp\left(-\frac{1}{2}(\mathbf{x}-\boldsymbol{\mu})'\boldsymbol{\Sigma}^{-1}(\mathbf{x}-\boldsymbol{\mu})\right)$$
+                    <p><strong>Properties:</strong></p>
+                    <ul>
+                        <li>Marginals are normal</li>
+                        <li>Linear combinations are normal</li>
+                        <li>Independence ⇔ Zero covariance</li>
+                    </ul>
+                </div>
+
+                <h3>7.2 Principal Component Analysis (PCA)</h3>
+
+                <div class="formula-box">
+                    <h4>PCA Objective</h4>
+                    <p>Find orthogonal linear combinations of variables with maximum variance</p>
+                    <p><strong>First PC:</strong> \( Z_1 = \mathbf{a}_1'\mathbf{X} \) where \( \mathbf{a}_1 \) is eigenvector of Σ corresponding to largest eigenvalue</p>
+                    <p><strong>Variance explained:</strong> \( \frac{\lambda_i}{\sum\lambda_i} \)</p>
+                    <p><strong>Steps:</strong></p>
+                    <ol>
+                        <li>Standardize data (optional)</li>
+                        <li>Compute covariance or correlation matrix</li>
+                        <li>Find eigenvalues and eigenvectors</li>
+                        <li>Select top k components</li>
+                    </ol>
+                </div>
+
+                <h3>7.3 Factor Analysis</h3>
+
+                <div class="formula-box">
+                    <h4>Factor Model</h4>
+                    <p><strong>Model:</strong> \( \mathbf{X} = \boldsymbol{\mu} + \mathbf{L}\mathbf{F} + \boldsymbol{\epsilon} \)</p>
+                    <ul>
+                        <li>\( \mathbf{F} \): Common factors</li>
+                        <li>\( \mathbf{L} \): Factor loadings</li>
+                        <li>\( \boldsymbol{\epsilon} \): Specific factors (unique to each variable)</li>
+                    </ul>
+                    <p><strong>Difference from PCA:</strong> Factor analysis assumes latent variables cause observed variables</p>
+                </div>
+
+                <h3>7.4 Discriminant Analysis</h3>
+
+                <div class="formula-box">
+                    <h4>Linear Discriminant Analysis (LDA)</h4>
+                    <p>Classify observation into one of k groups</p>
+                    <p><strong>Fisher's LDA:</strong> Maximize between-group to within-group variance ratio</p>
+                    <p><strong>Decision Rule:</strong> Assign to group with highest posterior probability</p>
+                </div>
+
+                <h3>7.5 Canonical Correlation</h3>
+
+                <div class="formula-box">
+                    <h4>Canonical Correlation</h4>
+                    <p>Measure association between two sets of variables</p>
+                    <p>Find linear combinations with maximum correlation</p>
+                    <p><strong>Use:</strong> Relating two multivariate datasets</p>
+                </div>
+            </section>
+
+            <!-- SECTION 8: TIME SERIES -->
+            <section id="timeseries">
+                <h2>8. Time Series Analysis</h2>
+
+                <h3>8.1 Components</h3>
+
+                <div class="formula-box">
+                    <h4>Time Series Components</h4>
+                    <ul>
+                        <li><strong>Trend (\( T_t \)):</strong> Long-term movement</li>
+                        <li><strong>Seasonal (\( S_t \)):</strong> Regular periodic fluctuations</li>
+                        <li><strong>Cyclic (\( C_t \)):</strong> Long-term oscillations</li>
+                        <li><strong>Irregular (\( I_t \)):</strong> Random variations</li>
+                    </ul>
+                    <p><strong>Additive Model:</strong> \( Y_t = T_t + S_t + C_t + I_t \)</p>
+                    <p><strong>Multiplicative Model:</strong> \( Y_t = T_t \times S_t \times C_t \times I_t \)</p>
+                </div>
+
+                <h3>8.2 Stationarity</h3>
+
+                <div class="formula-box">
+                    <h4>Stationary Process</h4>
+                    <ul>
+                        <li><strong>Weak Stationarity:</strong> Constant mean, variance, and autocovariance depends only on lag</li>
+                        <li><strong>Tests:</strong> ADF (Augmented Dickey-Fuller), KPSS</li>
+                        <li><strong>Differencing:</strong> \( \nabla Y_t = Y_t - Y_{t-1} \)</li>
+                    </ul>
+                </div>
+
+                <h3>8.3 ARIMA Models</h3>
+
+                <div class="formula-box">
+                    <h4>AR(p) - Autoregressive</h4>
+                    $$Y_t = \phi_1 Y_{t-1} + \phi_2 Y_{t-2} + \cdots + \phi_p Y_{t-p} + \epsilon_t$$
+                    <p><strong>Interpretation:</strong> Current value depends on past values</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>MA(q) - Moving Average</h4>
+                    $$Y_t = \epsilon_t + \theta_1\epsilon_{t-1} + \theta_2\epsilon_{t-2} + \cdots + \theta_q\epsilon_{t-q}$$
+                    <p><strong>Interpretation:</strong> Current value depends on past errors</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>ARMA(p,q)</h4>
+                    $$Y_t = \phi_1 Y_{t-1} + \cdots + \phi_p Y_{t-p} + \epsilon_t + \theta_1\epsilon_{t-1} + \cdots + \theta_q\epsilon_{t-q}$$
+                </div>
+
+                <div class="formula-box">
+                    <h4>ARIMA(p,d,q)</h4>
+                    <p>ARMA model applied to d-th difference of data</p>
+                    <p>d = order of differencing to achieve stationarity</p>
+                </div>
+
+                <h3>8.4 ACF and PACF</h3>
+
+                <div class="formula-box">
+                    <h4>Autocorrelation Function (ACF)</h4>
+                    $$\rho_k = \frac{Cov(Y_t, Y_{t-k})}{Var(Y_t)}$$
+                    <p>Measures linear association between \( Y_t \) and \( Y_{t-k} \)</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>Partial Autocorrelation Function (PACF)</h4>
+                    <p>Correlation between \( Y_t \) and \( Y_{t-k} \) after removing effects of intermediate lags</p>
+                </div>
+
+                <div class="tip-box">
+                    <h4>💡 Model Identification</h4>
+                    <ul>
+                        <li><strong>AR(p):</strong> PACF cuts off after lag p, ACF decays</li>
+                        <li><strong>MA(q):</strong> ACF cuts off after lag q, PACF decays</li>
+                        <li><strong>ARMA(p,q):</strong> Both decay</li>
+                    </ul>
+                </div>
+
+                <h3>8.5 Forecasting</h3>
+
+                <div class="formula-box">
+                    <h4>Box-Jenkins Methodology</h4>
+                    <ol>
+                        <li><strong>Identification:</strong> Check stationarity, plot ACF/PACF</li>
+                        <li><strong>Estimation:</strong> Fit ARIMA model, estimate parameters</li>
+                        <li><strong>Diagnostic Checking:</strong> Residual analysis</li>
+                        <li><strong>Forecasting:</strong> Generate predictions</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- SECTION 9: SAMPLING THEORY -->
+            <section id="sampling">
+                <h2>9. Sampling Theory</h2>
+
+                <h3>9.1 Sampling Methods</h3>
+
+                <div class="formula-box">
+                    <h4>Simple Random Sampling (SRS)</h4>
+                    <p>Each unit has equal probability of selection</p>
+                    <p><strong>Mean Estimator:</strong> \( \bar{y} = \frac{1}{n}\sum_{i=1}^n y_i \)</p>
+                    <p><strong>Variance:</strong> \( Var(\bar{y}) = \frac{\sigma^2}{n}\left(1-\frac{n}{N}\right) \)</p>
+                    <p>FPC = \( 1-\frac{n}{N} \) (finite population correction)</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>Stratified Random Sampling</h4>
+                    <p>Population divided into homogeneous strata</p>
+                    <p><strong>Stratified Mean:</strong> \( \bar{y}_{st} = \sum_{h=1}^L W_h\bar{y}_h \)</p>
+                    <p>where \( W_h = \frac{N_h}{N} \) is stratum weight</p>
+                    <p><strong>Variance:</strong> \( Var(\bar{y}_{st}) = \sum_{h=1}^L W_h^2\frac{\sigma_h^2}{n_h}\left(1-\frac{n_h}{N_h}\right) \)</p>
+                    <p><strong>Optimal Allocation:</strong> \( n_h \propto N_h\sigma_h \)</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>Systematic Sampling</h4>
+                    <p>Select every k-th unit after random start</p>
+                    <p>k = sampling interval = N/n</p>
+                    <p><strong>Advantage:</strong> Easy to implement</p>
+                    <p><strong>Caution:</strong> Risk of periodicity in population</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>Cluster Sampling</h4>
+                    <p>Population divided into clusters, sample clusters completely</p>
+                    <p>Generally less efficient than SRS (but cost-effective)</p>
+                    <p><strong>Use when:</strong> Population naturally clustered, complete list unavailable</p>
+                </div>
+
+                <h3>9.2 Central Limit Theorem</h3>
+
+                <div class="theorem-box">
+                    <h4>Central Limit Theorem</h4>
+                    <p>For i.i.d. \( X_1, \ldots, X_n \) with mean μ and variance σ²:</p>
+                    $$\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \xrightarrow{d} N(0,1) \text{ as } n \to \infty$$
+                    <p>Approximate normality holds for n ≥ 30</p>
+                    <p><strong>Implication:</strong> Sample mean is approximately normal for large samples</p>
+                </div>
+
+                <h3>9.3 Sample Size Determination</h3>
+
+                <div class="formula-box">
+                    <h4>Sample Size for Mean Estimation</h4>
+                    <p>For margin of error E and confidence level \( (1-\alpha) \):</p>
+                    $$n = \left(\frac{z_{\alpha/2}\sigma}{E}\right)^2$$
+                </div>
+
+                <div class="formula-box">
+                    <h4>Sample Size for Proportion Estimation</h4>
+                    $$n = \left(\frac{z_{\alpha/2}}{E}\right)^2 p(1-p)$$
+                    <p>Use p = 0.5 for maximum sample size (conservative)</p>
+                </div>
+            </section>
+
+            <!-- SECTION 10: NON-PARAMETRIC TESTS -->
+            <section id="nonparametric">
+                <h2>10. Non-Parametric Tests</h2>
+
+                <h3>10.1 Sign Test</h3>
+
+                <div class="formula-box">
+                    <h4>Sign Test</h4>
+                    <p>Test median = \( m_0 \)</p>
+                    <p>Count number of observations > \( m_0 \)</p>
+                    <p>Under \( H_0 \), follows Binomial(n, 0.5)</p>
+                    <p><strong>Use:</strong> Non-normal data, one-sample or paired data</p>
+                </div>
+
+                <h3>10.2 Wilcoxon Signed-Rank Test</h3>
+
+                <div class="formula-box">
+                    <h4>Wilcoxon Signed-Rank Test</h4>
+                    <p>Paired data or one-sample test</p>
+                    <ol>
+                        <li>Compute differences</li>
+                        <li>Rank absolute differences</li>
+                        <li>Sum ranks of positive differences</li>
+                    </ol>
+                    <p><strong>More powerful than sign test</strong> (uses magnitude information)</p>
+                </div>
+
+                <h3>10.3 Mann-Whitney U Test</h3>
+
+                <div class="formula-box">
+                    <h4>Mann-Whitney U Test (Wilcoxon Rank-Sum)</h4>
+                    <p>Two independent samples</p>
+                    <ol>
+                        <li>Rank all observations together</li>
+                        <li>Sum ranks for each group</li>
+                        <li>Test statistic based on rank sums</li>
+                    </ol>
+                    <p><strong>Use:</strong> Non-parametric alternative to two-sample t-test</p>
+                </div>
+
+                <h3>10.4 Kruskal-Wallis Test</h3>
+
+                <div class="formula-box">
+                    <h4>Kruskal-Wallis Test</h4>
+                    <p>Non-parametric alternative to one-way ANOVA</p>
+                    <p><strong>Test Statistic:</strong></p>
+                    $$H = \frac{12}{n(n+1)}\sum_{i=1}^k\frac{R_i^2}{n_i} - 3(n+1)$$
+                    <p>\( R_i \) = sum of ranks in group i</p>
+                    <p>\( H \sim \chi^2(k-1) \) under \( H_0 \)</p>
+                </div>
+
+                <h3>10.5 Runs Test</h3>
+
+                <div class="formula-box">
+                    <h4>Runs Test for Randomness</h4>
+                    <p>Test for randomness in sequence</p>
+                    <p>Count number of runs (sequences of same category)</p>
+                    <p><strong>Use:</strong> Detect patterns in data sequence</p>
+                </div>
+
+                <h3>10.6 When to Use Non-Parametric Tests</h3>
+
+                <div class="tip-box">
+                    <h4>💡 Use Non-Parametric Tests When:</h4>
+                    <ul>
+                        <li>Data is not normally distributed</li>
+                        <li>Sample size is small</li>
+                        <li>Data is ordinal or ranked</li>
+                        <li>Outliers are present</li>
+                        <li>Assumptions of parametric tests are violated</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SECTION 11: DESIGN OF EXPERIMENTS -->
+            <section id="design">
+                <h2>11. Design of Experiments</h2>
+
+                <h3>11.1 Principles</h3>
+
+                <div class="important">
+                    <h4>⚠️ Three Principles of Experimental Design</h4>
+                    <ol>
+                        <li><strong>Randomization:</strong> Random assignment to treatments (eliminates bias)</li>
+                        <li><strong>Replication:</strong> Repeat experiment to estimate error (increases precision)</li>
+                        <li><strong>Blocking:</strong> Group similar experimental units (reduces variability)</li>
+                    </ol>
+                </div>
+
+                <h3>11.2 Completely Randomized Design (CRD)</h3>
+
+                <div class="formula-box">
+                    <h4>CRD</h4>
+                    <p>Treatments randomly assigned to all experimental units</p>
+                    <p>Analysis: One-way ANOVA</p>
+                    <p><strong>Model:</strong> \( Y_{ij} = \mu + \tau_i + \epsilon_{ij} \)</p>
+                    <p><strong>Advantage:</strong> Simple, maximum degrees of freedom for error</p>
+                    <p><strong>Disadvantage:</strong> Doesn't control for extraneous variation</p>
+                </div>
+
+                <h3>11.3 Randomized Block Design (RBD)</h3>
+
+                <div class="formula-box">
+                    <h4>RBD</h4>
+                    <p>Experimental units grouped into blocks</p>
+                    <p>Each treatment appears once in each block</p>
+                    <p><strong>Model:</strong> \( Y_{ij} = \mu + \tau_i + \beta_j + \epsilon_{ij} \)</p>
+                    <p>Analysis: Two-way ANOVA without interaction</p>
+                    <p><strong>Advantage:</strong> Controls for one source of variation</p>
+                </div>
+
+                <h3>11.4 Latin Square Design (LSD)</h3>
+
+                <div class="formula-box">
+                    <h4>LSD</h4>
+                    <p>Control two sources of variation</p>
+                    <p>Each treatment appears once in each row and column</p>
+                    <p><strong>Model:</strong> \( Y_{ijk} = \mu + \alpha_i + \beta_j + \tau_k + \epsilon_{ijk} \)</p>
+                    <p><strong>Advantage:</strong> Controls for two sources of variation</p>
+                    <p><strong>Disadvantage:</strong> Requires square layout (k×k)</p>
+                </div>
+
+                <h3>11.5 Factorial Designs</h3>
+
+                <div class="formula-box">
+                    <h4>\( 2^k \) Factorial Design</h4>
+                    <p>k factors, each at 2 levels</p>
+                    <p>Study main effects and interactions</p>
+                    <p><strong>Main Effect:</strong> Average effect of changing factor level</p>
+                    <p><strong>Interaction:</strong> Effect of one factor depends on level of another</p>
+                    <p><strong>Total runs:</strong> \( 2^k \)</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Example: 2² Factorial</h4>
+                    <p>Two factors A and B, each at 2 levels (low, high)</p>
+                    <p>Four treatment combinations: (low,low), (low,high), (high,low), (high,high)</p>
+                    <p>Can estimate: Main effect of A, Main effect of B, Interaction A×B</p>
+                </div>
+            </section>
+
+            <!-- SECTION 12: QUICK FORMULA SHEET -->
+            <section id="formulas">
+                <h2>12. Quick Formula Reference Sheet</h2>
+
+                <div class="quick-ref">
+                    <h3>Probability</h3>
+                    <ul>
+                        <li>\( P(A \cup B) = P(A) + P(B) - P(A \cap B) \)</li>
+                        <li>\( P(A|B) = \frac{P(A \cap B)}{P(B)} \)</li>
+                        <li>\( P(A|B) = \frac{P(B|A)P(A)}{P(B)} \) (Bayes)</li>
+                        <li>\( P(A^c) = 1 - P(A) \)</li>
+                    </ul>
+                </div>
+
+                <div class="quick-ref">
+                    <h3>Distributions</h3>
+                    <ul>
+                        <li><strong>Binomial:</strong> \( E=np, Var=np(1-p) \)</li>
+                        <li><strong>Poisson:</strong> \( E=\lambda, Var=\lambda \)</li>
+                        <li><strong>Normal:</strong> \( E=\mu, Var=\sigma^2 \)</li>
+                        <li><strong>Exponential:</strong> \( E=1/\lambda, Var=1/\lambda^2 \)</li>
+                        <li><strong>Chi-square:</strong> \( E=k, Var=2k \)</li>
+                        <li><strong>t-distribution:</strong> \( E=0, Var=k/(k-2) \)</li>
+                    </ul>
+                </div>
+
+                <div class="quick-ref">
+                    <h3>Estimation</h3>
+                    <ul>
+                        <li><strong>CI for μ (σ known):</strong> \( \bar{x} \pm z_{\alpha/2}\frac{\sigma}{\sqrt{n}} \)</li>
+                        <li><strong>CI for μ (σ unknown):</strong> \( \bar{x} \pm t_{\alpha/2}\frac{s}{\sqrt{n}} \)</li>
+                        <li><strong>Sample size:</strong> \( n = \left(\frac{z_{\alpha/2}\sigma}{E}\right)^2 \)</li>
+                        <li><strong>MSE:</strong> \( Var(\hat{\theta}) + [Bias(\hat{\theta})]^2 \)</li>
+                    </ul>
+                </div>
+
+                <div class="quick-ref">
+                    <h3>Hypothesis Tests</h3>
+                    <ul>
+                        <li><strong>Z-test:</strong> \( z = \frac{\bar{x}-\mu_0}{\sigma/\sqrt{n}} \)</li>
+                        <li><strong>t-test:</strong> \( t = \frac{\bar{x}-\mu_0}{s/\sqrt{n}} \)</li>
+                        <li><strong>\( \chi^2 \)-test (GOF):</strong> \( \chi^2 = \sum\frac{(O-E)^2}{E} \)</li>
+                        <li><strong>F-test:</strong> \( F = \frac{s_1^2}{s_2^2} \)</li>
+                        <li><strong>Paired t-test:</strong> \( t = \frac{\bar{D}}{s_D/\sqrt{n}} \)</li>
+                    </ul>
+                </div>
+
+                <div class="quick-ref">
+                    <h3>Regression</h3>
+                    <ul>
+                        <li><strong>Slope:</strong> \( b_1 = \frac{Cov(X,Y)}{Var(X)} \)</li>
+                        <li><strong>Intercept:</strong> \( b_0 = \bar{y} - b_1\bar{x} \)</li>
+                        <li><strong>\( R^2 \):</strong> \( \frac{ESS}{TSS} = 1 - \frac{RSS}{TSS} \)</li>
+                        <li><strong>Correlation:</strong> \( r = \frac{Cov(X,Y)}{\sigma_X\sigma_Y} \)</li>
+                        <li><strong>Two regression lines:</strong> \( b_{yx} \times b_{xy} = r^2 \)</li>
+                        <li><strong>OLS (matrix):</strong> \( \hat{\beta} = (X'X)^{-1}X'Y \)</li>
+                    </ul>
+                </div>
+
+                <div class="quick-ref">
+                    <h3>ANOVA</h3>
+                    <ul>
+                        <li><strong>F-statistic:</strong> \( F = \frac{MSB}{MSW} = \frac{SSB/(k-1)}{SSW/(n-k)} \)</li>
+                        <li><strong>Total SS:</strong> \( SST = SSB + SSW \)</li>
+                        <li><strong>Regression F:</strong> \( F = \frac{ESS/k}{RSS/(n-k-1)} \)</li>
+                    </ul>
+                </div>
+
+                <div class="quick-ref">
+                    <h3>Sampling</h3>
+                    <ul>
+                        <li><strong>SRS variance:</strong> \( \frac{\sigma^2}{n}\left(1-\frac{n}{N}\right) \)</li>
+                        <li><strong>Stratified mean:</strong> \( \bar{y}_{st} = \sum W_h\bar{y}_h \)</li>
+                        <li><strong>CLT:</strong> \( \frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \to N(0,1) \)</li>
+                    </ul>
+                </div>
+
+                <div class="tip-box">
+                    <h4>💡 Last-Minute Exam Tips</h4>
+                    <ul>
+                        <li>✅ Always state null and alternative hypotheses clearly</li>
+                        <li>✅ Check assumptions before applying tests</li>
+                        <li>✅ Interpret results in context of problem</li>
+                        <li>✅ Remember: correlation ≠ causation</li>
+                        <li>✅ For ANOVA, always construct the complete table</li>
+                        <li>✅ In regression, check R² and significance of coefficients</li>
+                        <li>✅ For time series, check stationarity first</li>
+                        <li>✅ Show all steps in calculations</li>
+                        <li>✅ Double-check degrees of freedom</li>
+                        <li>✅ Use correct critical values from tables</li>
+                    </ul>
+                </div>
+
+                <div class="important">
+                    <h4>⚠️ Common Mistakes to Avoid</h4>
+                    <ul>
+                        <li>Confusing one-tailed and two-tailed tests</li>
+                        <li>Using wrong degrees of freedom</li>
+                        <li>Forgetting to check assumptions</li>
+                        <li>Mixing up Type I and Type II errors</li>
+                        <li>Incorrect interpretation of p-values</li>
+                        <li>Confusing population and sample statistics</li>
+                        <li>Wrong formula for pooled variance</li>
+                    </ul>
+                </div>
+            </section>
+
+            <footer>
+                <h3>🎯 Final Exam Preparation Checklist</h3>
+                <ul style="text-align: left; max-width: 800px; margin: 20px auto;">
+                    <li>✅ Review this guide tonight, focus on formulas you're less confident about</li>
+                    <li>✅ Practice 2-3 problems from each major section</li>
+                    <li>✅ Memorize key formulas from the Quick Reference Sheet</li>
+                    <li>✅ Understand when to use each test (conditions/assumptions)</li>
+                    <li>✅ Practice ANOVA table construction</li>
+                    <li>✅ Review regression interpretation (R², coefficients, p-values)</li>
+                    <li>✅ Get 7-8 hours of sleep - crucial for memory and performance</li>
+                    <li>✅ Keep this guide handy for quick last-minute revision</li>
+                    <li>✅ Stay calm and trust your preparation</li>
+                </ul>
+                <p style="margin-top: 30px; font-size: 1.3em; color: #667eea;"><strong>🌟 You've got this! Best of luck on your RBI DSIM Grade B exam! 🌟</strong></p>
+                <p style="margin-top: 20px;">Generated: October 18, 2025 | Complete Revision Guide</p>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            const toggleBtn = document.getElementById('sidebarToggle');
+
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('expanded');
+            toggleBtn.classList.toggle('collapsed');
+
+            // Update button text
+            if (sidebar.classList.contains('collapsed')) {
+                toggleBtn.innerHTML = '☰';
+            } else {
+                toggleBtn.innerHTML = '✕';
+            }
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
