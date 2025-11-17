@@ -1,0 +1,2018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Mathematical Foundations of Generative AI: A Comprehensive Guide</title>
+    <script>
+        // MathJax Configuration
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@400;700&display=swap');
+
+        :root {
+            --bg-color: #1a1a1a;
+            --surface-color: #242424;
+            --primary-accent: #61dafb; /* A vibrant, modern blue */
+            --secondary-accent: #9b59b6; /* A subtle purple */
+            --text-color: #e0e0e0;
+            --text-muted: #888888;
+            --border-color: #444444;
+            --code-bg: #2d2d2d;
+            --strong-color: #f1c40f;
+            --em-color: #e67e22;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            transition: margin-left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        #toc-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1001;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        #toc-toggle:hover {
+             background: #333;
+        }
+
+        #toc-toggle span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background-color: var(--text-color);
+            margin: 2px 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        
+        #toc-toggle.active span:nth-child(1) {
+            transform: translateY(6px) rotate(45deg);
+        }
+
+        #toc-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        #toc-toggle.active span:nth-child(3) {
+            transform: translateY(-6px) rotate(-45deg);
+        }
+
+        #toc-container {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 300px;
+            height: 100vh;
+            background-color: var(--surface-color);
+            z-index: 1000;
+            padding: 20px;
+            padding-top: 70px; /* Space for toggle button */
+            overflow-y: auto;
+            border-right: 1px solid var(--border-color);
+            box-shadow: 4px 0px 15px rgba(0,0,0,0.2);
+            transform: translateX(0);
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        #toc-container.collapsed {
+            transform: translateX(-100%);
+        }
+        
+        #toc-container h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-accent);
+            border-bottom: 2px solid var(--secondary-accent);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        
+        #toc ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #toc > ul > li {
+            margin-bottom: 15px;
+        }
+
+        #toc ul ul {
+            padding-left: 20px;
+            border-left: 1px solid var(--border-color);
+            margin-top: 5px;
+        }
+
+        #toc li {
+            margin-bottom: 5px;
+        }
+        
+        #toc li a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-family: 'Lato', sans-serif;
+            font-size: 0.9em;
+            transition: color 0.3s ease;
+        }
+        
+        #toc li a:hover {
+            color: var(--primary-accent);
+        }
+
+        #toc > ul > li > a {
+            font-weight: bold;
+            font-size: 1em;
+            color: var(--text-color);
+        }
+
+        #main-content {
+            margin-left: 340px;
+            padding: 40px;
+            max-width: 900px;
+            transition: margin-left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        #main-content.toc-collapsed {
+             margin-left: 80px;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-accent);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        
+        h1 { font-size: 3.5em; text-align: center; border: none; }
+        header p { text-align: center; font-size: 1.2em; color: var(--text-muted); }
+        h2 { font-size: 2.5em; margin-top: 60px; }
+        h3 { font-size: 2em; margin-top: 45px; border-bottom-style: dashed;}
+        h4 { font-size: 1.5em; border-bottom: none;}
+
+        a {
+            color: var(--primary-accent);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+        
+        strong {
+            color: var(--strong-color);
+        }
+        
+        em {
+             color: var(--em-color);
+             font-style: italic;
+        }
+
+        ul, ol {
+            padding-left: 30px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+        
+        /* Code Blocks */
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-left: 5px solid var(--primary-accent);
+            padding: 20px;
+            padding-top: 45px;
+            border-radius: 8px;
+            overflow-x: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        pre::before {
+            content: "PyTorch Code Example";
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: var(--primary-accent);
+            color: var(--bg-color);
+            padding: 5px 15px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.9em;
+            font-weight: bold;
+            border-radius: 8px 0 8px 0;
+        }
+
+        code {
+            font-family: 'Fira Code', 'Menlo', 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+        
+        p > code {
+            background-color: var(--code-bg);
+            padding: 3px 6px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+        
+        /* Monokai-like Syntax Highlighting */
+        .code-keyword { color: #f92672; } /* Pink */
+        .code-comment { color: #75715e; } /* Gray */
+        .code-string { color: #e6db74; } /* Yellow */
+        .code-function { color: #a6e22e; } /* Green */
+        .code-number { color: #ae81ff; } /* Purple */
+        .code-decorator { color: #66d9ef; font-style: italic; } /* Blue */
+
+        /* Blockquotes and Callouts */
+        blockquote {
+            margin: 25px 0;
+            padding: 20px 25px;
+            border-left: 5px solid var(--secondary-accent);
+            background-color: rgba(155, 89, 182, 0.1);
+            font-style: italic;
+            border-radius: 5px;
+        }
+
+        .callout {
+            padding: 20px;
+            margin: 25px 0;
+            border: 1px solid;
+            border-left-width: 5px;
+            border-radius: 8px;
+            position: relative;
+            padding-left: 50px;
+        }
+
+        .callout::before {
+            font-family: 'Arial', sans-serif;
+            position: absolute;
+            left: 15px;
+            top: 18px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .callout-definition {
+            border-color: #27ae60;
+            background-color: rgba(39, 174, 96, 0.1);
+        }
+        .callout-definition::before { content: "D"; color: #27ae60;}
+
+
+        .callout-keyidea {
+            border-color: #f39c12;
+            background-color: rgba(243, 156, 18, 0.1);
+        }
+        .callout-keyidea::before { content: "💡"; color: #f39c12;}
+
+
+        .callout-questions {
+            border-color: #e74c3c;
+            background-color: rgba(231, 76, 60, 0.1);
+        }
+        .callout-questions::before { content: "?"; color: #e74c3c;}
+        
+        .callout-title {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-family: 'Lato', sans-serif;
+            font-size: 1.2em;
+        }
+
+        .callout-definition .callout-title { color: #27ae60; }
+        .callout-keyidea .callout-title { color: #f39c12; }
+        .callout-questions .callout-title { color: #e74c3c; }
+        
+        /* MathJax styling */
+        .MathJax {
+            font-size: 1.1em !important;
+        }
+
+        footer {
+            margin-top: 100px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            font-size: 0.9em;
+            color: var(--text-muted);
+        }
+
+    </style>
+</head>
+<body>
+
+    <button id="toc-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    
+    <nav id="toc-container">
+        <h2>Contents</h2>
+        <div id="toc">
+            <ul>
+                <li><a href="#intro">Introduction</a></li>
+                <li><a href="#ch1">Part 1: Foundations of Generative AI</a>
+                    <ul>
+                        <li><a href="#s1-1">Course Outline & Objectives</a></li>
+                        <li><a href="#s1-2">Mathematical Problem Setting</a></li>
+                        <li><a href="#s1-3">The General Principle of Generative Modeling</a></li>
+                    </ul>
+                </li>
+                <li><a href="#ch2">Part 2: Divergence Minimization and GANs</a>
+                    <ul>
+                        <li><a href="#s2-1">F-Divergence</a></li>
+                        <li><a href="#s2-2">Variational Divergence Minimization (VDM)</a></li>
+                        <li><a href="#s2-3">Generative Adversarial Networks (GANs)</a></li>
+                        <li><a href="#s2-4">GANs as Classifier-Guided Samplers</a></li>
+                    </ul>
+                </li>
+                <li><a href="#ch3">Part 3: Advanced GANs and Model Evaluation</a>
+                    <ul>
+                        <li><a href="#s3-1">DC-GAN and Conditional GANs</a></li>
+                        <li><a href="#s3-2">Challenges in GAN Training: Saturation</a></li>
+                        <li><a href="#s3-3">Wasserstein GANs (WGANs)</a></li>
+                        <li><a href="#s3-4">GAN Inversion: Bi-GAN & Latent Regression</a></li>
+                        <li><a href="#s3-5">Adversarial Learning for Domain Shift (UDA)</a></li>
+                        <li><a href="#s3-6">Evaluation of Generative Models: FID</a></li>
+                    </ul>
+                </li>
+                 <li><a href="#ch4">Part 4: Latent Variable Models & VAEs</a>
+                    <ul>
+                        <li><a href="#s4-1">Introduction to Latent Variable Models</a></li>
+                        <li><a href="#s4-2">The Evidence Lower Bound (ELBO)</a></li>
+                        <li><a href="#s4-3">Expectation-Maximization (EM) for GMMs</a></li>
+                        <li><a href="#s4-4">Variational Autoencoders (VAEs)</a></li>
+                        <li><a href="#s4-5">The Reparameterization Trick</a></li>
+                        <li><a href="#s4-6">Training and Inference with VAEs</a></li>
+                        <li><a href="#s4-7">Beta-VAE and Vector Quantized VAE (VQ-VAE)</a></li>
+                    </ul>
+                </li>
+                 <li><a href="#ch5">Part 5: Denoising Diffusion Probabilistic Models (DDPMs)</a>
+                     <ul>
+                        <li><a href="#s5-1">From Hierarchical VAEs to DDPMs</a></li>
+                        <li><a href="#s5-2">DDPM Formulation: Forward & Reverse Process</a></li>
+                        <li><a href="#s5-3">Deriving the ELBO for DDPMs</a></li>
+                        <li><a href="#s5-4">Optimizing the DDPM Loss</a></li>
+                        <li><a href="#s5-5">Training and Inference in DDPMs</a></li>
+                     </ul>
+                </li>
+                 <li><a href="#ch6">Part 6: Conditional Diffusion and Advanced Architectures</a>
+                    <ul>
+                        <li><a href="#s6-1">Alternate DDPM Interpretations: Noise & Score Predictors</a></li>
+                        <li><a href="#s6-2">Guided Diffusion for Conditional Generation</a></li>
+                        <li><a href="#s6-3">Latent Diffusion Models</a></li>
+                        <li><a href="#s6-4">Denoising Diffusion Implicit Models (DDIMs)</a></li>
+                    </ul>
+                </li>
+                <li><a href="#ch7">Part 7: Autoregressive Models and Transformers</a>
+                    <ul>
+                        <li><a href="#s7-1">Introduction to Autoregressive (AR) Models</a></li>
+                        <li><a href="#s7-2">The Attention Mechanism</a></li>
+                        <li><a href="#s7-3">The Transformer Architecture</a></li>
+                        <li><a href="#s7-4">Training and Inference for AR Transformers</a></li>
+                    </ul>
+                </li>
+                 <li><a href="#ch8">Part 8: Reinforcement Learning for Alignment</a>
+                     <ul>
+                        <li><a href="#s8-1">An Overview of Reinforcement Learning (RL)</a></li>
+                        <li><a href="#s8-2">The Policy Gradient Theorem</a></li>
+                        <li><a href="#s8-3">Proximal Policy Optimization (PPO)</a></li>
+                        <li><a href="#s8-4">Trust Region Policy Optimization (TRPO)</a></li>
+                        <li><a href="#s8-5">Reward Modeling</a></li>
+                        <li><a href="#s8-6">Direct Preference Optimization (DPO)</a></li>
+                     </ul>
+                 </li>
+                 <li><a href="#ch9">Part 9: State-Space Models (SSMs)</a>
+                    <ul>
+                        <li><a href="#s9-1">Introduction to State-Space Models</a></li>
+                        <li><a href="#s9-2">Structured SSMs (S4)</a></li>
+                        <li><a href="#s9-3">Selective SSMs (Mamba)</a></li>
+                    </ul>
+                 </li>
+                <li><a href="#appendix">Appendix: PyTorch Practical Guides</a>
+                    <ul>
+                        <li><a href="#a1">Forward Pass & Backpropagation in an MLP</a></li>
+                        <li><a href="#a2">Introduction to PyTorch: Tensors</a></li>
+                        <li><a href="#a3">Datasets and DataLoaders</a></li>
+                        <li><a href="#a4">Building a Neural Network Model</a></li>
+                        <li><a href="#a5">Implementing GANs and DC-GAN</a></li>
+                        <li><a href="#a6">Implementing Conditional GAN and Bi-GAN</a></li>
+                        <li><a href="#a7">Implementing WGAN and UDA</a></li>
+                        <li><a href="#a8">Implementing VAEs (Beta-VAE & VQ-VAE)</a></li>
+                        <li><a href="#a9">The U-Net Architecture</a></li>
+                        <li><a href="#a10">Implementing DDPM and DDIM</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div id="main-content">
+        <header>
+            <h1 id="intro">The Mathematical Foundations of Generative AI</h1>
+            <p>A comprehensive, self-contained guide based on the lecture series by Professor Prat at the Indian Institute of Science, Bengaluru. This book covers the core mathematical principles, algorithms, and practical implementations of modern deep generative models.</p>
+        </header>
+        
+        <main>
+            <!-- Part 1: Foundations -->
+            <section id="ch1">
+                <h2>Part 1: Foundations of Generative AI</h2>
+                <h3 id="s1-1">Course Outline & Objectives</h3>
+                <p>
+                    This course explores the mathematical underpinnings of deep generative models (DGMs), also popularly known as Generative AI. The primary goal is to build a solid mathematical foundation to understand the inner workings of these powerful models. While practical aspects are not ignored, the treatment of each topic is primarily from a mathematical standpoint, enabling a deep appreciation of the formulations. This approach equips you to confidently read original research papers and understand their subsequent improvisations.
+                </p>
+                <p>The course will cover a broad family of Deep Generative Models (DGMs), so named because they almost always incorporate a deep neural network component.</p>
+                
+                <h4>Core Topics Covered:</h4>
+                <ol>
+                    <li><strong>Generative Adversarial Networks (GANs):</strong> We begin with GANs to establish a solid footing on the principles of generative modeling.</li>
+                    <li><strong>Variational Autoencoders (VAEs):</strong> These classical models provide the theoretical framework essential for understanding more advanced architectures.</li>
+                    <li><strong>Denoising Diffusion Probabilistic Models (DDPMs):</strong> The state-of-the-art models powering many commercial tools like DALL-E. We will also touch upon closely related Score-Based Models.</li>
+                    <li><strong>Autoregressive (AR) Models:</strong> The fundamental architecture behind most Large Language Models (LLMs) like GPT and Gemini.</li>
+                    <li><strong>State-Space Models (SSMs):</strong> An emerging alternative to AR models for sequence generation, with examples like Mamba.</li>
+                    <li><strong>LLM Alignment Techniques:</strong> We will explore reinforcement learning-based methods like Proximal Policy Optimization (PPO) and Direct Preference Optimization (DPO) used to align models with human preferences.</li>
+                </ol>
+
+                <div class="callout callout-keyidea">
+                    <p class="callout-title">Key Course Philosophy</p>
+                    <p>The entire course is designed to be <strong>data-modality agnostic</strong>. The mathematical frameworks discussed are general enough to be adapted for various data types—such as images, text, or speech—with only minor modifications.</p>
+                </div>
+                
+                <h3 id="s1-2">Mathematical Problem Setting</h3>
+                <p>
+                    The starting point for any machine learning task, including generative modeling, is <strong>data</strong>. We formally define our data and the assumptions we make about it.
+                </p>
+
+                <div class="callout callout-definition">
+                    <p class="callout-title">Data Definition</p>
+                    <p>We are given a dataset $D = \{x_1, x_2, \ldots, x_n\}$ containing $n$ data points. We make a crucial assumption about these points:</p>
+                    $$ x_i \sim_{i.i.d.} \mathcal{P}_x $$
+                    <p>This notation means each data point $x_i$ is sampled <strong>independently and identically distributed (i.i.d.)</strong> from an unknown, underlying data distribution $\mathcal{P}_x$.</p>
+                </div>
+
+                <p>
+                    Each data point $x_i$ is considered an instantiation of a random variable $X$ and lies in a high-dimensional real space, $x_i \in \mathbb{R}^d$, where $d$ is the dimensionality of the data. For real-world data like images, this dimensionality can be extremely high. For instance, a simple 400x400 pixel color image has a dimensionality of $400 \times 400 \times 3 = 480,000$.
+                </p>
+
+                <blockquote>
+                    The <strong>i.i.d. assumption</strong> means two things: (1) each data sample (e.g., each image) is statistically independent of every other sample, and (2) all samples are drawn from the exact same underlying probability distribution. This is a standard and convenient assumption for mathematical modeling. It does NOT mean that the dimensions within a single data point (e.g., the pixels of an image) are independent.
+                </blockquote>
+
+                <h3 id="s1-3">The General Principle of Generative Modeling</h3>
+                <p>With the problem formally defined, we can now state the core objective of generative modeling and outline the general recipe used by nearly all models to achieve it.</p>
+                
+                <div class="callout callout-keyidea">
+                    <p class="callout-title">The Goal of Generative Modeling</p>
+                    <p>Given $n$ samples drawn i.i.d. from an unknown distribution $\mathcal{P}_x$ (with density $p_x(x)$), the two-fold goal is:</p>
+                    <ol>
+                        <li>To <strong>estimate</strong> the underlying data distribution $p_x(x)$.</li>
+                        <li>To <strong>learn to sample</strong> new data points from this estimated distribution.</li>
+                    </ol>
+                    <p>While some models estimate $p_x(x)$ explicitly, others do it implicitly. However, all generative models must be able to generate new samples.</p>
+                </div>
+
+                <h4>The Three-Step Recipe</h4>
+                <p>Most generative models follow a general, three-step procedure to achieve this goal:</p>
+                <ol>
+                    <li>
+                        <strong>Assume a Parametric Model:</strong> We assume the unknown true data density $p_x(x)$ can be approximated by a parametric family of distributions, denoted $p_\theta(x)$. In modern DGMs, this model $p_\theta(x)$ is represented by a <strong>deep neural network</strong>, where $\theta$ represents the network's weights. We do this because of the universal approximation capability of neural networks—they are flexible enough to approximate a vast range of complex functions.
+                    </li>
+                    <li>
+                        <strong>Define a Divergence Metric:</strong> We define a metric, $D(p_x || p_\theta)$, that measures the "distance" or "divergence" between the true data distribution $p_x$ and our model's distribution $p_\theta$. This metric tells us how well our current model is approximating the true data. A key challenge is estimating this divergence without knowing $p_x$ explicitly, often relying only on samples.
+                    </li>
+                    <li>
+                        <strong>Solve an Optimization Problem:</strong> We adjust the parameters $\theta$ of our neural network to minimize the chosen divergence metric. This is an optimization problem:
+                        $$ \theta^* = \arg\min_\theta D(p_x || p_\theta) $$
+                        By minimizing this distance, we are effectively tuning our model $p_\theta(x)$ to become as close as possible to the true data distribution $p_x(x)$.
+                    </li>
+                </ol>
+
+                <h4>The Push-Forward Mechanism for Sampling</h4>
+                <p>
+                    The recipe above explains how to estimate the distribution, but how do we sample from it? Most modern generative models use a clever technique known as the **push-forward mechanism**.
+                </p>
+                
+                <ol>
+                    <li>Start with a simple, known distribution that we can easily sample from. This is typically a standard Gaussian (or normal) distribution, $z \sim \mathcal{N}(0, I)$, where $z$ is a vector in a low-dimensional "latent" space $\mathbb{R}^k$.</li>
+                    <li>Design a deterministic function $G_\theta(z)$, represented by a deep neural network, that maps the latent space to the data space ($G_\theta: \mathbb{R}^k \to \mathbb{R}^d$).</li>
+                    <li>The output of this network, $\hat{x} = G_\theta(z)$, is a new data point. The distribution of these outputs, $p_\theta(\hat{x})$, is determined by the parameters $\theta$ of the network $G_\theta$. This network is often called the <strong>generator</strong> or <strong>decoder</strong>.</li>
+                </ol>
+                
+                <p>
+                    By solving the optimization problem $\theta^* = \arg\min_\theta D(p_x || p_\theta)$, we train the generator network $G_\theta$. After training, we have $p_{\theta^*} \approx p_x$. To generate a new, novel data sample, we simply:
+                </p>
+                <ol>
+                    <li>Sample a random vector $z_{new}$ from the simple distribution $\mathcal{N}(0, I)$.</li>
+                    <li>Pass it through our trained generator: $\hat{x}_{new} = G_{\theta^*}(z_{new})$.</li>
+                </ol>
+                <p>The resulting $\hat{x}_{new}$ is a new sample from our learned approximation of the true data distribution.</p>
+                
+                <div class="callout callout-questions">
+                    <p class="callout-title">Knowledge Check: Part 1</p>
+                    <ol>
+                        <li>Explain the "i.i.d." assumption in the context of a dataset of cat images. What does it assume, and what does it not assume?</li>
+                        <li>What is the core difference between a generative model and a discriminative model (like a typical classifier) in terms of their primary objectives?</li>
+                        <li>Describe the "push-forward" mechanism for sampling. Why do we start with a simple distribution like a Gaussian?</li>
+                        <li>In the three-step recipe for generative modeling, a key challenge is computing the divergence $D(p_x || p_\theta)$ since $p_x$ is unknown. What information do we have that can help us estimate this divergence?</li>
+                        <li>If a 400x400 color image lies in a 480,000-dimensional space, why do generative models often start from a much lower dimensional latent space (e.g., k=128)? What does this imply about the structure of real-world image data?</li>
+                    </ol>
+                </div>
+            </section>
+            
+            <!-- Part 2: Divergence and GANs -->
+            <section id="ch2">
+                <h2>Part 2: Divergence Minimization and GANs</h2>
+                
+                <h3 id="s2-1">F-Divergence</h3>
+                <p>
+                    In our recipe for generative modeling, the second step requires choosing a divergence metric to measure the distance between the true distribution $p_x$ and our model $p_\theta$. A large and important class of such metrics is known as the **f-divergences**.
+                </p>
+
+                <div class="callout callout-definition">
+                    <p class="callout-title">Definition: F-Divergence</p>
+                    <p>
+                        Given two probability density functions $p_x(x)$ and $p_\theta(x)$, the f-divergence between them is defined as:
+                    </p>
+                    $$ D_f(p_x || p_\theta) = \int p_\theta(x) f\left(\frac{p_x(x)}{p_\theta(x)}\right) dx $$
+                    <p>Where the function $f: \mathbb{R}^+ \to \mathbb{R}$ is any <strong>convex</strong> function that satisfies $f(1) = 0$.</p>
+                </div>
+                
+                <p>
+                    This definition gives us a whole family of divergence metrics. By choosing different convex functions for $f$, we can derive various well-known divergences, each with its own properties.
+                </p>
+                
+                <h4>Key Properties of F-Divergence</h4>
+                <ul>
+                    <li><strong>Non-negativity:</strong> For any valid choice of $f$, $D_f(p_x || p_\theta) \ge 0$.</li>
+                    <li><strong>Identity of Indiscernibles:</strong> $D_f(p_x || p_\theta) = 0$ if and only if $p_x(x) = p_\theta(x)$ almost everywhere.</li>
+                </ul>
+                <p>
+                    These two properties make f-divergences suitable for our optimization goal. Minimizing the f-divergence to its lowest possible value (zero) is equivalent to making our model distribution identical to the true data distribution.
+                </p>
+
+                <h4>Examples of F-Divergences</h4>
+                <ol>
+                    <li>
+                        <strong>Kullback-Leibler (KL) Divergence:</strong> If we choose $f(u) = u \log u$, we get the famous KL divergence:
+                        $$ D_{KL}(p_x || p_\theta) = \int p_x(x) \log\left(\frac{p_x(x)}{p_\theta(x)}\right) dx $$
+                        Note that KL-divergence is not symmetric, meaning $D_{KL}(p_x || p_\theta) \neq D_{KL}(p_\theta || p_x)$.
+                    </li>
+                    <li>
+                        <strong>Jensen-Shannon (JS) Divergence:</strong> If we choose $f(u) = -(u+1)\log\frac{u+1}{2} + u\log u$, we arrive at the Jensen-Shannon divergence, a symmetric and bounded version of KL divergence. A variant of this is famously used in the original Generative Adversarial Network (GAN).
+                    </li>
+                    <li>
+                        <strong>Total Variation (TV) Distance:</strong> By choosing $f(u) = \frac{1}{2}|u-1|$, we obtain the Total Variation distance.
+                    </li>
+                </ol>
+
+                <h3 id="s2-2">Variational Divergence Minimization (VDM)</h3>
+                <p>
+                    A significant challenge remains: the definition of f-divergence involves an integral over $p_x$ and $p_\theta$, both of which are unknown to us. We only have samples from them. How can we compute and minimize this divergence? The solution lies in a powerful technique called **Variational Divergence Minimization**.
+                </p>
+                
+                <p>The core idea is to find a lower bound on the f-divergence that <em>can</em> be estimated using only samples. This is achieved using the concept of a **Fenchel conjugate** function.</p>
+
+                <div class="callout callout-definition">
+                    <p class="callout-title">Conjugate Function</p>
+                    <p>For any convex function $f(u)$, its Fenchel conjugate function $f^*(t)$ is defined as:</p>
+                    $$ f^*(t) = \sup_{u \in \text{dom}(f)} (ut - f(u)) $$
+                    <p>A key property is that the original function can be recovered from its conjugate: $f(u) = \sup_{t \in \text{dom}(f^*)} (ut - f^*(t))$.</p>
+                </div>
+                
+                <p>By substituting the conjugate representation of $f$ into the f-divergence formula and performing some algebraic manipulation, we can arrive at a crucial result:</p>
+
+                <div class="callout callout-keyidea">
+                    <p class="callout-title">The Variational Lower Bound on F-Divergence</p>
+                    $$ D_f(p_x || p_\theta) \ge \sup_{T} \left[ \mathbb{E}_{x \sim p_x}[T(x)] - \mathbb{E}_{z \sim p_z}[f^*(T(G_\theta(z)))] \right] $$
+                    <p>Here, the supremum is taken over a class of functions $T$. The right-hand side is a <strong>variational lower bound</strong> on the f-divergence. Notice that it is expressed entirely in terms of expectations, which can be approximated using sample averages!</p>
+                </div>
+                
+                <p>This transforms our original, intractable minimization problem into a solvable one. The optimization becomes a **minimax game**:</p>
+                <ol>
+                    <li><strong>The Maximization Step (The "Critic"):</strong> For a fixed generator $G_\theta$, we find a function $T$ (often represented by a neural network, called the critic or discriminator) that maximizes this lower bound. This is equivalent to finding the tightest possible lower bound on the current divergence.</li>
+                    <li><strong>The Minimization Step (The "Generator"):</strong> We then hold the critic $T$ fixed and update the generator's parameters $\theta$ to minimize this lower bound. Minimizing the lower bound serves as a proxy for minimizing the actual f-divergence.</li>
+                </ol>
+                <p>This alternating optimization process is the essence of Variational Divergence Minimization and directly leads to the framework of Generative Adversarial Networks.</p>
+
+                <h3 id="s2-3">Generative Adversarial Networks (GANs)</h3>
+                <p>
+                    GANs are a specific instantiation of the Variational Divergence Minimization framework. In a GAN, we have two neural networks competing against each other in a zero-sum game:
+                </p>
+                <ul>
+                    <li>The <strong>Generator ($G$)</strong>: Tries to produce realistic data from random noise. Its goal is to create data so convincing that the Discriminator cannot tell it's fake. It corresponds to the minimization player in our minimax game.</li>
+                    <li>The <strong>Discriminator ($D$)</strong>: Tries to distinguish between real data (from $p_x$) and fake data (from $G$). Its goal is to correctly identify fake data. It corresponds to the maximization player (the critic $T$).</li>
+                </ul>
+
+                <p>The original GAN paper uses an objective function that can be shown to be a particular instance of VDM where the f-divergence is a variant of the Jensen-Shannon divergence. The objective function is:</p>
+                
+                $$ \min_G \max_D V(D, G) = \mathbb{E}_{x \sim p_{data}(x)}[\log D(x)] + \mathbb{E}_{z \sim p_z(z)}[\log(1 - D(G(z)))] $$
+
+                <p>Let's break this down:</p>
+                <ul>
+                    <li><strong>Maximizing w.r.t D:</strong> The Discriminator $D$ wants to maximize this objective. For real data $x$, it tries to make $D(x)$ close to 1 (high probability of being real). For fake data $G(z)$, it tries to make $D(G(z))$ close to 0, which makes $\log(1 - D(G(z)))$ large (high probability of being fake).</li>
+                    <li><strong>Minimizing w.r.t G:</strong> The Generator $G$ wants to minimize this objective. It does so by producing fake data $G(z)$ that fools the discriminator, i.e., makes $D(G(z))$ close to 1. When $D(G(z))$ is close to 1, $\log(1 - D(G(z)))$ becomes a large negative number, thus minimizing the objective.</li>
+                </ul>
+                <p>
+                    This adversarial process continues, with both networks improving over time, until an equilibrium is reached where the generator produces data indistinguishable from real data, and the discriminator can only guess with 50% accuracy.
+                </p>
+
+                <h3 id="s2-4">GANs as Classifier-Guided Samplers</h3>
+                <p>Another powerful way to interpret the GAN framework is to view the discriminator not just as a mathematical critic but as a **classifier** that guides the generator's learning process.</p>
+                <p>Imagine you have a classifier ($D$) that is trained to distinguish between real samples ($p_x$, label 1) and fake samples ($p_\theta$, label 0). Now, how can this classifier help the generator ($G$) get better?</p>
+
+                <blockquote>
+                    The strategy is to tweak the generator's parameters $\theta$ until the classifier fails to distinguish between real and fake samples.
+                </blockquote>
+
+                <p>A classifier fails when the two distributions it is trying to separate become identical. Thus, the generator's goal becomes to modify its output distribution $p_\theta$ to match the real data distribution $p_x$, causing the classifier to fail. </p>
+
+                <p>However, a crucial point is that the classifier must not be fixed. If the classifier is static, the generator can easily find a simple trick (an "adversarial example") to fool it without actually learning the true data distribution. For the learning to be effective, the classifier must also improve alongside the generator. This leads to the same adversarial game: </p>
+                <ul>
+                    <li>The classifier trains to become better at spotting fakes.</li>
+                    <li>The generator trains to produce better fakes that can fool the improved classifier.</li>
+                </ul>
+                <p>This dynamic interplay ensures that the generator is continuously guided towards a more and more accurate approximation of the true data distribution, driven by the feedback from an ever-improving classifier.</p>
+
+                <div class="callout callout-questions">
+                    <p class="callout-title">Knowledge Check: Part 2</p>
+                    <ol>
+                        <li>Why is the non-negativity property of f-divergence, $D_f \ge 0$, important for its use in an optimization framework?</li>
+                        <li>Explain in your own words why the standard f-divergence formula is intractable for training a generative model and how Variational Divergence Minimization overcomes this.</li>
+                        <li>In the GAN framework, describe the respective goals of the Generator and the Discriminator. How do these goals create an "adversarial" dynamic?</li>
+                        <li>In the "classifier-guided" interpretation of GANs, why is it crucial that the classifier is also trained simultaneously and not kept fixed?</li>
+                        <li>The original GAN objective involves a term $\log(1 - D(G(z)))$. During the early stages of training, the generator is poor and the discriminator can easily identify fakes ($D(G(z)) \approx 0$). Why might this lead to very small gradients for the generator (a problem known as "vanishing gradients")?</li>
+                    </ol>
+                </div>
+            </section>
+            
+            <!-- Part 3: Advanced GANs and Evaluation -->
+            <section id="ch3">
+                <h2>Part 3: Advanced GANs and Model Evaluation</h2>
+
+                <h3 id="s3-1">DC-GAN and Conditional GANs</h3>
+                <p>The original GAN architecture used simple Multi-Layer Perceptrons (MLPs), which are not ideal for handling image data. This led to a key innovation: the **Deep Convolutional GAN (DC-GAN)**.</p>
+                
+                <h4>Deep Convolutional GAN (DC-GAN)</h4>
+                <p>DC-GAN adapts the GAN architecture specifically for images by incorporating ideas from Convolutional Neural Networks (CNNs).</p>
+                <ul>
+                    <li><strong>Generator:</strong> Instead of simple fully-connected layers, the DC-GAN generator uses <strong>transposed convolutions</strong> (also known as up-convolutions or fractionally-strided convolutions). This allows the network to start with a low-dimensional latent vector and progressively upsample it into a full-sized image, learning spatial features along the way.</li>
+                    <li><strong>Discriminator:</strong> The discriminator is built as a standard CNN, which is highly effective at image classification. It uses standard convolutional layers to downsample an input image into a single probability (real or fake).</li>
+                </ul>
+                <p>This architectural change allows GANs to learn hierarchical feature representations, leading to dramatically better and more stable image generation results.</p>
+                
+                <h4>Conditional GAN (cGAN)</h4>
+                <p>
+                    A standard GAN performs unconditional generation; we have no control over what kind of sample it produces. The **Conditional GAN (cGAN)** extends the framework to allow for conditional generation. The goal is to learn a mapping from a conditioning variable $y$ (like a class label or a text description) to an output sample $x$.
+                </p>
+                <p>
+                    The modification is simple but effective: both the generator and the discriminator are given the conditioning variable $y$ as an additional input.
+                </p>
+                <ul>
+                    <li><strong>Generator:</strong> Receives both the random noise vector $z$ and the condition $y$ (e.g., the label "cat"). It learns to generate an image that corresponds to that condition, i.e., $G(z, y)$.</li>
+                    <li><strong>Discriminator:</strong> Receives both an image $x$ and the condition $y$. It learns to determine if the image is a realistic sample <em>for that specific condition</em>.</li>
+                </ul>
+                <p>The cGAN objective becomes a conditional adversarial game:</p>
+                 $$ \min_G \max_D \mathbb{E}_{x,y \sim p_{data}}[\log D(x,y)] + \mathbb{E}_{z \sim p_z, y \sim p_{data}}[\log(1 - D(G(z,y),y))] $$
+                <p>This allows us to direct the generation process, for example, by asking the model to generate an image of a specific digit or a scene described by a text prompt.</p>
+
+                <h3 id="s3-2">Challenges in GAN Training: Saturation</h3>
+                <p>Training GANs is notoriously difficult and unstable. One of the primary reasons for this instability stems from the **Manifold Hypothesis** and the problem of a "perfect discriminator".</p>
+                
+                <div class="callout callout-keyidea">
+                    <p class="callout-title">The Manifold Hypothesis</p>
+                    <p>
+                        This hypothesis states that real-world, high-dimensional data (like images) does not fill its entire ambient space. Instead, it concentrates on a much lower-dimensional manifold. For example, the set of all valid human face images is a tiny subset of the space of all possible pixel combinations.
+                    </p>
+                </div>
+                
+                <p>
+                    During early training, the generator's output distribution ($p_\theta$) and the real data distribution ($p_x$) live on separate, non-overlapping manifolds. It can be shown that if the supports of two distributions do not overlap, a "perfect" discriminator can be learned that separates them with 100% accuracy.
+                </p>
+
+                <blockquote>
+                    If the discriminator becomes perfect (achieves 100% accuracy), it means $D(x)=1$ for real images and $D(G(z))=0$ for fake images. In this case, the generator's loss function, based on $\log(1-D(G(z)))$, becomes $\log(1) = 0$. The gradient of the loss with respect to the generator's parameters becomes zero, and the generator <strong>stops learning entirely</strong>. This phenomenon is known as **training saturation**.
+                </blockquote>
+
+                <p>The f-divergences (like JS divergence) used in early GANs are "hard" metrics—they saturate as soon as the distributions' supports become disjoint. This makes training brittle, as the generator often receives no useful signal to improve.</p>
+
+                <h3 id="s3-3">Wasserstein GANs (WGANs)</h3>
+                <p>
+                    To solve the saturation problem, we need a "softer" distance metric that still provides a useful gradient even when the distribution supports are disjoint. The **Wasserstein distance** (or Earth-Mover's Distance) provides such a metric.
+                </p>
+                
+                <div class="callout callout-definition">
+                    <p class="callout-title">Wasserstein-1 Distance (Intuition)</p>
+                    <p>
+                        Imagine the two distributions, $p_x$ and $p_\theta$, as two piles of dirt. The Wasserstein distance is the minimum "cost" (mass of dirt × distance moved) required to transform one pile into the shape of the other. Crucially, this cost is meaningful and provides a smooth gradient even if the piles are far apart (non-overlapping).
+                    </p>
+                </div>
+
+                <p>The mathematical form of the Wasserstein distance is intractable. However, the Kantorovich-Rubinstein duality provides an alternative, computable formulation:</p>
+                $$ W(p_x, p_\theta) = \sup_{||f||_L \le 1} \left( \mathbb{E}_{x \sim p_x}[f(x)] - \mathbb{E}_{\hat{x} \sim p_\theta}[f(\hat{x})] \right) $$
+
+                <p>This looks very similar to our variational lower bound! The key difference is that the supremum is taken over all 1-Lipschitz functions. A function is 1-Lipschitz if its gradient norm is at most 1 everywhere. This means the function's output cannot change too quickly relative to its input.</p>
+
+                <p>The WGAN algorithm modifies the GAN framework based on this duality:</p>
+                <ol>
+                    <li>The Discriminator is renamed the **Critic**. Its job is no longer to output a probability (0 to 1), but to output a real-valued score that helps estimate the Wasserstein distance. The sigmoid activation in the final layer is removed.</li>
+                    <li>To enforce the 1-Lipschitz constraint on the critic, a simple (though theoretically imperfect) technique called **weight clipping** is used. After each gradient update, the critic's weights are clipped to lie within a small range (e.g., [-0.01, 0.01]).</li>
+                    <li>The loss functions are simplified to directly match the dual formulation.</li>
+                </ol>
+                <p>The WGAN objective makes training significantly more stable, reduces the chance of mode collapse, and the critic's loss becomes a meaningful indicator of generation quality.</p>
+                
+                <h3 id="s3-4">GAN Inversion: Bi-GAN & Latent Regression</h3>
+                <p>A standard GAN learns a mapping from the latent space to the data space ($G: Z \to X$). **GAN inversion** is the task of finding the reverse mapping: given an image $x$, can we find the latent vector $z$ that produces it ($E: X \to Z$)? This reverse mapping is learned by an **Encoder** network.</p>
+                
+                <h4>Why is GAN Inversion useful?</h4>
+                <ul>
+                    <li><strong>Feature Extraction:</strong> The latent vector $z$ for an image $x$ serves as a compressed, meaningful feature representation of that image.</li>
+                    <li><strong>Image Manipulation:</strong> To edit an image $x$, we can first find its latent vector $z$, perform manipulations in the simpler latent space (e.g., $z' = z + \Delta z$), and then generate the edited image using the generator, $x' = G(z')$.</li>
+                </ul>
+
+                <h4>Bidirectional GAN (Bi-GAN)</h4>
+                <p>Bi-GAN learns the inversion mapping by introducing an Encoder network $E$ and modifying the discriminator's task. Instead of just distinguishing real vs. fake images, the discriminator now distinguishes between pairs of (data, latent) vectors:</p>
+                <ul>
+                    <li>A "real" pair consists of a real image and its encoded latent vector: $(x, E(x))$.</li>
+                    <li>A "fake" pair consists of a fake image and the random noise that generated it: $(G(z), z)$.</li>
+                </ul>
+                <p>The discriminator is trained to tell these two types of pairs apart. By doing so, it forces the joint distribution of real data and its encodings to match the joint distribution of generated data and its source latents, effectively teaching the encoder $E$ to be the inverse of the generator $G$.</p>
+
+                <h3 id="s3-5">Adversarial Learning for Domain Shift (UDA)</h3>
+                <p>Adversarial training isn't limited to image generation. It's a powerful tool for aligning distributions, which is useful in tasks like **Unsupervised Domain Adaptation (UDA)**.</p>
+                <p>
+                    <strong>Problem:</strong> Imagine you train a classifier on labeled "source" data (e.g., photos of digits) but want it to perform well on unlabeled "target" data from a different but related domain (e.g., artistic renderings of digits). The performance will drop due to the "domain shift".
+                </p>
+                <p>
+                    <strong>Solution:</strong> Use adversarial learning to learn domain-invariant features.
+                </p>
+                <ol>
+                    <li>A <strong>Feature Extractor ($F$)</strong> creates feature embeddings for images from both the source and target domains.</li>
+                    <li>A <strong>Domain Discriminator ($D$)</strong> tries to guess whether a feature embedding came from the source or target domain.</li>
+                    <li>A <strong>Label Classifier ($C$)</strong> tries to classify the source features correctly.</li>
+                </ol>
+                <p>
+                    The feature extractor $F$ is trained with two objectives:
+                    1.  **Minimize the label classification loss** (to create useful features).
+                    2.  **Maximize the domain discriminator's loss** (to create features that are indistinguishable between domains).
+                </p>
+                <p>By fooling the domain discriminator, the feature extractor learns representations that are agnostic to the domain. A classifier trained on these shared features will generalize well to the target domain, even without seeing its labels.</p>
+                
+                <h3 id="s3-6">Evaluation of Generative Models: FID</h3>
+                <p>
+                    How do we quantitatively measure the quality of generated images? One of the most widely used metrics is the **Fréchet Inception Distance (FID)**.
+                </p>
+                <p>
+                    FID compares the distribution of generated images with the distribution of real images in a feature space. It's based on the Wasserstein-2 distance between two multivariate Gaussian distributions.
+                </p>
+                <h4>How FID is Calculated:</h4>
+                <ol>
+                    <li>
+                        Take a large set of real images and a large set of generated images.
+                    </li>
+                    <li>
+                        Pass all images through a pre-trained **Inception-v3 network** (a powerful image classifier). Extract the activations from an intermediate layer. These activations serve as feature embeddings for each image.
+                    </li>
+                    <li>
+                        Model the distributions of these real and generated feature embeddings as multivariate Gaussians. Calculate the mean ($\mu$) and covariance ($\Sigma$) for both sets of features: $(\mu_r, \Sigma_r)$ and $(\mu_g, \Sigma_g)$.
+                    </li>
+                    <li>
+                        The FID score is then calculated using the formula for the Wasserstein-2 distance between these two Gaussians:
+                        $$ \text{FID} = ||\mu_r - \mu_g||^2_2 + \text{Tr}(\Sigma_r + \Sigma_g - 2(\Sigma_r\Sigma_g)^{1/2}) $$
+                    </li>
+                </ol>
+                <p>A <strong>lower FID score</strong> indicates that the statistics of the generated image features are closer to the statistics of real image features, suggesting higher quality and diversity. FID has been shown to correlate well with human judgment of image quality.</p>
+                
+                <div class="callout callout-questions">
+                    <p class="callout-title">Knowledge Check: Part 3</p>
+                    <ol>
+                        <li>How does the architecture of a DC-GAN's generator differ from a vanilla MLP-based GAN, and why is this change beneficial for image generation?</li>
+                        <li>Explain the core concept of the Wasserstein distance and why it provides a more stable training signal for GANs compared to JS divergence.</li>
+                        <li>You want to create a GAN that generates photos of faces, but allows you to specify whether the person should be "smiling" or "not smiling". Which GAN variant would you use and how would you set it up?</li>
+                        <li>What is the purpose of GAN Inversion? Describe one real-world application where it could be useful.</li>
+                        <li>You have generated a set of images and calculated an FID score of 35. A colleague trains a new model and gets an FID score of 15. What can you conclude about the colleague's model compared to yours?</li>
+                    </ol>
+                </div>
+            </section>
+            
+             <!-- Part 4: Latent Variable Models & VAEs -->
+            <section id="ch4">
+                <h2>Part 4: Latent Variable Models & VAEs</h2>
+                
+                <h3 id="s4-1">Introduction to Latent Variable Models</h3>
+                <p>
+                    GANs are an example of <em>implicit</em> generative models—they learn to produce samples from a distribution without ever explicitly defining the density function $p_\theta(x)$. The next family of models we explore, **Latent Variable Models**, takes a more explicit, probabilistic approach.
+                </p>
+                
+                <div class="callout callout-definition">
+                    <p class="callout-title">Definition: Latent Variable Model</p>
+                    <p>
+                        A latent variable model assumes that our observed data $x$ is generated from an unobserved, "latent" or "hidden" variable $z$. The model density $p_\theta(x)$ is defined by marginalizing over this latent variable:
+                    </p>
+                    $$ p_\theta(x) = \int p_\theta(x, z) dz = \int p_\theta(x|z)p_\theta(z) dz $$
+                </div>
+
+                <p>
+                    The intuition is that complex data in the high-dimensional space $X$ can be explained by simpler, low-dimensional factors of variation in the latent space $Z$. For example, an image of a face ($x$) might be generated by latent factors ($z$) controlling pose, lighting, expression, and identity.
+                </p>
+                <ul>
+                    <li>$p_\theta(z)$ is the **prior** over the latent space, which is typically a simple, fixed distribution like a standard Gaussian, $\mathcal{N}(0, I)$.</li>
+                    <li>$p_\theta(x|z)$ is the **likelihood** or **decoder**. It defines how to generate data $x$ given a latent code $z$. In a neural model, this is represented by a decoder network.</li>
+                </ul>
+                
+                <p>Our goal is to learn the parameters $\theta$ of the decoder that best explain the observed data.</p>
+                
+                <h3 id="s4-2">The Evidence Lower Bound (ELBO)</h3>
+                <p>
+                    The standard way to train a latent variable model is through **Maximum Likelihood Estimation (MLE)**. We want to find the parameters $\theta$ that maximize the log-likelihood of our observed data:
+                </p>
+                $$ \theta^* = \arg\max_\theta \sum_{i=1}^n \log p_\theta(x_i) = \arg\max_\theta \sum_{i=1}^n \log \int p_\theta(x_i|z)p_\theta(z) dz $$
+
+                <p>This integral is intractable for complex decoders (like neural networks) because we would need to integrate over all possible latent variables $z$. This makes direct MLE impossible.</p>
+                
+                <p>The solution is to introduce an approximation. Instead of maximizing the log-likelihood directly, we maximize a **lower bound** on it. This bound is known as the **Evidence Lower Bound (ELBO)**.</p>
+                
+                <p>To derive it, we introduce an approximate posterior distribution, $q_\phi(z|x)$, often called the **encoder** or **inference network**. This network learns to approximate the true (but intractable) posterior $p_\theta(z|x)$, i.e., it tries to infer the likely latent codes $z$ that could have generated a given data point $x$. Using Jensen's inequality, we can show:</p>
+                
+                <div class="callout callout-keyidea">
+                    <p class="callout-title">The Evidence Lower Bound (ELBO)</p>
+                    $$ \log p_\theta(x) \ge \mathbb{E}_{z \sim q_\phi(z|x)}[\log p_\theta(x|z)] - D_{KL}(q_\phi(z|x) || p_\theta(z)) $$
+                    <p>This inequality shows that the log-likelihood (the "evidence") is always greater than or equal to the ELBO. By maximizing the ELBO, we are pushing up the log-likelihood of our data.</p>
+                </div>
+
+                <p>The ELBO consists of two terms:</p>
+                <ol>
+                    <li>$\mathbb{E}_{z \sim q_\phi(z|x)}[\log p_\theta(x|z)]$: The **reconstruction loss**. This term encourages the decoder $p_\theta(x|z)$ to be able to reconstruct the original data point $x$ from a latent code $z$ sampled from the encoder's distribution $q_\phi(z|x)$.</li>
+                    <li>$D_{KL}(q_\phi(z|x) || p_\theta(z))$: The **KL divergence regularizer**. This term acts as a regularizer, pushing the approximate posterior distribution $q_\phi(z|x)$ from the encoder to be close to the prior distribution $p_\theta(z)$. It encourages the latent space to be well-structured and smooth.</li>
+                </ol>
+                <p>We now have a tractable objective function that we can optimize with respect to both the decoder parameters $\theta$ and the encoder parameters $\phi$.</p>
+                
+                <h3 id="s4-3">Expectation-Maximization (EM) for GMMs</h3>
+                <p>
+                    The idea of using latent variables and optimizing a lower bound is a classic statistical technique, beautifully illustrated by the **Expectation-Maximization (EM)** algorithm for **Gaussian Mixture Models (GMMs)**.
+                </p>
+                <p>
+                    A GMM is a latent variable model where the latent variable $z$ is discrete, indicating which of the $K$ Gaussian "clusters" a data point $x$ belongs to. The EM algorithm iteratively optimizes the GMM parameters (the means, covariances, and weights of each Gaussian) by alternating between two steps, which correspond to maximizing the ELBO:
+                </p>
+                <ul>
+                    <li><strong>E-Step (Expectation):</strong> For fixed model parameters, calculate the "responsibility" of each cluster for each data point. This is equivalent to computing the optimal approximate posterior $q(z|x)$, which tells us the probability that a point $x$ belongs to cluster $k$.</li>
+                    <li><strong>M-Step (Maximization):</strong> Using these fixed responsibilities, update the model parameters (means, covariances) to maximize the expected log-likelihood. This corresponds to optimizing $\theta$ while keeping $q$ fixed.</li>
+                </ul>
+                <p>The EM algorithm for GMMs works well because both steps can be solved analytically. For deep neural networks, this is not possible, which leads us to the Variational Autoencoder.</p>
+                
+                <h3 id="s4-4">Variational Autoencoders (VAEs)</h3>
+                <p>
+                    A **Variational Autoencoder (VAE)** is a neural implementation of the latent variable modeling framework. It consists of two neural networks:
+                </p>
+                <ul>
+                    <li><strong>Encoder ($q_\phi(z|x)$):</strong> A probabilistic neural network that takes a data point $x$ and outputs the parameters (typically mean $\mu$ and variance $\sigma^2$) of a Gaussian distribution in the latent space. This is our approximate posterior.</li>
+                    <li><strong>Decoder ($p_\theta(x|z)$):</strong> A probabilistic neural network that takes a latent vector $z$ and outputs the parameters of a distribution over the data space (e.g., the mean of a Gaussian, or pixel probabilities for a Bernoulli distribution). This is our likelihood.</li>
+                </ul>
+
+                <h3 id="s4-5">The Reparameterization Trick</h3>
+                <p>To train a VAE, we need to backpropagate gradients through the entire model. However, there is a problem: the sampling step. We sample $z$ from the distribution output by the encoder, $z \sim q_\phi(z|x)$. Sampling is a stochastic operation, and we cannot backpropagate gradients through a random node.</p>
+                
+                <p>The **reparameterization trick** is a clever way to solve this. It reframes the sampling process to make it differentiable. Instead of sampling $z$ directly from the encoder's output distribution, we sample a random noise variable $\epsilon$ from a simple, fixed distribution (e.g., $\epsilon \sim \mathcal{N}(0, I)$) and then compute $z$ as a deterministic function of the encoder's parameters and this noise.</p>
+                
+                <div class="callout callout-keyidea">
+                    <p class="callout-title">The Reparameterization Trick for a Gaussian Encoder</p>
+                    <p>
+                        The encoder outputs a mean $\mu_\phi(x)$ and a standard deviation $\sigma_\phi(x)$. Instead of sampling $z \sim \mathcal{N}(\mu_\phi(x), \sigma^2_\phi(x))$, we compute:
+                    </p>
+                    $$ z = \mu_\phi(x) + \sigma_\phi(x) \odot \epsilon, \quad \text{where } \epsilon \sim \mathcal{N}(0, I) $$
+                    <p>($\odot$ denotes element-wise multiplication). Now, the randomness is injected by $\epsilon$, which is external to the network. The path from the encoder parameters ($\phi$) through $\mu$ and $\sigma$ to $z$ and finally to the loss is now fully deterministic and differentiable. This allows gradients to flow back to the encoder.</p>
+                </div>
+
+                <h3 id="s4-6">Training and Inference with VAEs</h3>
+                
+                <h4>Training</h4>
+                <p>
+                    Training a VAE involves a single forward pass and backward pass to optimize the ELBO with respect to both $\phi$ and $\theta$. For a single data point $x$:
+                </p>
+                <ol>
+                    <li>Pass $x$ through the encoder to get $\mu_\phi(x)$ and $\sigma_\phi(x)$.</li>
+                    <li>Sample $\epsilon \sim \mathcal{N}(0, I)$ and compute the latent vector $z$ using the reparameterization trick.</li>
+                    <li>Pass $z$ through the decoder to get the parameters of the output distribution (e.g., a reconstructed mean $\hat{x}$).</li>
+                    <li>Calculate the two parts of the ELBO loss:
+                        <ul>
+                            <li><strong>Reconstruction Loss:</strong> e.g., Mean Squared Error between $x$ and $\hat{x}$.</li>
+                            <li><strong>KL Loss:</strong> The analytical KL divergence between the encoder's output distribution $\mathcal{N}(\mu_\phi, \sigma^2_\phi)$ and the prior $\mathcal{N}(0, I)$.</li>
+                        </ul>
+                    </li>
+                    <li>Backpropagate the total loss to update both $\phi$ and $\theta$.</li>
+                </ol>
+                
+                <h4>Inference (Generation)</h4>
+                <p>Once the VAE is trained, we can discard the encoder and use only the decoder for generation. To generate a new sample:</p>
+                <ol>
+                    <li>Sample a new latent vector $z_{new}$ directly from the prior distribution, $z_{new} \sim p(z) = \mathcal{N}(0, I)$.</li>
+                    <li>Pass this $z_{new}$ through the trained decoder network to obtain the parameters of the output distribution.</li>
+                    <li>Generate the final sample $\hat{x}_{new}$ from this output distribution (or simply take the mean).</li>
+                </ol>
+                <p>Because the KL regularization term forced the encoder to map inputs to a smooth, Gaussian-like cloud in the latent space, sampling from this space with the decoder produces new, coherent, and varied samples.</p>
+
+                <h3 id="s4-7">Beta-VAE and Vector Quantized VAE (VQ-VAE)</h3>
+                
+                <h4>Beta-VAE</h4>
+                <p>The standard VAE objective can be viewed as an autoencoder with a regularization term (the KL divergence). The **Beta-VAE** modifies the ELBO by adding a hyperparameter $\beta$ to control the strength of this regularization:</p>
+                $$ \mathcal{L}_{\beta-VAE} = \mathbb{E}_{z \sim q_\phi(z|x)}[\log p_\theta(x|z)] - \beta \cdot D_{KL}(q_\phi(z|x) || p_\theta(z)) $$
+                <ul>
+                    <li>When $\beta > 1$, it places more emphasis on the KL term, forcing a more disentangled latent space where individual latent dimensions might correspond to independent factors of variation. This is useful for feature learning but can harm reconstruction quality.</li>
+                    <li>When $\beta < 1$, it prioritizes reconstruction over regularization.</li>
+                </ul>
+
+                <h4>Vector Quantized VAE (VQ-VAE)</h4>
+                <p>Standard VAEs use a continuous latent space. For some data types like language or speech, a discrete latent space might be more natural. The **VQ-VAE** achieves this by introducing a learnable, discrete codebook of embedding vectors.</p>
+                <ol>
+                    <li>The encoder outputs a continuous vector $z_e(x)$.</li>
+                    <li>This vector is then "quantized" by finding the closest vector in the learnable codebook: $z_q(x) = \text{argmin}_{e_k} ||z_e(x) - e_k||_2$.</li>
+                    <li>This discrete, quantized vector $z_q(x)$ is then passed to the decoder to reconstruct the image.</li>
+                </ol>
+                <p>Training a VQ-VAE is tricky because the `argmin` operation is non-differentiable. This is solved by using a "straight-through estimator" that simply copies the gradient from the decoder's input back to the encoder's output. The VQ-VAE can produce very sharp, high-quality images because the decoder is trained on a limited set of discrete codes, avoiding the "blurriness" sometimes seen in standard VAEs.</p>
+
+                <div class="callout callout-questions">
+                    <p class="callout-title">Knowledge Check: Part 4</p>
+                    <ol>
+                        <li>Explain the fundamental difference between how a GAN and a VAE represent the data generation process.</li>
+                        <li>What is the purpose of the encoder ($q_\phi(z|x)$) in a VAE? Why can't we just train the decoder ($p_\theta(x|z)$) on its own?</li>
+                        <li>Describe the reparameterization trick in your own words. Why is it essential for training a VAE with stochastic gradient descent?</li>
+                        <li>The VAE loss has two components: a reconstruction term and a KL divergence term. What problem might arise if the weight on the KL divergence term (i.e., $\beta$) is set too high?</li>
+                        <li>What is the main motivation for using a discrete latent space, as implemented in the VQ-VAE?</li>
+                    </ol>
+                </div>
+            </section>
+            
+            <!-- Part 5: DDPMs -->
+            <section id="ch5">
+                <h2>Part 5: Denoising Diffusion Probabilistic Models (DDPMs)</h2>
+
+                <h3 id="s5-1">From Hierarchical VAEs to DDPMs</h3>
+                <p>
+                    Diffusion models are the current state-of-the-art for high-quality image generation. They can be understood as a special type of latent variable model, specifically a **Hierarchical VAE** with particular constraints.
+                </p>
+                <p>
+                    A standard VAE maps data to a single latent space in one step. A Hierarchical VAE does this in multiple, sequential steps: $X \to Z_1 \to Z_2 \to \dots \to Z_T$. This allows for a more gradual and potentially less lossy compression of information.
+                </p>
+                
+                <div class="callout callout-keyidea">
+                    <p class="callout-title">DDPM as a special Hierarchical VAE</p>
+                    <p>A DDPM is a Hierarchical VAE with three key properties:</p>
+                    <ol>
+                        <li>
+                            <strong>Latent dimension matches data dimension:</strong> The dimensionality of every latent space $X_t$ is the same as the original data space $X_0$. There is no compression.
+                        </li>
+                        <li>
+                            <strong>The forward process (encoder) is fixed:</strong> The encoding process is not learned. It is a fixed Markov chain that gradually adds Gaussian noise to the data over $T$ timesteps.
+                        </li>
+                        <li>
+                            <strong>The reverse process (decoder) is learned:</strong> The goal is to learn the reverse process—a denoising model that can incrementally remove noise to recover the original data from a pure noise input.
+                        </li>
+                    </ol>
+                </div>
+
+                <h3 id="s5-2">DDPM Formulation: Forward & Reverse Process</h3>
+                
+                <h4>The Forward Process (Diffusion)</h4>
+                <p>The forward process, $q$, gradually corrupts a clean image $x_0$ by adding a small amount of Gaussian noise at each of $T$ timesteps. This is a fixed Markov chain:</p>
+                $$ q(x_t | x_{t-1}) = \mathcal{N}(x_t; \sqrt{1 - \beta_t} x_{t-1}, \beta_t I) $$
+                <p>Here, $\{\beta_t\}_{t=1}^T$ is a small, predefined variance schedule. After $T$ steps (e.g., $T=1000$), the data $x_T$ becomes indistinguishable from pure Gaussian noise, $x_T \approx \mathcal{N}(0, I)$.</p>
+
+                <p>A key property of this process is that we can sample $x_t$ at any timestep $t$ directly from $x_0$, without iterating through all previous steps. Letting $\alpha_t = 1 - \beta_t$ and $\bar{\alpha}_t = \prod_{i=1}^t \alpha_i$:</p>
+                $$ q(x_t|x_0) = \mathcal{N}(x_t; \sqrt{\bar{\alpha}_t}x_0, (1 - \bar{\alpha}_t)I) \implies x_t = \sqrt{\bar{\alpha}_t}x_0 + \sqrt{1-\bar{\alpha}_t}\epsilon, \quad \epsilon \sim \mathcal{N}(0, I) $$
+                <p>This "closed-form" expression is crucial for efficient training.</p>
+                
+                <h4>The Reverse Process (Denoising)</h4>
+                <p>
+                    The magic of diffusion is learning the reverse process, $p_\theta(x_{t-1}|x_t)$, which denoises the data one step at a time. If we can reverse the entire chain starting from pure noise $x_T \sim \mathcal{N}(0, I)$, we can generate a new, clean image $x_0$.
+                </p>
+                <p>The reverse process is also modeled as a Markov chain with learnable Gaussian transitions:</p>
+                 $$ p_\theta(x_{t-1} | x_t) = \mathcal{N}(x_{t-1}; \mu_\theta(x_t, t), \Sigma_\theta(x_t, t)) $$
+                <p>Our goal is to train a neural network to learn the mean $\mu_\theta$ and variance $\Sigma_\theta$ of this reverse transition. It can be shown that if the $\beta_t$ steps are small enough, the reverse transitions have the same functional form as the forward ones.</p>
+
+                <h3 id="s5-3">Deriving the ELBO for DDPMs</h3>
+                <p>Like a VAE, we train the DDPM by maximizing the Evidence Lower Bound (ELBO). For a hierarchical model, the ELBO breaks down into a sum of terms representing each step of the process.</p>
+                <p>After significant algebraic manipulation (involving applying Bayes' rule to the forward process posteriors), the ELBO for a DDPM can be simplified into a very elegant form:</p>
+
+                <div class="callout callout-keyidea">
+                    <p class="callout-title">Simplified DDPM Objective</p>
+                    $$ L_{simple}(\theta) = \mathbb{E}_{t, x_0, \epsilon} \left[ || \epsilon - \epsilon_\theta(\sqrt{\bar{\alpha}_t}x_0 + \sqrt{1-\bar{\alpha}_t}\epsilon, t) ||^2 \right] $$
+                </div>
+
+                <p>Let's unpack this surprisingly simple result:</p>
+                <ul>
+                    <li>$\epsilon$ is the random Gaussian noise we sampled.</li>
+                    <li>$\sqrt{\bar{\alpha}_t}x_0 + \sqrt{1-\bar{\alpha}_t}\epsilon$ is just our noisy image $x_t$.</li>
+                    <li>$\epsilon_\theta(x_t, t)$ is a neural network that is trained to <strong>predict the noise</strong> $\epsilon$ that was added to create $x_t$.</li>
+                </ul>
+
+                <blockquote>
+                    Incredibly, training a diffusion model simplifies to a simple regression task: train a neural network to predict the noise component of a noisy image. The neural network architecture typically used for this task is a <strong>U-Net</strong>.
+                </blockquote>
+
+                <h3 id="s5-4">Training and Inference in DDPMs</h3>
+                
+                <h4>Training Algorithm</h4>
+                <ol>
+                    <li>Take a random training sample $x_0$.</li>
+                    <li>Pick a random timestep $t$ uniformly from $\{1, ..., T\}$.</li>
+                    <li>Generate a random Gaussian noise sample $\epsilon \sim \mathcal{N}(0, I)$.</li>
+                    <li>Create the noisy image $x_t$ using the closed-form equation: $x_t = \sqrt{\bar{\alpha}_t}x_0 + \sqrt{1-\bar{\alpha}_t}\epsilon$.</li>
+                    <li>Pass this $x_t$ and the timestep $t$ into the noise prediction network $\epsilon_\theta(x_t, t)$.</li>
+                    <li>Calculate the mean squared error between the actual noise $\epsilon$ and the predicted noise $\epsilon_\theta$.</li>
+                    <li>Update the network weights $\theta$ using gradient descent on this loss.</li>
+                </ol>
+
+                <h4>Inference (Sampling) Algorithm</h4>
+                <p>To generate a new image, we perform the reverse process step-by-step for $T$ steps.</p>
+                <ol>
+                    <li>Start with pure noise by sampling $x_T \sim \mathcal{N}(0, I)$.</li>
+                    <li>Iterate backwards from $t=T$ down to $1$:
+                        <ul>
+                            <li>Predict the noise in the current image using the trained network: $\epsilon_\theta(x_t, t)$.</li>
+                            <li>Use this predicted noise to calculate the mean of the reverse distribution, $\mu_\theta(x_t, t)$. The full equation for the mean is:
+                            $$ \mu_\theta(x_t, t) = \frac{1}{\sqrt{\alpha_t}} \left( x_t - \frac{\beta_t}{\sqrt{1 - \bar{\alpha}_t}} \epsilon_\theta(x_t, t) \right) $$</li>
+                            <li>Sample the next, slightly less noisy image:
+                            $$ x_{t-1} = \mu_\theta(x_t, t) + \sigma_t z, \quad \text{where } z \sim \mathcal{N}(0, I) \text{ if } t>1, \text{ else } z=0 $$
+                            The variance $\sigma_t^2$ is fixed according to the beta schedule.
+                            </li>
+                        </ul>
+                    </li>
+                    <li>The final result $x_0$ is the generated image.</li>
+                </ol>
+                <p>This iterative sampling process is why diffusion models are slower at inference than one-step models like GANs or VAEs.</p>
+
+                <div class="callout callout-questions">
+                    <p class="callout-title">Knowledge Check: Part 5</p>
+                    <ol>
+                        <li>Describe the key difference between a standard VAE's encoder and a DDPM's forward process.</li>
+                        <li>What is the primary objective of the neural network trained in a DDPM? Does it predict the original image, the noise, or something else?</li>
+                        <li>Why is the "closed-form" expression for sampling $x_t$ directly from $x_0$ so important for making DDPM training efficient?</li>
+                        <li>Explain why DDPM inference is much slower than GAN or VAE inference.</li>
+                        <li>What is the role of the timestep embedding `t` provided as input to the U-Net in a DDPM? Why can't the network just work on the noisy image `x_t` alone?</li>
+                    </ol>
+                </div>
+            </section>
+            
+             <!-- Part 6: Conditional Diffusion -->
+            <section id="ch6">
+                <h2>Part 6: Conditional Diffusion and Advanced Architectures</h2>
+                
+                <h3 id="s6-1">Alternate DDPM Interpretations: Noise & Score Predictors</h3>
+                <p>
+                    We've seen that a DDPM can be framed as a model that predicts the noise $\epsilon$ added to an image. However, there are several other mathematically equivalent interpretations that provide different intuitions and lead to new capabilities.
+                </p>
+
+                <p>It can be shown through algebraic rearrangement that a model trained to predict noise $\epsilon_\theta(x_t, t)$ is also implicitly predicting:</p>
+                <ol>
+                    <li><strong>The original image $x_0$</strong>: There's a direct formula to get a prediction for $x_0$ from $x_t$ and the predicted noise $\epsilon_\theta$.
+                    $$ \hat{x}_0 = \frac{1}{\sqrt{\bar{\alpha}_t}}(x_t - \sqrt{1 - \bar{\alpha}_t}\epsilon_\theta(x_t,t)) $$
+                    This frames the DDPM as a <strong>denoising model</strong> that directly predicts the clean image.
+                    </li>
+                    <li><strong>The score function $\nabla_{x_t} \log p(x_t)$</strong>: The score function points in the direction of highest data density. It turns out the score is directly proportional to the negative noise:
+                     $$ \nabla_{x_t} \log p(x_t) = -\frac{\epsilon}{\sqrt{1 - \bar{\alpha}_t}} $$
+                    Therefore, a network predicting the noise $\epsilon_\theta$ is also implicitly learning the score function of the noisy data distribution. This links DDPMs to another class of generative models called **Score-Based Models**.
+                    </li>
+                </ol>
+
+                <h3 id="s6-2">Guided Diffusion for Conditional Generation</h3>
+                <p>How do we adapt DDPMs for conditional generation, e.g., generating an image given a text prompt $y$? The score-based interpretation is particularly useful here. We want to sample from the conditional distribution $p(x_0 | y)$. This is equivalent to using the conditional score, $\nabla_{x_t} \log p(x_t | y)$, to guide the reverse process.</p>
+
+                <p>Using Bayes' rule, we can decompose the conditional score:</p>
+                $$ \nabla_{x_t} \log p(x_t|y) = \nabla_{x_t} \log p(x_t) + \nabla_{x_t} \log p(y|x_t) $$
+
+                This is a powerful result: the conditional score we want is just the **unconditional score** (which our DDPM already predicts) plus a **"guidance" term**, $\nabla_{x_t} \log p(y|x_t)$.</p>
+
+                <h4>Classifier Guidance</h4>
+                <p>The guidance term $\nabla_{x_t} \log p(y|x_t)$ tells us how to modify $x_t$ to make it more likely to have the class label $y$. We can learn this term by training a separate **classifier** that learns to predict the label $y$ from a noisy image $x_t$.</p>
+                
+                <p>The sampling process is then modified: at each step, we first predict the unconditional mean $\mu_\theta(x_t,t)$ as usual. We then add a guidance step in the direction of the classifier's gradient to get the modified conditional mean, which is then used for sampling $x_{t-1}$. This guides the generation towards the desired class.</p>
+
+                <h4>Classifier-Free Guidance</h4>
+                <p>
+                    Training a separate classifier on noisy images is cumbersome. **Classifier-Free Guidance** is a clever trick to achieve the same effect without an explicit classifier. The key idea is to train a single conditional DDPM network, $\epsilon_\theta(x_t, t, y)$, that takes the conditioning information $y$ as an additional input.
+                </p>
+
+                <p>
+                    During training, we randomly, with some probability, replace the true condition $y$ with a null token ($\emptyset$). This forces the single network to learn both the conditional prediction ($\epsilon_\theta(x_t, t, y)$) and the unconditional prediction ($\epsilon_\theta(x_t, t, \emptyset)$) simultaneously.
+                </p>
+
+                <p>During inference, we can simulate the guidance term by taking a weighted combination of the conditional and unconditional predictions:</p>
+                $$ \hat{\epsilon} = \epsilon_\theta(x_t, t, \emptyset) + s \cdot (\epsilon_\theta(x_t, t, y) - \epsilon_\theta(x_t, t, \emptyset)) $$
+                <p>Here, $s > 1$ is a guidance scale. This new $\hat{\epsilon}$ is then used in the sampling step. This method is simpler to train and often yields better results than explicit classifier guidance.</p>
+
+                <h3 id="s6-3">Latent Diffusion Models</h3>
+                <p>
+                    DDPMs are computationally expensive, especially for high-resolution images, because the diffusion process operates in the pixel space. **Latent Diffusion Models (LDMs)**, like the one used in Stable Diffusion, tackle this by running the diffusion process in a smaller, learned **latent space**.
+                </p>
+                <ol>
+                    <li>
+                        First, a powerful autoencoder (often a VQ-VAE) is trained. Its purpose is to compress an image into a smaller, perceptually-rich latent representation. The encoder maps $x \to z$, and the decoder maps $z \to \hat{x}$.
+                    </li>
+                    <li>
+                        The DDPM is then trained entirely in this latent space. The forward process adds noise to a latent code $z_0$, and the reverse process learns to denoise a noisy latent code $z_t$.
+                    </li>
+                    <li>
+                        For generation, the DDPM is run in the latent space to produce a clean latent code $z_0$. This latent code is then passed through the pre-trained autoencoder's decoder once to produce the final, high-resolution image.
+                    </li>
+                </ol>
+                <p>By working in a compressed space, LDMs drastically reduce the computational cost of training and inference while maintaining high generation quality.</p>
+                
+                <h3 id="s6-4">Denoising Diffusion Implicit Models (DDIMs)</h3>
+                <p>
+                    One major drawback of DDPMs is that sampling is slow, requiring thousands of steps. **DDIMs** reformulate the generation process to allow for much faster sampling.
+                </p>
+                <p>
+                    DDPMs assume a specific Markovian forward process. DDIMs introduce a more general class of non-Markovian forward processes that share the same marginal distributions as the DDPM process. A remarkable result is that all these different forward processes can be reversed using the **same network** trained with the standard DDPM objective.
+                </p>
+                <p>This flexibility allows for a different, deterministic reverse process. Setting a specific parameter ($\eta=0$) makes the sampling process deterministic (given a starting noise vector). This has two huge advantages:</p>
+                <ol>
+                    <li>
+                        <strong>Faster Sampling:</strong> Because the process is no longer stochastic, we can take much larger "jumps" during the reverse process, sampling in as few as 20-50 steps instead of 1000, with little degradation in quality.
+                    </li>
+                    <li>
+                        <strong>Invertibility:</strong> The deterministic process means there is a unique mapping from $x_0 \to x_T$ and back. This allows for **DDIM inversion**, where we can find the exact noise vector $x_T$ that corresponds to a real image $x_0$. This is extremely powerful for image editing applications.
+                    </li>
+                </ol>
+
+                 <div class="callout callout-questions">
+                    <p class="callout-title">Knowledge Check: Part 6</p>
+                    <ol>
+                        <li>Explain the connection between predicting noise in a DDPM and predicting the score function of the noisy data distribution.</li>
+                        <li>What is the main drawback of using classifier guidance for conditional diffusion, and how does classifier-free guidance solve it?</li>
+                        <li>Describe the two main stages of a Latent Diffusion Model (LDM). Why is this approach more computationally efficient than a standard DDPM operating in pixel space?</li>
+                        <li>What are the two primary advantages of DDIMs over DDPMs?</li>
+                        <li>You want to edit a real photograph by changing the weather from "sunny" to "snowy" while preserving the objects in the scene. Which model (DDPM or DDIM) and technique would be most suitable for this task, and why?</li>
+                    </ol>
+                </div>
+            </section>
+            
+            <!-- Part 7: Autoregressive Models and Transformers -->
+            <section id="ch7">
+                <h2>Part 7: Autoregressive Models and Transformers</h2>
+                
+                <h3 id="s7-1">Introduction to Autoregressive (AR) Models</h3>
+                <p>
+                    While diffusion models excel at generating high-resolution images, another class of models, **Autoregressive (AR) Models**, has become the dominant paradigm for modeling sequential data, especially text. These models form the foundation of all modern Large Language Models (LLMs) like GPT and Gemini.
+                </p>
+                
+                <div class="callout callout-definition">
+                    <p class="callout-title">Definition: Autoregressive Model</p>
+                    <p>
+                        An AR model treats a data point $x$ (e.g., a sentence) as a sequence of tokens $x = (x_1, x_2, \ldots, x_T)$. It models the joint probability of the sequence by factoring it into a product of conditional probabilities using the chain rule:
+                    </p>
+                    $$ p(x) = p(x_1, x_2, \ldots, x_T) = \prod_{t=1}^T p(x_t | x_1, x_2, \ldots, x_{t-1}) = \prod_{t=1}^T p(x_t | x_{<t}) $$
+                </div>
+                
+                <p>The core task of an AR model is to predict the next token in a sequence given all the previous tokens. It's "autoregressive" because it regresses on itself (its own past predictions). To generate a new sequence, the model predicts one token at a time, appends it to the input sequence, and then feeds the new sequence back in to predict the next token, and so on.</p>
+
+                <p>Early AR models like Recurrent Neural Networks (RNNs) and LSTMs process sequences token by token, maintaining a hidden state that summarizes the past. However, they suffer from two main issues:</p>
+                <ul>
+                    <li><strong>Sequential Computation:</strong> They are difficult to parallelize, making them slow to train on long sequences.</li>
+                    <li><strong>Long-Range Dependencies:</strong> It is difficult for them to capture relationships between tokens that are far apart in the sequence, as information gets diluted through the recurrent hidden state.</li>
+                </ul>
+
+                <h3 id="s7-2">The Attention Mechanism</h3>
+                <p>
+                    The **Transformer** architecture solved these problems by introducing the **attention mechanism**. Instead of a recurrent state, attention allows the model to directly look at and weigh the importance of all other tokens in the sequence when processing a single token.
+                </p>
+                <p>
+                    The most common form is **Scaled Dot-Product Attention**. For a given token, we compute three vectors from its input embedding:
+                </p>
+                <ul>
+                    <li><strong>Query (Q):</strong> What I am looking for.</li>
+                    <li><strong>Key (K):</strong> What I have.</li>
+                    <li><strong>Value (V):</strong> What I will communicate.</li>
+                </ul>
+                <p>
+                    The attention output for a single query token is a weighted sum of all the value vectors in the sequence. The weight for each value vector is computed by taking the dot product of the query vector with its corresponding key vector, scaling it, and passing it through a softmax function.
+                </p>
+                
+                $$ \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V $$
+                
+                <blockquote>
+                    Essentially, the query from one token "asks" all other key tokens: "How relevant are you to me?" The dot product scores their relevance. These scores are then used to create a weighted average of the value tokens, allowing information to be directly passed between any two tokens in the sequence, regardless of distance.
+                </blockquote>
+
+                <h3 id="s7-3">The Transformer Architecture</h3>
+                <p>
+                    The Transformer architecture is built around the attention mechanism. A typical "decoder-only" Transformer block (as used in models like GPT) consists of the following components:
+                </p>
+                
+                <ol>
+                    <li>
+                        <strong>Masked Multi-Head Self-Attention:</strong>
+                        <ul>
+                            <li><strong>Self-Attention:</strong> The Q, K, and V vectors all come from the same input sequence.</li>
+                            <li><strong>Multi-Head:</strong> Instead of one set of Q, K, V projections, the model learns multiple "heads" in parallel, each focusing on different types of relationships. The outputs are then concatenated and combined.</li>
+                            <li><strong>Masked:</strong> To maintain the autoregressive property (predicting the future from the past), a "causal mask" is applied. Before the softmax step, the attention scores for all future tokens are set to negative infinity. This ensures that when predicting token $t$, the model can only attend to tokens from $1$ to $t$.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Add & Norm (Residual Connection and Layer Normalization):</strong> After the attention block, a residual connection is added ($X + \text{Attention}(X)$) and the result is layer-normalized. This helps stabilize training for very deep networks.
+                    </li>
+                    <li>
+                        <strong>Feed-Forward Network:</strong> A simple position-wise MLP is applied to each token's representation independently. This provides additional non-linearity and computational capacity.
+                    </li>
+                    <li>
+                        <strong>Add & Norm:</strong> Another residual connection and layer normalization are applied after the feed-forward network.
+                    </li>
+                </ol>
+                <p>
+                    These blocks are stacked multiple times (e.g., 96 times in GPT-3) to create a very deep and powerful model. Additionally, since the attention mechanism itself is permutation-invariant, **positional encodings** are added to the input embeddings to give the model information about the order of the tokens.
+                </p>
+
+                <h3 id="s7-4">Training and Inference for AR Transformers</h3>
+                
+                <h4>Training (Teacher Forcing)</h4>
+                <p>
+                    Transformer-based language models are trained on a simple **next-token prediction** task using a technique called **teacher forcing**.
+                </p>
+                <p>
+                    Given a sequence $(x_1, x_2, \ldots, x_T)$, we create input/target pairs:
+                </p>
+                <ul>
+                    <li>Input to the model: $(x_1, x_2, \ldots, x_{T-1})$</li>
+                    <li>Target outputs: $(x_2, x_3, \ldots, x_T)$</li>
+                </ul>
+                <p>The model processes the entire input sequence in parallel (thanks to causal masking). For each input position $t$, it must predict the target token $x_{t+1}$. The loss is typically the cross-entropy loss between the model's predicted probability distribution and the one-hot encoded target token, summed over all positions. Because the true next token is always provided as the target, this is called teacher forcing.</p>
+                
+                <h4>Inference (Decoding)</h4>
+                <p>
+                    Since we don't have a "teacher" during inference, we must generate tokens one by one. Starting with a prompt (e.g., "Once upon a time,"), we feed it into the model. The model outputs a probability distribution over the entire vocabulary for the next token. We then select a token from this distribution, append it to our sequence, and feed the extended sequence back into the model to generate the next token. This process is repeated until a special "end-of-sequence" token is generated or a maximum length is reached.
+                </p>
+                
+                <p>Several strategies exist for selecting the next token:</p>
+                <ul>
+                    <li><strong>Greedy Decoding:</strong> Always pick the single most likely token. Fast and deterministic, but can be repetitive and uncreative.</li>
+                    <li><strong>Top-K Sampling:</strong> Sample from the top K most likely tokens. Introduces randomness and diversity.</li>
+                    <li><strong>Top-P (Nucleus) Sampling:</strong> Sample from the smallest set of tokens whose cumulative probability exceeds a threshold P. This is an adaptive method that considers more tokens when the model is uncertain and fewer when it is confident.</li>
+                </ul>
+                
+                <div class="callout callout-questions">
+                    <p class="callout-title">Knowledge Check: Part 7</p>
+                    <ol>
+                        <li>What is the fundamental factorization that all autoregressive models are based on? Explain why this makes them suitable for sequence generation.</li>
+                        <li>Explain the primary limitation of RNN-based autoregressive models that the Transformer architecture was designed to overcome.</li>
+                        <li>In the self-attention mechanism, what is the role of the Query, Key, and Value vectors?</li>
+                        <li>What is "causal masking" in a Transformer decoder, and why is it essential for training an autoregressive language model?</li>
+                        <li>Compare and contrast Greedy Decoding and Top-K Sampling for generating text from a Transformer. What are the pros and cons of each?</li>
+                    </ol>
+                </div>
+            </section>
+
+             <!-- Part 8: RLHF -->
+            <section id="ch8">
+                <h2>Part 8: Reinforcement Learning for Alignment</h2>
+
+                <h3 id="s8-1">An Overview of Reinforcement Learning (RL)</h3>
+                <p>
+                    After pre-training on a massive dataset, LLMs are excellent at predicting the next token. However, this doesn't guarantee they will be helpful, harmless, or follow instructions. **Alignment** is the process of fine-tuning the model to match human preferences. Reinforcement Learning (RL) provides a powerful framework for this task.
+                </p>
+                <p>
+                    The RL paradigm is framed as a **Markov Decision Process (MDP)** involving an <strong>agent</strong> interacting with an <strong>environment</strong>.
+                </p>
+                <ul>
+                    <li>The agent observes a <strong>state</strong> ($s_t$).</li>
+                    <li>Based on its <strong>policy</strong> ($\pi$), it takes an <strong>action</strong> ($a_t$).</li>
+                    <li>The environment provides a scalar <strong>reward</strong> ($r_t$) and transitions to a new state ($s_{t+1}$).</li>
+                </ul>
+                <p>The agent's goal is to learn a policy $\pi(a_t | s_t)$ that maximizes the **expected cumulative discounted reward** (or return) over an entire trajectory $\tau = (s_0, a_0, r_0, s_1, a_1, r_1, \ldots)$.</p>
+                
+                <div class="callout callout-definition">
+                    <p class="callout-title">The RL Objective</p>
+                    <p>The goal is to find the optimal policy parameters $\theta^*$ that maximize the objective function $J(\theta)$:</p>
+                    $$ \theta^* = \arg\max_\theta J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta} \left[ \sum_{t=0}^T \gamma^t r_t \right] $$
+                    <p>where $\gamma \in [0, 1]$ is a discount factor that prioritizes immediate rewards over future ones.</p>
+                </div>
+
+                <h4>Connecting RL to Language Models</h4>
+                <ul>
+                    <li><strong>Policy ($\pi_\theta$):</strong> The language model itself.</li>
+                    <li><strong>State ($s_t$):</strong> The current sequence of tokens generated so far (prompt + response).</li>
+                    <li><strong>Action ($a_t$):</strong> The next token to be generated.</li>
+                    <li><strong>Reward ($r_t$):</strong> A score given by a separate "reward model" after a full response is generated. This reward reflects how much a human would prefer that response.</li>
+                </ul>
+
+                <h3 id="s8-2">The Policy Gradient Theorem</h3>
+                <p>
+                    How do we update the policy (LLM weights) to maximize the reward? We use gradient ascent. The **Policy Gradient Theorem** gives us a way to compute the gradient of the RL objective, $\nabla_\theta J(\theta)$, even though the reward function is non-differentiable.
+                </p>
+                <p>
+                    A foundational form of this gradient is:
+                </p>
+                $$ \nabla_\theta J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta} \left[ \left( \sum_{t=0}^T \nabla_\theta \log \pi_\theta(a_t|s_t) \right) \left( \sum_{t=0}^T r_t \right) \right] $$
+                <p>
+                    This is often refined by subtracting a baseline to reduce variance. A common baseline is the **value function** $V(s_t)$, which estimates the expected future return from state $s_t$. The difference between the actual return and the value function is the **advantage function** $A(s_t, a_t)$.
+                </p>
+
+                 <div class="callout callout-keyidea">
+                    <p class="callout-title">Advantage-Based Policy Gradient</p>
+                     $$ \nabla_\theta J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta} \left[ \sum_{t=0}^T \nabla_\theta \log \pi_\theta(a_t|s_t) A(s_t, a_t) \right] $$
+                    <p>Intuitively, this rule says: "If an action led to a better-than-expected outcome (positive advantage), increase its probability. If it led to a worse-than-expected outcome (negative advantage), decrease its probability."</p>
+                </div>
+                
+                <h3 id="s8-3">Proximal Policy Optimization (PPO)</h3>
+                <p>
+                    Vanilla policy gradient updates can be unstable. If a single gradient step changes the policy too much, performance can catastrophically collapse. **PPO** is an algorithm designed to take the largest possible improvement step without moving too far from the previous policy, ensuring more stable training.
+                </p>
+                <p>
+                    PPO optimizes a surrogate objective function that includes a **clipped probability ratio**. Let $r_t(\theta) = \frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_{old}}(a_t|s_t)}$ be the ratio of the new policy's probability to the old policy's probability for a given action.
+                </p>
+                <p>The PPO clipped objective is:</p>
+                $$ L^{CLIP}(\theta) = \mathbb{E}_t \left[ \min(r_t(\theta)A_t, \text{clip}(r_t(\theta), 1-\epsilon, 1+\epsilon)A_t) \right] $$
+                <ul>
+                    <li>The first term, $r_t(\theta)A_t$, is the standard policy gradient objective.</li>
+                    <li>The second term clips the probability ratio to be within a small window $[1-\epsilon, 1+\epsilon]$. By taking the minimum of the two terms, PPO creates a pessimistic bound on the policy update, preventing excessively large changes and stabilizing the learning process.</li>
+                </ul>
+
+                <h3 id="s8-4">Reward Modeling</h3>
+                <p>
+                    To use PPO, we need a reward signal. Directly assigning a scalar score to every generated response is difficult for humans. It is much easier for humans to compare two responses and say which one is better. This leads to the creation of a **preference dataset**.
+                </p>
+                
+                <p>
+                    A preference dataset consists of triplets: (prompt $x$, chosen response $y_w$, rejected response $y_l$).
+                </p>
+
+                <p>
+                    A separate **reward model** ($r_\psi(x, y)$), typically another LLM, is then trained on this preference data. It is trained to output a higher scalar score for the chosen response than for the rejected response. The **Bradley-Terry model** is often used for this, which frames the problem as predicting the probability that $y_w$ is preferred over $y_l$:
+                </p>
+                $$ p(y_w \succ y_l | x) = \sigma(r_\psi(x, y_w) - r_\psi(x, y_l)) $$
+                <p>This reward model is trained using a standard binary cross-entropy loss. Once trained, it can provide the reward signal needed for the PPO alignment phase.</p>
+
+                <h3 id="s8-5">Direct Preference Optimization (DPO)</h3>
+                <p>
+                    **DPO** is a more recent and simpler alternative to PPO. It cleverly shows that the constrained RL optimization objective can be optimized **directly on the preference data**, completely bypassing the need for an explicit reward model and the complexities of RL training.
+                </p>
+                
+                <p>DPO starts from the same RL objective as PPO but derives an analytical mapping from the optimal reward function to the optimal policy. By substituting this relationship back into the Bradley-Terry loss function used for reward modeling, it derives a new loss function directly in terms of policies:</p>
+                
+                <div class="callout callout-keyidea">
+                    <p class="callout-title">The DPO Loss Function</p>
+                     $$ L_{DPO}(\pi_\theta, \pi_{ref}) = -\mathbb{E}_{(x,y_w,y_l)\sim D} \left[ \log \sigma\left( \beta \log \frac{\pi_\theta(y_w|x)}{\pi_{ref}(y_w|x)} - \beta \log \frac{\pi_\theta(y_l|x)}{\pi_{ref}(y_l|x)} \right) \right] $$
+                </div>
+
+                <p>
+                    This loss can be optimized with a single stage of fine-tuning. We take our pre-trained model as the reference policy ($\pi_{ref}$) and then fine-tune a copy of it ($\pi_\theta$) using the DPO loss on the preference dataset. The objective directly increases the likelihood of preferred responses and decreases the likelihood of rejected responses, relative to the reference policy, effectively achieving alignment without the need for a separate reward model or complex RL pipeline.
+                </p>
+
+                 <div class="callout callout-questions">
+                    <p class="callout-title">Knowledge Check: Part 8</p>
+                    <ol>
+                        <li>Why is "alignment" necessary for large language models that have already been pre-trained on vast amounts of text?</li>
+                        <li>In the context of aligning an LLM, what corresponds to the "policy", "state", "action", and "reward" in the Reinforcement Learning framework?</li>
+                        <li>What is the core idea behind the PPO algorithm? Why is it generally more stable than a vanilla policy gradient approach?</li>
+                        <li>Why is collecting a "preference dataset" of comparisons (e.g., response A is better than response B) often easier and more reliable than collecting direct scalar reward scores for each response?</li>
+                        <li>What is the main advantage of DPO over PPO for model alignment? Explain how it simplifies the overall training pipeline.</li>
+                    </ol>
+                </div>
+            </section>
+            
+             <!-- Part 9: State-Space Models -->
+            <section id="ch9">
+                <h2>Part 9: State-Space Models (SSMs)</h2>
+
+                <h3 id="s9-1">Introduction to State-Space Models</h3>
+                <p>
+                    While Transformers have dominated sequence modeling, they have a major limitation: their computational complexity is quadratic in the sequence length, $O(L^2)$, due to the self-attention mechanism. This makes processing very long sequences prohibitively expensive.
+                </p>
+                <p>
+                    **State-Space Models (SSMs)** have emerged as a promising alternative, offering a combination of the parallelism of CNNs and the recurrent nature of RNNs, often with near-linear complexity in sequence length.
+                </p>
+                
+                <p>An SSM is a system that maps an input sequence $u(t)$ to an output sequence $y(t)$ via an intermediate hidden state $x(t)$. A continuous-time linear SSM is defined by the differential equations:</p>
+
+                 <div class="callout callout-definition">
+                    <p class="callout-title">Continuous-Time State-Space Model</p>
+                     $$ x'(t) = Ax(t) + Bu(t) $$
+                     $$ y(t) = Cx(t) $$
+                </div>
+                
+                <p>Where:</p>
+                <ul>
+                    <li>$x(t) \in \mathbb{R}^N$ is the latent state.</li>
+                    <li>$u(t) \in \mathbb{R}$ is the input signal (for simplicity, we consider a 1D input).</li>
+                    <li>$y(t) \in \mathbb{R}$ is the output signal.</li>
+                    <li>$A, B, C$ are learnable matrices that define the system's dynamics.</li>
+                </ul>
+                
+                <h4>Discretization and Convolution</h4>
+                <p>Since we work with discrete sequences (like tokens), we need to discretize this continuous system. This turns the differential equations into recurrence relations with new matrices $(\bar{A}, \bar{B}, \bar{C})$.</p>
+                
+                <p>A key insight is that this linear recurrence can be "unrolled". The output at any step $k$, $y_k$, can be expressed as a **convolution** of the entire input sequence $u$ with a fixed filter or kernel $\bar{K}$:</p>
+                $$ y = \bar{K} * u $$
+                
+                <p>The kernel $\bar{K}$ is determined entirely by the state matrices $(\bar{A}, \bar{B}, \bar{C})$. This is powerful because convolution is highly parallelizable. Using the **Convolution Theorem**, convolution in the time domain is equivalent to element-wise multiplication in the frequency domain. This operation can be performed very efficiently (in $O(L \log L)$ time) using the Fast Fourier Transform (FFT).</p>
+                
+                <h3 id="s9-2">Structured SSMs (S4)</h3>
+                <p>
+                    The main challenge is efficiently computing the SSM kernel $\bar{K}$. A direct computation is slow. The **Structured State-Space Sequence (S4)** model introduces a critical innovation: it imposes a specific structure on the state matrix $A$.
+                </p>
+                <p>
+                    The S4 model constrains the matrix $A$ to be **diagonal plus low-rank (DPLR)**. This special structure, combined with mathematical identities, allows the convolutional kernel $\bar{K}$ to be computed extremely efficiently without ever needing to explicitly form the large state matrices.
+                </p>
+                
+                <p>
+                    By working in the frequency domain and leveraging this structured approach, S4 can process very long sequences with near-linear time complexity, while its state-space formulation gives it the ability to capture long-range dependencies effectively.
+                </p>
+
+                <h3 id="s9-3">Selective SSMs (Mamba)</h3>
+                <p>
+                    While S4 is efficient, its parameters $(A, B, C)$ are static—they do not change based on the input. This makes it difficult for the model to perform **content-aware reasoning**, for example, selectively remembering or ignoring certain tokens based on context.
+                </p>
+                
+                <p>
+                    **Mamba** introduces a crucial modification: it makes the SSM parameters $(B, C)$ and the discretization step size $\Delta$ **input-dependent**.
+                </p>
+                 
+                <div class="callout callout-keyidea">
+                    <p class="callout-title">The Mamba Architecture</p>
+                    <p>
+                        In Mamba, the input sequence $u$ is passed through a linear projection to produce dynamic parameters $\Delta(u)$, $B(u)$, and $C(u)$ for each token.
+                    </p>
+                    <p>This means the system's dynamics change at every timestep based on the content of the input. This "selectivity" allows Mamba to:</p>
+                    <ul>
+                        <li>Focus on or ignore specific inputs.</li>
+                        <li>Modulate how much information flows into or out of the hidden state at each step.</li>
+                    </ul>
+                </div>
+
+                <p>This input-dependent nature breaks the time-invariance required for the efficient convolution method used in S4. Mamba solves this by using a hardware-aware **parallel scan algorithm**. This allows it to compute the recurrence efficiently on modern GPUs, achieving both linear-time scaling and content-aware selectivity.</p>
+                
+                <p>Mamba and its variants have demonstrated performance that rivals or exceeds that of Transformers on many language and long-sequence tasks, but with significantly better computational efficiency, making them a very exciting and active area of research in generative modeling.</p>
+
+                <div class="callout callout-questions">
+                    <p class="callout-title">Knowledge Check: Part 9</p>
+                    <ol>
+                        <li>What is the primary computational bottleneck of the Transformer architecture, and how do State-Space Models aim to solve it?</li>
+                        <li>Explain the relationship between a linear discrete-time SSM and the convolution operation. How is this relationship leveraged for efficient computation?</li>
+                        <li>What is the main structural constraint that the S4 model imposes on its state matrix A, and why is this constraint important?</li>
+                        <li>What key limitation of S4 and other static SSMs does the Mamba architecture address?</li>
+                        <li>How does Mamba make its state-space parameters input-dependent, and what computational challenge does this introduce? How does Mamba overcome this challenge?</li>
+                    </ol>
+                </div>
+
+            </section>
+            
+            <section id="appendix">
+                 <h2>Appendix: PyTorch Practical Guides</h2>
+                 <p>This section compiles the key concepts and code implementations from the tutorial sessions, providing a practical guide to building these generative models using PyTorch.</p>
+
+                <h3 id="a1">Forward Pass & Backpropagation in an MLP</h3>
+                <p>
+                    The fundamental mechanics of training a neural network involve the forward pass, error computation, and the backward pass (backpropagation). We'll illustrate this with a simple Multi-Layer Perceptron (MLP) for a regression task.
+                </p>
+                
+                <h4>The Setup</h4>
+                <ol>
+                    <li><strong>Forward Pass:</strong> An input vector $x$ is fed through the network. At each layer, a weighted sum of inputs from the previous layer is calculated, a bias is added, and the result is passed through a non-linear activation function (like Sigmoid or ReLU). This process continues until a final output prediction $\hat{y}$ is produced.</li>
+                    <li><strong>Error Computation:</strong> A <strong>loss function</strong> measures the discrepancy between the prediction $\hat{y}$ and the true target label $y$. For regression, a common choice is the Mean Squared Error (MSE) loss: $L = \frac{1}{2}(y - \hat{y})^2$.</li>
+                    <li><strong>Backward Pass (Backpropagation):</strong> To minimize the loss, we need to know how to adjust the network's weights. We compute the gradient of the loss with respect to each weight in the network, $\frac{\partial L}{\partial w}$. This is done efficiently using the **chain rule** of calculus, starting from the output layer and propagating the error gradients backward through the network.</li>
+                    <li><strong>Weight Update:</strong> Once we have the gradients, we update the weights using an optimizer like **Stochastic Gradient Descent (SGD)**: $w_{new} = w_{old} - \alpha \frac{\partial L}{\partial w}$, where $\alpha$ is the learning rate.</li>
+                </ol>
+
+                <h4>PyTorch Implementation Philosophy</h4>
+                <p>In PyTorch, this process is automated through the `autograd` engine. You only need to define the forward pass; PyTorch automatically builds a computational graph and knows how to compute the gradients during the backward pass.</p>
+
+                <pre><code><span class="code-comment"># Define a simple MLP Model in PyTorch</span>
+<span class="code-keyword">import</span> torch
+<span class="code-keyword">import</span> torch.nn <span class="code-keyword">as</span> nn
+
+<span class="code-keyword">class</span> <span class="code-function">SimpleMLP</span>(nn.Module):
+    <span class="code-keyword">def</span> <span class="code-function">__init__</span>(<span class="code-keyword">self</span>):
+        <span class="code-keyword">super</span>().<span class="code-function">__init__</span>()
+        <span class="code-keyword">self</span>.layer1 = nn.Linear(<span class="code-keyword">in_features</span>=<span class="code-number">784</span>, <span class="code-keyword">out_features</span>=<span class="code-number">256</span>)
+        <span class="code-keyword">self</span>.activation1 = nn.ReLU()
+        <span class="code-keyword">self</span>.layer2 = nn.Linear(<span class="code-keyword">in_features</span>=<span class="code-number">256</span>, <span class="code-keyword">out_features</span>=<span class="code-number">10</span>)
+
+    <span class="code-keyword">def</span> <span class="code-function">forward</span>(<span class="code-keyword">self</span>, x):
+        x = <span class="code-keyword">self</span>.layer1(x)
+        x = <span class="code-keyword">self</span>.activation1(x)
+        x = <span class="code-keyword">self</span>.layer2(x)
+        <span class="code-keyword">return</span> x
+        
+<span class="code-comment"># Training Loop Snippet</span>
+model = SimpleMLP()
+optimizer = torch.optim.SGD(model.parameters(), <span class="code-keyword">lr</span>=<span class="code-number">0.01</span>)
+loss_fn = nn.MSELoss()
+
+<span class="code-keyword">for</span> x, y <span class="code-keyword">in</span> dataloader: <span class="code-comment"># Assume dataloader provides data</span>
+    <span class="code-comment"># 1. Forward pass</span>
+    y_pred = model(x)
+    
+    <span class="code-comment"># 2. Compute loss</span>
+    loss = loss_fn(y_pred, y)
+    
+    <span class="code-comment"># Zero the gradients from previous step</span>
+    optimizer.zero_grad()
+    
+    <span class="code-comment"># 3. Backward pass: compute gradients</span>
+    loss.backward()
+    
+    <span class="code-comment"># 4. Weight update</span>
+    optimizer.step()
+</code></pre>
+
+                <h3 id="a2">Introduction to PyTorch: Tensors</h3>
+                <p>The fundamental building block in PyTorch is the <strong>Tensor</strong>. A Tensor is a multi-dimensional array, very similar to a NumPy `ndarray`, but with a major advantage: it can be moved to a GPU to accelerate computations.</p>
+                
+                <h4>Creating Tensors</h4>
+                <pre><code><span class="code-keyword">import</span> torch
+<span class="code-keyword">import</span> numpy <span class="code-keyword">as</span> np
+
+<span class="code-comment"># From a Python list</span>
+data_list = [[<span class="code-number">1</span>, <span class="code-number">2</span>], [<span class="code-number">3</span>, <span class="code-number">4</span>]]
+x_data = torch.tensor(data_list)
+<span class="code-keyword">print</span>(x_data)
+
+<span class="code-comment"># From a NumPy array</span>
+np_array = np.array(data_list)
+x_np = torch.from_numpy(np_array)
+<span class="code-keyword">print</span>(x_np)
+
+<span class="code-comment"># Creating tensors with specific values or shapes</span>
+shape = (<span class="code-number">2</span>, <span class="code-number">3</span>)
+ones_tensor = torch.ones(shape)
+zeros_tensor = torch.zeros(shape)
+rand_tensor = torch.rand(shape) <span class="code-comment"># Uniform random [0, 1)</span>
+</code></pre>
+
+                <h4>Tensor Attributes</h4>
+                <pre><code>tensor = torch.rand(<span class="code-number">3</span>, <span class="code-number">4</span>)
+<span class="code-keyword">print</span>(<span class="code-string">f"Shape: {tensor.shape}"</span>)
+<span class="code-keyword">print</span>(<span class="code-string">f"Data type: {tensor.dtype}"</span>)
+<span class="code-keyword">print</span>(<span class="code-string">f"Device: {tensor.device}"</span>) <span class="code-comment"># CPU by default</span>
+
+<span class="code-comment"># Moving tensors to GPU (if available)</span>
+<span class="code-keyword">if</span> torch.cuda.is_available():
+    tensor = tensor.to(<span class="code-string">'cuda'</span>)
+    <span class="code-keyword">print</span>(<span class="code-string">f"New device: {tensor.device}"</span>)
+</code></pre>
+                
+                <h4>Operations on Tensors</h4>
+                <p>PyTorch supports a rich library of operations, including indexing, slicing, reshaping, and mathematical operations.</p>
+                
+                <pre><code>t1 = torch.rand(<span class="code-number">4</span>, <span class="code-number">4</span>)
+t2 = torch.rand(<span class="code-number">4</span>, <span class="code-number">4</span>)
+
+<span class="code-comment"># Element-wise multiplication</span>
+element_wise_mul = t1 * t2 <span class="code-comment"># or torch.mul(t1, t2)</span>
+
+<span class="code-comment"># Matrix multiplication</span>
+matrix_mul = t1 @ t2.T <span class="code-comment"># .T is transpose, @ is matrix multiplication</span>
+<span class="code-comment"># or torch.matmul(t1, t2.T)</span>
+
+<span class="code-comment"># Concatenation</span>
+<span class="code-comment"># Concatenate along columns (dimension 1)</span>
+cat_cols = torch.cat([t1, t2, t1], <span class="code-keyword">dim</span>=<span class="code-number">1</span>)
+<span class="code-keyword">print</span>(cat_cols.shape) <span class="code-comment"># Output: torch.Size([4, 12])</span>
+
+<span class="code-comment"># Concatenate along rows (dimension 0)</span>
+cat_rows = torch.cat([t1, t2], <span class="code-keyword">dim</span>=<span class="code-number">0</span>)
+<span class="code-keyword">print</span>(cat_rows.shape) <span class="code-comment"># Output: torch.Size([8, 4])</span>
+</code></pre>
+                
+                <h3 id="a3">Datasets and DataLoaders</h3>
+                <p>PyTorch provides two powerful primitives, `Dataset` and `DataLoader`, to standardize and streamline the process of loading and iterating over data.</p>
+                
+                <h4>Dataset</h4>
+                <p>A `Dataset` object is a class that stores your data and labels. Any custom dataset must inherit from `torch.utils.data.Dataset` and implement three methods:</p>
+                <ul>
+                    <li>`__init__()`: Where you initialize your data (e.g., load file paths, read annotations).</li>
+                    <li>`__len__()`: Should return the total number of samples in the dataset.</li>
+                    <li>`__getitem__(idx)`: Should load and return a single sample (and its label) given an index `idx`.</li>
+                </ul>
+                <pre><code><span class="code-keyword">from</span> torch.utils.data <span class="code-keyword">import</span> Dataset
+
+<span class="code-keyword">class</span> <span class="code-function">CustomImageDataset</span>(Dataset):
+    <span class="code-keyword">def</span> <span class="code-function">__init__</span>(<span class="code-keyword">self</span>, annotations_file, img_dir, <span class="code-keyword">transform</span>=<span class="code-keyword">None</span>):
+        <span class="code-keyword">self</span>.img_labels = pd.read_csv(annotations_file)
+        <span class="code-keyword">self</span>.img_dir = img_dir
+        <span class="code-keyword">self</span>.transform = transform
+
+    <span class="code-keyword">def</span> <span class="code-function">__len__</span>(<span class="code-keyword">self</span>):
+        <span class="code-keyword">return</span> <span class="code-keyword">len</span>(<span class="code-keyword">self</span>.img_labels)
+
+    <span class="code-keyword">def</span> <span class="code-function">__getitem__</span>(<span class="code-keyword">self</span>, idx):
+        img_path = os.path.join(<span class="code-keyword">self</span>.img_dir, <span class="code-keyword">self</span>.img_labels.iloc[idx, <span class="code-number">0</span>])
+        image = read_image(img_path)
+        label = <span class="code-keyword">self</span>.img_labels.iloc[idx, <span class="code-number">1</span>]
+        <span class="code-keyword">if</span> <span class="code-keyword">self</span>.transform:
+            image = <span class="code-keyword">self</span>.transform(image)
+        <span class="code-keyword">return</span> image, label
+</code></pre>
+
+                <h4>DataLoader</h4>
+                <p>A `DataLoader` is an iterable that wraps a `Dataset`. It handles creating batches of data, shuffling, and loading data in parallel using multiple workers.</p>
+                <pre><code><span class="code-keyword">from</span> torch.utils.data <span class="code-keyword">import</span> DataLoader
+
+<span class="code-comment"># torchvision has many built-in datasets</span>
+<span class="code-keyword">from</span> torchvision.datasets <span class="code-keyword">import</span> FashionMNIST
+<span class="code-keyword">from</span> torchvision <span class="code-keyword">import</span> transforms
+
+training_data = FashionMNIST(
+    <span class="code-keyword">root</span>=<span class="code-string">"data"</span>,
+    <span class="code-keyword">train</span>=<span class="code-keyword">True</span>,
+    <span class="code-keyword">download</span>=<span class="code-keyword">True</span>,
+    <span class="code-keyword">transform</span>=transforms.ToTensor()
+)
+
+train_dataloader = DataLoader(training_data, <span class="code-keyword">batch_size</span>=<span class="code-number">64</span>, <span class="code-keyword">shuffle</span>=<span class="code-keyword">True</span>)
+
+<span class="code-comment"># You can now iterate over the DataLoader in your training loop</span>
+<span class="code-keyword">for</span> batch, (X, y) <span class="code-keyword">in</span> <span class="code-keyword">enumerate</span>(train_dataloader):
+    <span class="code-keyword">print</span>(<span class="code-string">f"Batch {batch+1}"</span>)
+    <span class="code-keyword">print</span>(<span class="code-string">f"X shape: {X.shape}"</span>)
+    <span class="code-keyword">print</span>(<span class="code-string">f"y shape: {y.shape}"</span>)
+    <span class="code-keyword">break</span>
+</code></pre>
+
+                <h3 id="a4">Building a Neural Network Model</h3>
+                <p>All neural network models in PyTorch should inherit from the `torch.nn.Module` class. Key components:</p>
+                <ul>
+                    <li><strong>`__init__()` method:</strong> This is where you define all the layers your model will use (e.g., convolutional, linear, activation layers).</li>
+                    <li><strong>`forward()` method:</strong> This is where you define the computation of your model. You specify how the input data `x` flows through the layers defined in `__init__`.</li>
+                </ul>
+
+                <p>PyTorch's `nn` module provides a rich set of pre-built layers. A common pattern is to use `nn.Sequential` to stack layers into a simple pipeline.</p>
+                <pre><code><span class="code-keyword">import</span> torch.nn <span class="code-keyword">as</span> nn
+
+device = <span class="code-string">'cuda'</span> <span class="code-keyword">if</span> torch.cuda.is_available() <span class="code-keyword">else</span> <span class="code-string">'cpu'</span>
+
+<span class="code-keyword">class</span> <span class="code-function">NeuralNetwork</span>(nn.Module):
+    <span class="code-keyword">def</span> <span class="code-function">__init__</span>(<span class="code-keyword">self</span>):
+        <span class="code-keyword">super</span>().__init__()
+        <span class="code-keyword">self</span>.flatten = nn.Flatten()
+        <span class="code-keyword">self</span>.linear_relu_stack = nn.Sequential(
+            nn.Linear(<span class="code-number">28</span>*<span class="code-number">28</span>, <span class="code-number">512</span>),
+            nn.ReLU(),
+            nn.Linear(<span class="code-number">512</span>, <span class="code-number">512</span>),
+            nn.ReLU(),
+            nn.Linear(<span class="code-number">512</span>, <span class="code-number">10</span>),
+        )
+
+    <span class="code-keyword">def</span> <span class="code-function">forward</span>(<span class="code-keyword">self</span>, x):
+        x = <span class="code-keyword">self</span>.flatten(x)
+        logits = <span class="code-keyword">self</span>.linear_relu_stack(x)
+        <span class="code-keyword">return</span> logits
+
+model = NeuralNetwork().to(device)
+<span class="code-keyword">print</span>(model)
+</code></pre>
+
+                <h3 id="a5">Implementing GANs and DC-GAN</h3>
+                <p>Implementing a GAN involves defining two models (Generator and Discriminator) and two optimizers, and then alternating between training them.</p>
+
+                <h4>Core GAN Implementation Steps</h4>
+                <pre><code><span class="code-comment"># Define Generator (MLP based)</span>
+<span class="code-keyword">class</span> <span class="code-function">Generator</span>(nn.Module):
+    <span class="code-comment"># ... __init__ defining layers to map from latent_dim to image_dim</span>
+    <span class="code-comment"># ... forward method</span>
+
+<span class="code-comment"># Define Discriminator (MLP based)</span>
+<span class="code-keyword">class</span> <span class="code-function">Discriminator</span>(nn.Module):
+    <span class="code-comment"># ... __init__ defining layers from image_dim to 1 (outputting a logit)</span>
+    <span class="code-comment"># ... forward method with a final nn.Sigmoid()</span>
+
+<span class="code-comment"># Setup</span>
+latent_dim = <span class="code-number">100</span>
+generator = Generator(latent_dim)
+discriminator = Discriminator()
+g_optimizer = torch.optim.Adam(generator.parameters(), <span class="code-keyword">lr</span>=<span class="code-number">0.0002</span>)
+d_optimizer = torch.optim.Adam(discriminator.parameters(), <span class="code-keyword">lr</span>=<span class="code-number">0.0002</span>)
+loss_fn = nn.BCELoss() <span class="code-comment"># Binary Cross Entropy</span>
+
+<span class="code-comment"># Main Training Loop</span>
+<span class="code-keyword">for</span> epoch <span class="code-keyword">in</span> <span class="code-keyword">range</span>(num_epochs):
+    <span class="code-keyword">for</span> real_images, _ <span class="code-keyword">in</span> dataloader:
+        batch_size = real_images.size(<span class="code-number">0</span>)
+        real_labels = torch.ones(batch_size, <span class="code-number">1</span>)
+        fake_labels = torch.zeros(batch_size, <span class="code-number">1</span>)
+        
+        <span class="code-comment"># --- Train the Discriminator ---</span>
+        <span class="code-comment"># Loss on real images</span>
+        real_outputs = discriminator(real_images.view(batch_size, -<span class="code-number">1</span>))
+        d_loss_real = loss_fn(real_outputs, real_labels)
+        
+        <span class="code-comment"># Loss on fake images</span>
+        noise = torch.randn(batch_size, latent_dim)
+        fake_images = generator(noise)
+        fake_outputs = discriminator(fake_images.detach()) <span class="code-comment"># .detach() stops gradient flow to generator</span>
+        d_loss_fake = loss_fn(fake_outputs, fake_labels)
+        
+        <span class="code-comment"># Total discriminator loss and update</span>
+        d_loss = d_loss_real + d_loss_fake
+        d_optimizer.zero_grad()
+        d_loss.backward()
+        d_optimizer.step()
+        
+        <span class="code-comment"># --- Train the Generator ---</span>
+        <span class="code-comment"># We want the generator to fool the discriminator</span>
+        fake_outputs = discriminator(fake_images) <span class="code-comment"># Note: no .detach() here</span>
+        g_loss = loss_fn(fake_outputs, real_labels) <span class="code-comment"># Trick: generator loss uses real_labels</span>
+        
+        <span class="code-comment"># Generator update</span>
+        g_optimizer.zero_grad()
+        g_loss.backward()
+        g_optimizer.step()
+</code></pre>
+
+                <h4>DC-GAN Implementation</h4>
+                <p>For a DC-GAN, the core logic is the same. The only change is in the model architectures. The Generator uses `nn.ConvTranspose2d` layers for upsampling, and the Discriminator uses `nn.Conv2d` layers for downsampling, often with `nn.BatchNorm2d` and `nn.LeakyReLU` for stability.</p>
+
+                <h3 id="a6">Implementing Conditional GAN and Bi-GAN</h3>
+                
+                <h4>Conditional GAN</h4>
+                <p>To implement a cGAN, we need to pass the conditional information (e.g., class labels) to both the Generator and Discriminator. A common technique is to create an embedding for the labels and concatenate it to the input.</p>
+
+                <pre><code><span class="code-comment"># Inside Generator __init__</span>
+<span class="code-keyword">self</span>.label_embedding = nn.Embedding(num_classes, embedding_dim)
+<span class="code-comment"># Input layer now takes (latent_dim + embedding_dim)</span>
+
+<span class="code-comment"># Inside Generator forward(noise, labels)</span>
+label_emb = <span class="code-keyword">self</span>.label_embedding(labels)
+gen_input = torch.cat((noise, label_emb), -<span class="code-number">1</span>)
+<span class="code-comment"># ... pass gen_input through layers ...</span>
+
+<span class="code-comment"># Similar logic applies to the Discriminator, concatenating image features and label embeddings</span>
+</code></pre>
+
+                <h4>Bi-GAN</h4>
+                <p>Bi-GAN requires three models: Generator, Discriminator, and an Encoder. The Discriminator is modified to take pairs of (image, latent) as input and distinguish real pairs from fake pairs.</p>
+
+                <pre><code><span class="code-keyword">class</span> <span class="code-function">Encoder</span>(nn.Module):
+    <span class="code-comment"># ... layers to map from image_dim to latent_dim</span>
+
+<span class="code-keyword">class</span> <span class="code-function">BiGAN_Discriminator</span>(nn.Module):
+    <span class="code-comment"># ... layers to map from (image_dim + latent_dim) to 1</span>
+    <span class="code-keyword">def</span> <span class="code-function">forward</span>(<span class="code-keyword">self</span>, x, z):
+        xz_pair = torch.cat((x, z), -<span class="code-number">1</span>)
+        <span class="code-comment"># ... pass through layers ...</span>
+
+<span class="code-comment"># In training loop:</span>
+<span class="code-comment"># Real pair: (real_image, encoder(real_image))</span>
+<span class="code-comment"># Fake pair: (generator(noise), noise)</span>
+</code></pre>
+
+                <h3 id="a7">Implementing WGAN and UDA</h3>
+
+                <h4>Wasserstein GAN (WGAN)</h4>
+                <p>WGAN implementation requires a few key changes to the standard GAN training loop:</p>
+                <ol>
+                    <li><strong>Critic Architecture:</strong> The discriminator (now called a critic) outputs a raw score, not a probability. Remove the final `nn.Sigmoid` layer.</li>
+                    <li><strong>Loss Function:</strong> The loss is no longer binary cross-entropy. It directly reflects the Wasserstein estimate:
+                        <ul>
+                            <li>Critic Loss: `torch.mean(critic(fake_images)) - torch.mean(critic(real_images))`</li>
+                            <li>Generator Loss: `-torch.mean(critic(fake_images))`</li>
+                        </ul>
+                    </li>
+                    <li><strong>Weight Clipping:</strong> After each critic update (`critic_optimizer.step()`), you must manually clip the critic's weights.
+                    <pre><code><span class="code-keyword">for</span> p <span class="code-keyword">in</span> critic.parameters():
+    p.data.clamp_(-<span class="code-number">0.01</span>, <span class="code-number">0.01</span>)
+</code></pre></li>
+                    <li><strong>Optimizer:</strong> WGAN often works better with `RMSprop` instead of `Adam`.</li>
+                </ol>
+
+                <h4>Unsupervised Domain Adaptation (UDA)</h4>
+                <p>Implementing adversarial UDA requires three models and two losses.</p>
+
+                <pre><code><span class="code-comment"># Models</span>
+feature_extractor = FeatureExtractor()
+label_classifier = LabelClassifier()
+domain_discriminator = DomainDiscriminator()
+
+<span class="code-comment"># Optimizers for each component</span>
+<span class="code-comment"># Losses</span>
+label_loss_fn = nn.CrossEntropyLoss()
+domain_loss_fn = nn.BCELoss()
+
+<span class="code-comment"># Training loop requires iterators for both source and target data</span>
+<span class="code-keyword">for</span> source_data, target_data <span class="code-keyword">in</span> <span class="code-keyword">zip</span>(source_loader, target_loader):
+    <span class="code-comment"># ... get source_images, source_labels, target_images</span>
+    
+    <span class="code-comment"># --- Train label classifier and domain discriminator ---</span>
+    <span class="code-comment"># Get features</span>
+    source_features = feature_extractor(source_images)
+    target_features = feature_extractor(target_images)
+
+    <span class="code-comment"># Label loss on source only</span>
+    label_preds = label_classifier(source_features)
+    label_loss = label_loss_fn(label_preds, source_labels)
+
+    <span class="code-comment"># Domain loss</span>
+    all_features = torch.cat((source_features, target_features))
+    domain_preds = domain_discriminator(all_features)
+    <span class="code-comment"># ... create domain labels (1s for source, 0s for target) and compute domain loss ...</span>
+    
+    <span class="code-comment"># --- Train feature extractor to FOOL discriminator ---</span>
+    <span class="code-comment"># Here we use the negative of the domain loss to maximize it</span>
+    <span class="code-comment"># This requires using a gradient reversal layer in practice for stable training</span>
+</code></pre>
+
+                <h3 id="a8">Implementing VAEs (Beta-VAE & VQ-VAE)</h3>
+
+                <h4>Beta-VAE Implementation</h4>
+                <p>Implementing a VAE involves an encoder that outputs `mu` and `log_var`, a `reparameterize` function, and a decoder.</p>
+                <pre><code><span class="code-keyword">class</span> <span class="code-function">VAE</span>(nn.Module):
+    <span class="code-keyword">def</span> <span class="code-function">__init__</span>(<span class="code-keyword">self</span>):
+        <span class="code-keyword">super</span>().__init__()
+        <span class="code-comment"># ... define encoder layers ...</span>
+        <span class="code-keyword">self</span>.fc_mu = nn.Linear(encoder_out_dim, latent_dim)
+        <span class="code-keyword">self</span>.fc_log_var = nn.Linear(encoder_out_dim, latent_dim)
+        <span class="code-comment"># ... define decoder layers ...</span>
+
+    <span class="code-keyword">def</span> <span class="code-function">encode</span>(<span class="code-keyword">self</span>, x):
+        h = <span class="code-comment"># ... pass x through encoder layers ...</span>
+        <span class="code-keyword">return</span> <span class="code-keyword">self</span>.fc_mu(h), <span class="code-keyword">self</span>.fc_log_var(h)
+
+    <span class="code-keyword">def</span> <span class="code-function">reparameterize</span>(<span class="code-keyword">self</span>, mu, log_var):
+        std = torch.exp(<span class="code-number">0.5</span> * log_var)
+        eps = torch.randn_like(std)
+        <span class="code-keyword">return</span> mu + eps * std
+
+    <span class="code-keyword">def</span> <span class="code-function">decode</span>(<span class="code-keyword">self</span>, z):
+        <span class="code-comment"># ... pass z through decoder layers to get reconstruction ...</span>
+        <span class="code-keyword">return</span> reconstruction
+
+    <span class="code-keyword">def</span> <span class="code-function">forward</span>(<span class="code-keyword">self</span>, x):
+        mu, log_var = <span class="code-keyword">self</span>.encode(x.view(-<span class="code-number">1</span>, <span class="code-number">784</span>))
+        z = <span class="code-keyword">self</span>.reparameterize(mu, log_var)
+        <span class="code-keyword">return</span> <span class="code-keyword">self</span>.decode(z), mu, log_var
+
+<span class="code-comment"># VAE Loss Function</span>
+<span class="code-keyword">def</span> <span class="code-function">vae_loss</span>(recon_x, x, mu, log_var, beta=<span class="code-number">1.0</span>):
+    recon_loss = F.mse_loss(recon_x, x.view(-<span class="code-number">1</span>, <span class="code-number">784</span>), <span class="code-keyword">reduction</span>=<span class="code-string">'sum'</span>)
+    kld_loss = -<span class="code-number">0.5</span> * torch.sum(<span class="code-number">1</span> + log_var - mu.pow(<span class="code-number">2</span>) - log_var.exp())
+    <span class="code-keyword">return</span> recon_loss + beta * kld_loss
+</code></pre>
+                
+                <h4>VQ-VAE Implementation</h4>
+                <p>A VQ-VAE is more complex. It requires a custom `VectorQuantizer` module that contains the codebook (`nn.Embedding`) and handles the non-differentiable `argmin` step using a straight-through gradient.</p>
+                <pre><code><span class="code-keyword">class</span> <span class="code-function">VectorQuantizer</span>(nn.Module):
+    <span class="code-comment"># ... init with number of embeddings and dimension ...</span>
+    
+    <span class="code-keyword">def</span> <span class="code-function">forward</span>(<span class="code-keyword">self</span>, z_e):
+        <span class="code-comment"># z_e is encoder output</span>
+        <span class="code-comment"># 1. Reshape z_e and codebook to calculate distances</span>
+        <span class="code-comment"># 2. Find closest codebook entry (argmin)</span>
+        <span class="code-comment"># 3. Use straight-through estimator to pass gradients:</span>
+        z_q = z_e + (z_q_from_codebook - z_e).detach()
+        <span class="code-comment"># 4. Compute commitment loss and codebook loss</span>
+        <span class="code-keyword">return</span> z_q, vq_loss
+
+<span class="code-keyword">class</span> <span class="code-function">VQVAE</span>(nn.Module):
+    <span class="code-keyword">def</span> <span class="code-function">__init__</span>(<span class="code-keyword">self</span>, <span class="code-keyword">...</span>):
+        <span class="code-comment"># define encoder, quantizer, decoder</span>
+
+    <span class="code-keyword">def</span> <span class="code-function">forward</span>(<span class="code-keyword">self</span>, x):
+        z_e = <span class="code-keyword">self</span>.encoder(x)
+        z_q, vq_loss = <span class="code-keyword">self</span>.quantizer(z_e)
+        recon_x = <span class="code-keyword">self</span>.decoder(z_q)
+        <span class="code-keyword">return</span> recon_x, vq_loss
+
+<span class="code-comment"># Total loss = reconstruction_loss + vq_loss</span>
+</code></pre>
+
+                <h3 id="a9">The U-Net Architecture</h3>
+                <p>The **U-Net** is a convolutional architecture originally designed for biomedical image segmentation, but its structure is perfectly suited for the noise prediction task in DDPMs. Its key feature is a symmetric encoder-decoder structure with **skip connections**.</p>
+                <ul>
+                    <li><strong>Encoder (Downsampling Path):</strong> A series of convolutional blocks and max-pooling layers progressively reduce the spatial dimensions and increase the number of feature channels, capturing context.</li>
+                    <li><strong>Bottleneck:</strong> A final convolutional layer at the lowest spatial resolution.</li>
+                    <li><strong>Decoder (Upsampling Path):</strong> A series of transposed convolutions progressively upsample the feature maps back to the original image size.</li>
+                    <li><strong>Skip Connections:</strong> Critically, the feature maps from each stage of the encoder are concatenated with the feature maps at the corresponding stage of the decoder. This allows the decoder to directly access low-level spatial information from the encoder, helping it to create detailed, high-resolution reconstructions.</li>
+                </ul>
+                <p>In a DDPM, the U-Net takes a noisy image `x_t` and a time embedding `t` as input and is trained to output the predicted noise `epsilon`. The skip connections are vital for preserving image details throughout the denoising process.</p>
+
+                <h3 id="a10">Implementing DDPM and DDIM</h3>
+
+                <h4>DDPM Implementation</h4>
+                <p>The implementation revolves around a class that encapsulates the noise prediction model (a U-Net) and handles the forward and reverse processes.</p>
+                <pre><code><span class="code-keyword">class</span> <span class="code-function">DiffusionModel</span>:
+    <span class="code-keyword">def</span> <span class="code-function">__init__</span>(<span class="code-keyword">self</span>, T=<span class="code-number">1000</span>):
+        <span class="code-keyword">self</span>.T = T
+        <span class="code-comment"># Precompute betas, alphas, alpha_bars, etc.</span>
+        <span class="code-keyword">self</span>.model = UNet(...) <span class="code-comment"># The noise predictor network</span>
+        
+    <span class="code-keyword">def</span> <span class="code-function">forward_process</span>(<span class="code-keyword">self</span>, x0, t, noise):
+        <span class="code-comment"># Apply x_t = sqrt(alpha_bar_t)*x0 + sqrt(1-alpha_bar_t)*noise</span>
+        <span class="code-keyword">return</span> noisy_image
+
+    <span class="code-keyword">def</span> <span class="code-function">p_losses</span>(<span class="code-keyword">self</span>, x0):
+        t = torch.randint(<span class="code-number">1</span>, <span class="code-keyword">self</span>.T, (x0.shape[<span class="code-number">0</span>],))
+        noise = torch.randn_like(x0)
+        x_t = <span class="code-keyword">self</span>.forward_process(x0, t, noise)
+        predicted_noise = <span class="code-keyword">self</span>.model(x_t, t)
+        <span class="code-keyword">return</span> F.mse_loss(noise, predicted_noise)
+
+    <span class="code-decorator">@torch.no_grad()</span>
+    <span class="code-keyword">def</span> <span class="code-function">sample</span>(<span class="code-keyword">self</span>, n_images):
+        x_t = torch.randn(n_images, <span class="code-keyword">...</span>) <span class="code-comment"># Start with pure noise</span>
+        <span class="code-keyword">for</span> t <span class="code-keyword">in</span> <span class="code-keyword">reversed</span>(<span class="code-keyword">range</span>(<span class="code-number">1</span>, <span class="code-keyword">self</span>.T)):
+            predicted_noise = <span class="code-keyword">self</span>.model(x_t, t)
+            <span class="code-comment"># Use predicted_noise to calculate mu_theta(x_t, t)</span>
+            mu = <span class="code-comment"># ... (1/sqrt(alpha_t)) * (x_t - ...)</span>
+            <span class="code-comment"># Sample x_{t-1}</span>
+            x_t = mu + sigma_t * torch.randn_like(x_t)
+        <span class="code-keyword">return</span> x_t
+</code></pre>
+                
+                <h4>DDIM Sampling</h4>
+                <p>DDIM sampling reuses the exact same trained model as the DDPM. The only difference is in the `sample` function, which uses the deterministic DDIM update rule instead of the stochastic DDPM one.</p>
+                <pre><code><span class="code-decorator">@torch.no_grad()</span>
+    <span class="code-keyword">def</span> <span class="code-function">ddim_sample</span>(<span class="code-keyword">self</span>, n_images, num_steps=<span class="code-number">50</span>):
+        <span class="code-comment"># Choose a subset of timesteps to "jump" through</span>
+        timestep_map = torch.linspace(<span class="code-number">1</span>, <span class="code-keyword">self</span>.T-<span class="code-number">1</span>, num_steps).long()
+    
+        x_t = torch.randn(n_images, <span class="code-keyword">...</span>)
+    
+        <span class="code-keyword">for</span> i <span class="code-keyword">in</span> <span class="code-keyword">reversed</span>(<span class="code-keyword">range</span>(num_steps)):
+            t = timestep_map[i]
+            t_prev = timestep_map[i-<span class="code-number">1</span>] <span class="code-keyword">if</span> i > <span class="code-number">0</span> <span class="code-keyword">else</span> <span class="code-number">0</span>
+        
+            predicted_noise = <span class="code-keyword">self</span>.model(x_t, t)
+        
+            <span class="code-comment"># Calculate predicted x0 from predicted_noise</span>
+            predicted_x0 = <span class="code-comment"># ... (x_t - ...*predicted_noise) / ...</span>
+        
+            <span class="code-comment"># Use the deterministic DDIM update rule to get x_{t_prev}</span>
+            <span class="code-comment"># x_{t_prev} = sqrt(alpha_bar_{t_prev})*predicted_x0 + sqrt(1 - alpha_bar_{t_prev})*predicted_noise</span>
+            x_t = <span class="code-comment"># ... implement the DDIM equation ...</span>
+
+        <span class="code-keyword">return</span> x_t
+</code></pre>
+
+            </section>
+        </main>
+        
+        <footer>
+            <p>This comprehensive guide was generated based on the "Mathematical Foundations of Generative AI" lecture series. All concepts, code, and explanations are derived from the provided transcripts.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtn = document.getElementById('toc-toggle');
+            const tocContainer = document.getElementById('toc-container');
+            const mainContent = document.getElementById('main-content');
+
+            toggleBtn.addEventListener('click', () => {
+                tocContainer.classList.toggle('collapsed');
+                mainContent.classList.toggle('toc-collapsed');
+                toggleBtn.classList.toggle('active');
+            });
+
+             // Smooth scroll for TOC links
+            document.querySelectorAll('#toc a').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    if (this.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        document.querySelector(this.getAttribute('href')).scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
